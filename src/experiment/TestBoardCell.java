@@ -20,7 +20,7 @@ public class TestBoardCell {
 	}
 	public Set<TestBoardCell> getAdjList() {
 		//return adjacents;
-		return null;
+		return new HashSet<TestBoardCell>();
 	}
 	public void setIsRoom(boolean room) {
 		//this.room = room;

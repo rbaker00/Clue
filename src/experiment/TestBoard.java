@@ -12,7 +12,7 @@ public class TestBoard {
 		return;
 	}
 	public Set<TestBoardCell> getTargets() {
-		return null;
+		return new HashSet<TestBoardCell>();
 	}
 	public TestBoardCell getCell(int row, int col) {
 		return new TestBoardCell(-1, -1);

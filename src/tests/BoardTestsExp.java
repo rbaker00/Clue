@@ -123,10 +123,10 @@ public class BoardTestsExp {
 	@Test
 	public void testTargetsOccupied2() {
 		board.getCell(0, 1).setOccupied(true);
-		board.getCell(1, 0).setOccupied(true);
 		TestBoardCell cell = board.getCell(0, 0);
 		board.calcTargets(cell, 1);
 		Set<TestBoardCell> targets = board.getTargets();
-		assertEquals(0, targets.size());
+		assertEquals(1, targets.size());
+		assertTrue(targets.contains(board.getCell(1, 0)));
 	}
 }
