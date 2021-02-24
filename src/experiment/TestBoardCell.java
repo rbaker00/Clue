@@ -12,27 +12,31 @@ public class TestBoardCell {
 	
 	public TestBoardCell(int row, int column) {
 		super();
-		this.row = row;
-		this.column = column;
-		adjacents = new HashSet<TestBoardCell>();
+		//this.row = row;
+		//this.column = column;
+		//adjacents = new HashSet<TestBoardCell>();
 	}
 	
-	void addAdjacency(TestBoardCell cell) {
-		adjacents.add(cell);
+	public void addAdjacency(TestBoardCell cell) {
+		//adjacents.add(cell);
 	}
-	Set<TestBoardCell> getAdjList() {
-		return adjacents;
+	public Set<TestBoardCell> getAdjList() {
+		//return adjacents;
+		return null;
 	}
-	void setRoom(boolean room) {
-		this.room = room;
+	public void setRoom(boolean room) {
+		//this.room = room;
 	}
-	boolean getRoom() {
-		return room;
+	public boolean getRoom() {
+		//return room;
+		return false;
 	}
-	void setOccupied(boolean occupied) {
-		this.occupied = occupied;
+	public void setOccupied(boolean occupied) {
+		//this.occupied = occupied;
 	}
-	boolean getOccupied() {
-		return occupied;
+	public boolean getOccupied() {
+		//return occupied;
+		return false;
+		
 	}
 }
