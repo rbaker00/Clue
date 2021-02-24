@@ -3,6 +3,7 @@ package experiment;
 import java.util.HashSet;
 import java.util.Set;
 
+
 public class TestBoardCell {
 	private int row;
 	private int column;
@@ -16,7 +17,6 @@ public class TestBoardCell {
 		//this.column = column;
 		//adjacents = new HashSet<TestBoardCell>();
 	}
-	
 	public void addAdjacency(TestBoardCell cell) {
 		//adjacents.add(cell);
 	}
