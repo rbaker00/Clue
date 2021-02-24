@@ -11,7 +11,7 @@ public class TestBoard {
 	public void calcTargets(TestBoardCell start, int pathlength) {
 		return;
 	}
-	public Set<TestBoardCell> getTarget() {
+	public Set<TestBoardCell> getTargets() {
 		return null;
 	}
 	public TestBoardCell getCell(int row, int col) {

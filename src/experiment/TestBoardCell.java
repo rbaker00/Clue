@@ -1,8 +1,6 @@
 package experiment;
 
-import java.util.HashSet;
-import java.util.Set;
-
+import java.util.*;
 
 public class TestBoardCell {
 	private int row;
@@ -24,7 +22,7 @@ public class TestBoardCell {
 		//return adjacents;
 		return null;
 	}
-	public void setRoom(boolean room) {
+	public void setIsRoom(boolean room) {
 		//this.room = room;
 	}
 	public boolean getRoom() {
