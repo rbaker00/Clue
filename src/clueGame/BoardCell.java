@@ -16,4 +16,28 @@ public class BoardCell {
 	public void addAdj(BoardCell adj) {
 		adjList.add(adj);
 	}
+	public int getRows() {
+		return row;
+	}
+	public int getColumns() {
+		return col;
+	}
+	public char getInitial() {
+		return initial;
+	}
+	public DoorDirection getDoorDirection() {
+		return doorDirection;
+	}
+	public Boolean getRoomLabel() {
+		return roomLabel;
+	}
+	public Boolean getRoomCenter() {
+		return roomCenter;
+	}
+	public char getSecretPassage() {
+		return secretPassage;
+	}
+	public Set<BoardCell> getAdjList() {
+		return adjList;
+	}
 }
