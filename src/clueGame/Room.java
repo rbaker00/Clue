@@ -7,4 +7,10 @@ public class Room {
 	public Room() {
 		super();
 	}
+	public String getName() {
+		return null;
+	}
+	public BoardCell getLabelCell() {
+		return new BoardCell();
+	}
 }
