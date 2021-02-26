@@ -3,7 +3,6 @@ package experiment;
 import java.util.*;
 
 public class TestBoard {
-	Set<TestBoardCell> board;
 	private TestBoardCell[][] grid;
 	private Set<TestBoardCell> targets;
 	private Set<TestBoardCell> visited;
@@ -29,10 +28,13 @@ public class TestBoard {
 	}
 	private void setAdjacencyList(TestBoardCell theCell) {
 		for (int row = -1; row <= 1; row += 2) {
-			for (int col = -1; col <= 1; col += 2) {
-				if (theCell.getRow() + row > -1 && theCell.getRow() + row < ROWS && theCell.getColumn() + col > -1 && theCell.getColumn() + col < COLS) {
-					
-				}
+			if (theCell.getColumn() + row > -1 && theCell.getColumn() + row < ROWS) {
+				theCell.addAdjacency(this.getCell(theCell.getRow() + row, theCell.getColumn()));
+			}
+		}
+		for (int col = -1; col <= 1; col += 2) {
+			if (theCell.getColumn() + col > -1 && theCell.getColumn() + col < COLS) {
+				theCell.addAdjacency(this.getCell(theCell.getRow(), theCell.getColumn() + col));
 			}
 		}
 	}
