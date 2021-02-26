@@ -33,7 +33,7 @@ public class TestBoard {
 	}
 	private void setAdjacencyList(TestBoardCell theCell) {
 		for (int row = -1; row <= 1; row += 2) {
-			if (theCell.getColumn() + row > -1 && theCell.getColumn() + row < ROWS) {
+			if (theCell.getRow() + row > -1 && theCell.getRow() + row < ROWS) {
 				theCell.addAdjacency(getCell(theCell.getRow() + row, theCell.getColumn()));
 			}
 		}
