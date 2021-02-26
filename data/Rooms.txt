@@ -7,7 +7,7 @@ Room, Kitchen, K
 Room, Emergency Room, E
 Room, Manager's Office, M
 Room, Consulting Room, C
-Room, Medical Ward, W
+Room, Pre-labour Room, P
 // other spaces on board
 Space, Unused, X
-Space, Walkway, W
+Space, Hallway, H
