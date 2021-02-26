@@ -64,7 +64,7 @@ public class BoardTestsExp {
 		assertTrue(testList.contains(board.getCell(2, 3)));
 		assertTrue(testList.contains(board.getCell(1, 2)));
 		assertTrue(testList.contains(board.getCell(3, 2)));
-		assertEquals(3, testList.size());
+		assertEquals(4, testList.size());
 	}
 	// test for targets in empty board
 	@Test
