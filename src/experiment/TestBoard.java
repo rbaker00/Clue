@@ -39,8 +39,7 @@ public class TestBoard {
 		}
 	}
 	public Set<TestBoardCell> getTargets() {
-		
-		return null;
+		return targets;
 	}
 	public TestBoardCell getCell(int row, int col) {
 		return grid[row][col];
