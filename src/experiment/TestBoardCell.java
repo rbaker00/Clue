@@ -6,35 +6,37 @@ public class TestBoardCell {
 	private int row;
 	private int column;
 	private Set<TestBoardCell> adjacents;
-	private boolean room;
-	private boolean occupied;
+	private boolean isRoom;
+	private boolean isOccupied;
 	
 	public TestBoardCell(int row, int column) {
 		super();
-		//this.row = row;
-		//this.column = column;
-		//adjacents = new HashSet<TestBoardCell>();
+		this.row = row;
+		this.column = column;
+		adjacents = new HashSet<TestBoardCell>();
 	}
 	public void addAdjacency(TestBoardCell cell) {
-		//adjacents.add(cell);
+		adjacents.add(cell);
 	}
 	public Set<TestBoardCell> getAdjList() {
-		//return adjacents;
-		return new HashSet<TestBoardCell>();
+		return adjacents;
 	}
-	public void setIsRoom(boolean room) {
-		//this.room = room;
+	public void setIsRoom(boolean isRoom) {
+		this.isRoom = isRoom;
 	}
 	public boolean getRoom() {
-		//return room;
-		return false;
+		return isRoom;
 	}
-	public void setOccupied(boolean occupied) {
-		//this.occupied = occupied;
+	public void setOccupied(boolean isOccupied) {
+		this.isOccupied = isOccupied;
 	}
 	public boolean getOccupied() {
-		//return occupied;
-		return false;
-		
+		return isOccupied;
+	}
+	public int getRow() {
+		return row;
+	}
+	public int getColumn() {
+		return column;
 	}
 }
