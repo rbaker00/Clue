@@ -6,7 +6,7 @@ public class BoardCell {
 	private int row, col;
 	private char initial;
 	private DoorDirection doorDirection;
-	private Boolean roomLabel, roomCenter;
+	private boolean roomLabel, roomCenter;
 	private char secretPassage;
 	private Set<BoardCell> adjList;
 	
@@ -28,10 +28,10 @@ public class BoardCell {
 	public DoorDirection getDoorDirection() {
 		return doorDirection;
 	}
-	public Boolean getRoomLabel() {
+	public boolean getRoomLabel() {
 		return roomLabel;
 	}
-	public Boolean getRoomCenter() {
+	public boolean getRoomCenter() {
 		return roomCenter;
 	}
 	public char getSecretPassage() {
