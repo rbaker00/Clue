@@ -9,6 +9,10 @@ public class BoardCell {
 	private Boolean roomLabel, roomCenter;
 	private char secretPassage;
 	private Set<BoardCell> adjList;
+	
+	public BoardCell() {
+		super();
+	}
 	public void addAdj(BoardCell adj) {
 		adjList.add(adj);
 	}
