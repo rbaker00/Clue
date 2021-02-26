@@ -29,12 +29,12 @@ public class TestBoard {
 	private void setAdjacencyList(TestBoardCell theCell) {
 		for (int row = -1; row <= 1; row += 2) {
 			if (theCell.getColumn() + row > -1 && theCell.getColumn() + row < ROWS) {
-				theCell.addAdjacency(this.getCell(theCell.getRow() + row, theCell.getColumn()));
+				theCell.addAdjacency(getCell(theCell.getRow() + row, theCell.getColumn()));
 			}
 		}
 		for (int col = -1; col <= 1; col += 2) {
 			if (theCell.getColumn() + col > -1 && theCell.getColumn() + col < COLS) {
-				theCell.addAdjacency(this.getCell(theCell.getRow(), theCell.getColumn() + col));
+				theCell.addAdjacency(getCell(theCell.getRow(), theCell.getColumn() + col));
 			}
 		}
 	}
