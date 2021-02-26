@@ -7,6 +7,7 @@ public class Board {
 	private int numRows;
 	private int numColumns;
 	private String layoutConfigFile;
+	private String setupConfigFile;
 	private Map<Character, Room> roomMap;
 	private static Board theInstance = new Board();
 	
@@ -15,6 +16,12 @@ public class Board {
 	}
 	public static Board getInstance() {
 		return theInstance;
+	}
+	public int getRows() {
+		return numRows;
+	}
+	public int getColumns() {
+		return numColumns;
 	}
 	public void initialize() {
 		
