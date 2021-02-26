@@ -16,6 +16,11 @@ public class TestBoard {
 				grid[row][col] = new TestBoardCell(row, col);
 			}
 		}
+		for (int row = 0; row < ROWS; row++) {
+			for (int col = 0; col < COLS; col++) {
+				this.setAdjacencyList(grid[row][col]);
+			}
+		}
 	}
 	public void calcTargets(TestBoardCell start, int pathlength) {
 		targets = new HashSet<TestBoardCell>();
