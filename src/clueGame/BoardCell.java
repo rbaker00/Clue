@@ -47,7 +47,7 @@ public class BoardCell {
 	}
 	public Set<BoardCell> getAdjList() {
 		//return adjList;
-		return new HashSet<BoardCell>;
+		return new HashSet<BoardCell>();
 	}
 	public boolean isDoorway() {
 		return false;
