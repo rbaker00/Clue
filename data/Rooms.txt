@@ -1,0 +1,13 @@
+// Rooms and room cards
+Room, Operating Room, O
+Room, Nursery, N
+Room, Delivery Room, D
+Room, Janitor's Closet, J
+Room, Kitchen, K
+Room, Emergency Room, E
+Room, Manager's Office, M
+Room, Consulting Room, C
+Room, Medical Ward, W
+// other spaces on board
+Space, Unused, X
+Space, Walkway, W
