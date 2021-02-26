@@ -25,7 +25,9 @@ public class TestBoard {
 	}
 	public void calcTargets(TestBoardCell start, int pathlength) {
 		targets = new HashSet<TestBoardCell>();
+		visited.add(start);
 		findAllTargets(start, pathlength);
+		visited.remove(start);
 		return;
 	}
 	private void findAllTargets(TestBoardCell thisCell, int numSteps) {

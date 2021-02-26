@@ -117,7 +117,7 @@ public class BoardTestsExp {
 		assertTrue(targets.contains(board.getCell(1, 3)));
 		assertTrue(targets.contains(board.getCell(2, 2)));
 		assertTrue(targets.contains(board.getCell(3, 1)));
-		assertTrue(targets.contains(board.getCell(2, 0)));
+		assertTrue(targets.contains(board.getCell(0, 2)));
 	}
 	// test for if targets contain any occupied cells
 	@Test
