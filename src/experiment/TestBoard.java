@@ -11,6 +11,7 @@ public class TestBoard {
 	public TestBoard() {
 		super();
 		grid = new TestBoardCell[ROWS][COLS];
+		visited = new HashSet<TestBoardCell>();
 		for (int row = 0; row < ROWS; row++) {
 			for (int col = 0; col < COLS; col++) {
 				grid[row][col] = new TestBoardCell(row, col);
@@ -24,12 +25,22 @@ public class TestBoard {
 	}
 	public void calcTargets(TestBoardCell start, int pathlength) {
 		targets = new HashSet<TestBoardCell>();
-		visited = new HashSet<TestBoardCell>();
 		findAllTargets(start, pathlength);
 		return;
 	}
 	private void findAllTargets(TestBoardCell thisCell, int numSteps) {
-		
+		for(TestBoardCell adjCell : thisCell.getAdjList()) {
+			if(visited.contains(adjCell)) {
+				continue;
+			}
+			visited.add(adjCell);
+			if(numSteps==1) {
+				targets.add(adjCell);
+			} else {
+				findAllTargets(adjCell, numSteps-1);
+			}
+			visited.remove(adjCell);
+		}
 	}
 	private void setAdjacencyList(TestBoardCell theCell) {
 		for (int row = -1; row <= 1; row += 2) {
