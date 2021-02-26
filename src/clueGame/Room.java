@@ -13,4 +13,7 @@ public class Room {
 	public BoardCell getLabelCell() {
 		return new BoardCell();
 	}
+	public BoardCell getCenterCell() {
+		return new BoardCell();
+	}
 }
