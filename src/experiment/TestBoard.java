@@ -30,11 +30,11 @@ public class TestBoard {
 	}
 	private void findAllTargets(TestBoardCell thisCell, int numSteps) {
 		for(TestBoardCell adjCell : thisCell.getAdjList()) {
-			if(visited.contains(adjCell)) {
+			if(visited.contains(adjCell) || adjCell.getOccupied()) {
 				continue;
 			}
 			visited.add(adjCell);
-			if(numSteps==1) {
+			if(numSteps==1 || adjCell.getRoom()) {
 				targets.add(adjCell);
 			} else {
 				findAllTargets(adjCell, numSteps-1);
