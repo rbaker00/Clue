@@ -1,5 +1,5 @@
 package clueGame;
 
-public class BadConfigException {
-
+public class BadConfigException extends Exception {
+	
 }
