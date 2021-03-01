@@ -4,16 +4,24 @@ public class Room {
 	private String name;
 	private BoardCell centerCell;
 	private BoardCell labelCell;
-	public Room() {
+	public Room(String name) {
 		super();
+		this.name = name;
 	}
 	public String getName() {
-		return null;
+		return name;
 	}
 	public BoardCell getLabelCell() {
-		return new BoardCell();
+		return labelCell;
 	}
 	public BoardCell getCenterCell() {
-		return new BoardCell();
+		return centerCell;
 	}
+	public void setCenterCell(BoardCell centerCell) {
+		this.centerCell = centerCell;
+	}
+	public void setLabelCell(BoardCell labelCell) {
+		this.labelCell = labelCell;
+	}
+	
 }

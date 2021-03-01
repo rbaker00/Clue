@@ -75,14 +75,14 @@ public class FileInitTest {
 				if (cell.isDoorway())
 					numDoors++;
 			}
-		Assert.assertEquals(10, numDoors);
+		Assert.assertEquals(12, numDoors);
 	}
 
 	// Test a few room cells to ensure the room initial is correct.
 	@Test
 	public void testRooms() {
 		// just test a standard room location
-		BoardCell cell = board.getCell(1, 1);
+		BoardCell cell = board.getCell(1, 2);
 		Room room = board.getRoom(cell) ;
 		assertTrue( room != null );
 		assertEquals( room.getName(), "Pre-labour Room" ) ;

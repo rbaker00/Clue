@@ -11,48 +11,46 @@ public class BoardCell {
 	private char secretPassage;
 	private Set<BoardCell> adjList;
 	
-	public BoardCell() {
+	
+	public BoardCell(int row, int col, char initial, DoorDirection doorDirection, boolean roomLabel, boolean roomCenter, char secretPassage) {
 		super();
+		this.row = row;
+		this.col = col;
+		this.initial = initial;
+		this.doorDirection = doorDirection;
+		this.roomLabel = roomLabel;
+		this.roomCenter = roomCenter;
+		this.secretPassage = secretPassage;
 	}
 	public void addAdj(BoardCell adj) {
 		//adjList.add(adj);
 	}
 	public int getRows() {
-		//return row;
-		return -1;
+		return row;
 	}
 	public int getColumns() {
-		//return col;
-		return -1;
+		return col;
 	}
 	public char getInitial() {
-		//return initial;
-		return ' ';
+		return initial;
 	}
 	public DoorDirection getDoorDirection() {
-		//return doorDirection;
-		return DoorDirection.NONE;
-	}
-	public boolean getRoomLabel() {
-		//return roomLabel;
-		return false;
+		return doorDirection;
 	}
 	public boolean isRoomCenter() {
-		//return roomCenter;
-		return false;
+		return roomCenter;
 	}
 	public char getSecretPassage() {
-		//return secretPassage;
-		return ' ';
+		return secretPassage;
 	}
 	public Set<BoardCell> getAdjList() {
 		//return adjList;
 		return new HashSet<BoardCell>();
 	}
 	public boolean isDoorway() {
-		return false;
+		return doorDirection != DoorDirection.NONE;
 	}
 	public boolean isLabel() {
-		return false;
+		return roomLabel;
 	}
 }

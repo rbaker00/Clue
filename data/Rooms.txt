@@ -10,4 +10,4 @@ Room, Consulting Room, C
 Room, Pre-labour Room, P
 // other spaces on board
 Space, Unused, X
-Space, Hallway, H
+Space, Walkway, W
