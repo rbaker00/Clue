@@ -43,27 +43,27 @@ public class Board {
 	    Scanner myReader;
 		try {
 			myReader = new Scanner(setup);
+			roomMap = new HashMap<Character, Room>();
+			while (myReader.hasNextLine()) {
+		        String[] data = myReader.nextLine().split(", ");
+		        if(data.length > 3) {
+		        	myReader.close();
+		        	throw new BadConfigFormatException();
+		        }
+		        if ((data[0].equals("Room") || data[0].equals("Space")) && data.length == 3) {
+			        rooms.add(new Room(data[1]));
+			        roomMap.put(data[2].charAt(0), rooms.get(rooms.size()-1));
+		        }
+		        else {
+		        	myReader.close();
+		        	throw new BadConfigFormatException();
+		        }
+		    }
+			myReader.close();
 		} catch (FileNotFoundException e) {
 			e.printStackTrace();
 			return;
 		}
-		
-		roomMap = new HashMap<Character, Room>();
-		while (myReader.hasNextLine()) {
-			
-	        String[] data = myReader.nextLine().split(", ");
-	        if(data.length > 3) {
-	        	throw new BadConfigFormatException();
-	        }
-	        if ((data[0].equals("Room") || data[0].equals("Space")) && data.length == 3) {
-		        rooms.add(new Room(data[1]));
-		        roomMap.put(data[2].charAt(0), rooms.get(rooms.size()-1));
-	        }
-	        else {
-	        	throw new BadConfigFormatException();
-	        }
-	    }
-	    myReader.close();
 	}
 	public void loadLayoutConfig() {
 		File layout = new File(layoutConfigFile);
@@ -73,6 +73,7 @@ public class Board {
 			while (myReader.hasNextLine()) {
 		        lines.add(myReader.nextLine());
 		    }
+			myReader.close();
 			numRows = lines.size();
 			String[] theLine = lines.get(0).split(",");
 			numColumns = theLine.length;
@@ -137,7 +138,6 @@ public class Board {
 				}
 				theLine = null;
 			}
-		    myReader.close();
 		} catch (FileNotFoundException e) {
 			e.printStackTrace();
 			return;
