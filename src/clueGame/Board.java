@@ -52,76 +52,97 @@ public class Board {
 		while (myReader.hasNextLine()) {
 			
 	        String[] data = myReader.nextLine().split(", ");
-	        if (data[0].equals("Room") || data[0].equals("Space")) {
+	        if(data.length > 3) {
+	        	throw new BadConfigFormatException();
+	        }
+	        if ((data[0].equals("Room") || data[0].equals("Space")) && data.length == 3) {
 		        rooms.add(new Room(data[1]));
 		        roomMap.put(data[2].charAt(0), rooms.get(rooms.size()-1));
+	        }
+	        else {
+	        	throw new BadConfigFormatException();
 	        }
 	    }
 	    myReader.close();
 	}
 	public void loadLayoutConfig() {
 		File layout = new File(layoutConfigFile);
-	    Scanner myReader;
 		try {
-			myReader = new Scanner(layout);
+			Scanner myReader = new Scanner(layout);
+			ArrayList<String> lines = new ArrayList<String>();
+			while (myReader.hasNextLine()) {
+		        lines.add(myReader.nextLine());
+		    }
+			numRows = lines.size();
+			String[] theLine = lines.get(0).split(",");
+			numColumns = theLine.length;
+			grid = new BoardCell[numRows][numColumns];
+			for (int row = 0; row < numRows; row++) {
+				if (theLine == null) {
+					theLine = lines.get(row).split(",");
+				}
+				if(theLine.length != numColumns) {
+					throw new BadConfigFormatException("Board layout file does not have the same number of columns in every row.");
+				}
+				for (int col = 0; col < numColumns; col++) {
+					char initial = theLine[col].charAt(0);
+					if(!roomMap.containsKey(initial)) {
+						throw new BadConfigFormatException("Board layout refers to room that is not in the setup file.");
+					}
+					DoorDirection doorDirection = DoorDirection.NONE;
+					boolean roomLabel = false;
+					boolean roomCenter = false;
+					char secretPassage = ' ';
+					if (theLine[col].length() > 1) {
+						if(theLine[col].length() > 2) {
+							throw new BadConfigFormatException("Too many characters in Board Cell from layout file");
+						}
+						switch(theLine[col].charAt(1)) {
+						case '#':
+							roomLabel = true;
+							break;
+						case '*':
+							roomCenter = true;
+							break;
+						case '<':
+							doorDirection = DoorDirection.LEFT;
+							break;
+						case '^':
+							doorDirection = DoorDirection.UP;
+							break;
+						case '>':
+							doorDirection = DoorDirection.RIGHT;
+							break;
+						case 'v':
+							doorDirection = DoorDirection.DOWN;
+							break;
+						default:
+							secretPassage = theLine[col].charAt(1);
+							if(!roomMap.containsKey(secretPassage)) {
+								throw new BadConfigFormatException("Board layout refers to room that is not in the setup file.");
+							}
+							break;
+						}
+					}
+					else if(theLine[col].length() != 1) {
+						throw new BadConfigFormatException("Empty cell in layout file.");
+					}
+					grid[row][col] = new BoardCell(row, col, initial, doorDirection, roomLabel, roomCenter, secretPassage);
+					if (roomLabel) {
+						roomMap.get(initial).setLabelCell(grid[row][col]);
+					}
+					else if (roomCenter) {
+						roomMap.get(initial).setCenterCell(grid[row][col]);
+					}
+				}
+				theLine = null;
+			}
+		    myReader.close();
 		} catch (FileNotFoundException e) {
 			e.printStackTrace();
 			return;
 		}
-		ArrayList<String> lines = new ArrayList<String>();
-		while (myReader.hasNextLine()) {
-	        lines.add(myReader.nextLine());
-	    }
-		numRows = lines.size();
-		String[] theLine = lines.get(0).split(",");
-		numColumns = theLine.length;
-		grid = new BoardCell[numRows][numColumns];
-		for (int row = 0; row < numRows; row++) {
-			if (theLine == null) {
-				theLine = lines.get(row).split(",");
-			}
-			for (int col = 0; col < numColumns; col++) {
-				char initial = theLine[col].charAt(0);
-				DoorDirection doorDirection = DoorDirection.NONE;
-				boolean roomLabel = false;
-				boolean roomCenter = false;
-				char secretPassage = ' ';
-				if (theLine[col].length() > 1) {
-					switch(theLine[col].charAt(1)) {
-					case '#':
-						roomLabel = true;
-						break;
-					case '*':
-						roomCenter = true;
-						break;
-					case '<':
-						doorDirection = DoorDirection.LEFT;
-						break;
-					case '^':
-						doorDirection = DoorDirection.UP;
-						break;
-					case '>':
-						doorDirection = DoorDirection.RIGHT;
-						break;
-					case 'v':
-						doorDirection = DoorDirection.DOWN;
-						break;
-					default:
-						secretPassage = theLine[col].charAt(1);
-						break;
-					}
-				}
-				grid[row][col] = new BoardCell(row, col, initial, doorDirection, roomLabel, roomCenter, secretPassage);
-				if (roomLabel) {
-					roomMap.get(initial).setLabelCell(grid[row][col]);
-				}
-				else if (roomCenter) {
-					roomMap.get(initial).setCenterCell(grid[row][col]);
-				}
-			}
-			theLine = null;
-		}
-	    myReader.close();
+		
 	}
 	public void setConfigFiles(String layoutConfigFile, String setupConfigFile) {
 		this.setupConfigFile = "data/" + setupConfigFile;
