@@ -11,7 +11,11 @@ public class BoardCell {
 	private boolean roomLabel, roomCenter;
 	private char secretPassage;
 	private Set<BoardCell> adjList;
+	private boolean isOccupied = false;
 	
+	public BoardCell() {
+		super();
+	}
 	
 	public BoardCell(int row, int col, char initial, DoorDirection doorDirection, boolean roomLabel, boolean roomCenter, char secretPassage) {
 		super();
@@ -23,8 +27,8 @@ public class BoardCell {
 		this.roomCenter = roomCenter;
 		this.secretPassage = secretPassage;
 	}
-	public void addAdj(BoardCell adj) {
-		//adjList.add(adj);
+	public void addAdjacency(BoardCell adj) {
+		adjList.add(adj);
 	}
 	public int getRows() {
 		return row;
@@ -45,13 +49,18 @@ public class BoardCell {
 		return secretPassage;
 	}
 	public Set<BoardCell> getAdjList() {
-		//return adjList;
-		return new HashSet<BoardCell>();
+		return adjList;
 	}
 	public boolean isDoorway() {
 		return doorDirection != DoorDirection.NONE;
 	}
 	public boolean isLabel() {
 		return roomLabel;
+	}
+	public boolean getOccupied() {
+		return isOccupied;
+	}
+	public void setOccupied(boolean b) {
+		isOccupied = b;
 	}
 }
