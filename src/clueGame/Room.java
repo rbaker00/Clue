@@ -1,5 +1,6 @@
 package clueGame;
 
+//Class used to contain a room for a clue game
 public class Room {
 	private String name;
 	private BoardCell centerCell;

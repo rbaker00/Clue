@@ -3,6 +3,7 @@ package clueGame;
 import java.util.HashSet;
 import java.util.Set;
 
+//Class used to contain a cell of a clue game
 public class BoardCell {
 	private int row, col;
 	private char initial;
