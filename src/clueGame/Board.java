@@ -47,7 +47,6 @@ public class Board {
 			e.printStackTrace();
 			return;
 		}
-		
 		roomMap = new HashMap<Character, Room>();
 		while (myReader.hasNextLine()) {
 			
@@ -55,11 +54,11 @@ public class Board {
 	        if(data.length > 3) {
 	        	throw new BadConfigFormatException();
 	        }
-	        if ((data[0].equals("Room") || data[0].equals("Space")) && data.length == 3) {
+	        if (data[0].equals("Room") || data[0].equals("Space")) {
 		        rooms.add(new Room(data[1]));
 		        roomMap.put(data[2].charAt(0), rooms.get(rooms.size()-1));
 	        }
-	        else {
+	        else if (!data[0].substring(0, 2).equals("//")){
 	        	throw new BadConfigFormatException();
 	        }
 	    }
@@ -137,7 +136,6 @@ public class Board {
 				}
 				theLine = null;
 			}
-		    myReader.close();
 		} catch (FileNotFoundException e) {
 			e.printStackTrace();
 			return;
