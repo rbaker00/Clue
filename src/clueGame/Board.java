@@ -128,7 +128,6 @@ public class Board {
 		this.layoutConfigFile = "data/" + layoutConfigFile;
 	}
 	public Room getRoom(char c) {
-		System.out.println(c);
 		return roomMap.get(c);
 	}
 	public BoardCell getCell(int row, int col) {
