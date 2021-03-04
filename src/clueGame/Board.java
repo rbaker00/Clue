@@ -1,11 +1,11 @@
 package clueGame;
 
-import java.util.Map;
-import java.util.ArrayList;
-import java.util.HashMap;
+import java.util.*;
+
+import experiment.TestBoardCell;
+
 import java.io.File;
 import java.io.FileNotFoundException;
-import java.util.Scanner;
 
 //Class to contain a clue board
 public class Board {
@@ -18,6 +18,8 @@ public class Board {
 	private static Board theInstance = new Board();
 	private ArrayList<Room> rooms;
 	private char unused;
+	Set<BoardCell> targets;
+	Set<BoardCell> visited = new HashSet<BoardCell>();
 	
 	private Board() {
 		super();
@@ -160,10 +162,51 @@ public class Board {
 	public Room getRoom(char c) {
 		return roomMap.get(c);
 	}
-	public BoardCell getCell(int row, int col) {
-		return grid[row][col];
-	}
 	public Room getRoom(BoardCell cell) {
 		return roomMap.get(cell.getInitial());
+	}
+	public void calcTargets(BoardCell start, int pathlength) {
+//		targets = new HashSet<BoardCell>();
+//		visited.add(start);
+//		findAllTargets(start, pathlength);
+//		visited.remove(start);
+//		return;
+	}
+	private void findAllTargets(BoardCell thisCell, int numSteps) {
+//		for(BoardCell adjCell : thisCell.getAdjList()) {
+//			if(visited.contains(adjCell) || adjCell.getOccupied()) {
+//				continue;
+//			}
+//			visited.add(adjCell);
+//			if(numSteps==1 || adjCell.getRoom()) {
+//				targets.add(adjCell);
+//			} else {
+//				findAllTargets(adjCell, numSteps-1);
+//			}
+//			visited.remove(adjCell);
+//		}
+	}
+	public void setAdjacencyList(BoardCell theCell) {
+//		for (int row = -1; row <= 1; row += 2) {
+//			if (theCell.getRows() + row > -1 && theCell.getRows() + row < numRows) {
+//				theCell.addAdjacency(getCell(theCell.getRows() + row, theCell.getColumns()));
+//			}
+//		}
+//		for (int col = -1; col <= 1; col += 2) {
+//			if (theCell.getColumns() + col > -1 && theCell.getColumns() + col < numColumns) {
+//				theCell.addAdjacency(getCell(theCell.getRows(), theCell.getColumns() + col));
+//			}
+//		}
+	}
+	public Set<BoardCell> getAdjList(int row, int col) {
+//		return grid[row][col].getAdjList();
+		return new HashSet<BoardCell>();
+	}
+	public Set<BoardCell> getTargets() {
+//		return targets;
+		return new HashSet<BoardCell>();
+	}
+	public BoardCell getCell(int row, int col) {
+		return grid[row][col];
 	}
 }
