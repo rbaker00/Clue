@@ -53,7 +53,7 @@ public class FileInitTest {
 		cell = board.getCell(4, 8);
 		assertTrue(cell.isDoorway());
 		assertEquals(DoorDirection.LEFT, cell.getDoorDirection());
-		cell = board.getCell(2, 16);
+		cell = board.getCell(22, 17);
 		assertTrue(cell.isDoorway());
 		assertEquals(DoorDirection.RIGHT, cell.getDoorDirection());
 		cell = board.getCell(19, 4);
