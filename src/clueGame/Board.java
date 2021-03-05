@@ -135,6 +135,7 @@ public class Board {
 						break;
 					default:
 						secretPassage = theLine[col].charAt(1);
+						roomMap.get(initial).setSecretPassage(roomMap.get(secretPassage));
 						if(!roomMap.containsKey(secretPassage)) {
 							throw new BadConfigFormatException("Board layout refers to room that is not in the setup file.");
 						}

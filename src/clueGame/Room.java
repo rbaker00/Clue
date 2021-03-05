@@ -5,6 +5,13 @@ public class Room {
 	private String name;
 	private BoardCell centerCell;
 	private BoardCell labelCell;
+	private Room secretPassage;
+	public Room getSecretPassage() {
+		return secretPassage;
+	}
+	public void setSecretPassage(Room secretPassage) {
+		this.secretPassage = secretPassage;
+	}
 	public Room() {
 		super();
 	}
