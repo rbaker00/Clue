@@ -17,7 +17,6 @@ public class Board {
 	private Map<Character, Room> roomMap;
 	private static Board theInstance = new Board();
 	private ArrayList<Room> rooms;
-	private char unused;
 	Set<BoardCell> targets;
 	Set<BoardCell> visited = new HashSet<BoardCell>();
 	
@@ -38,6 +37,7 @@ public class Board {
 	public void initialize() {
 		loadSetupConfig();
 		loadLayoutConfig();
+		setAllAdjacencies();
 	}
 	//Loads the file that stores all of the rooms and some information about them
 	public void loadSetupConfig() {
@@ -94,6 +94,7 @@ public class Board {
 		
 	}
 	private void setupGrid(ArrayList<String> lines, String[] theLine) {
+		ArrayList<BoardCell> doors = new ArrayList<BoardCell>();
 		for (int row = 0; row < numRows; row++) {
 			if (theLine == null) {
 				theLine = lines.get(row).split(",");
@@ -152,8 +153,27 @@ public class Board {
 				else if (roomCenter) {
 					roomMap.get(initial).setCenterCell(grid[row][col]);
 				}
+				else if (doorDirection != DoorDirection.NONE) {
+					doors.add(grid[row][col]);
+				}
 			}
 			theLine = null;
+		}
+		for (BoardCell theCell : doors) {
+			switch (theCell.getDoorDirection()) {
+			case UP:
+				roomMap.get(grid[theCell.getRows() - 1][theCell.getColumns()].getInitial()).addDoor(theCell);
+				break;
+			case LEFT:
+				roomMap.get(grid[theCell.getRows()][theCell.getColumns() - 1].getInitial()).addDoor(theCell);
+				break;
+			case RIGHT:
+				roomMap.get(grid[theCell.getRows()][theCell.getColumns() + 1].getInitial()).addDoor(theCell);
+				break;
+			default:
+				roomMap.get(grid[theCell.getRows() + 1][theCell.getColumns()].getInitial()).addDoor(theCell);
+				break;
+			}
 		}
 	}
 	public void setConfigFiles(String layoutConfigFile, String setupConfigFile) {
@@ -187,21 +207,55 @@ public class Board {
 //			visited.remove(adjCell);
 //		}
 	}
-	public void setAdjacencyList(BoardCell theCell) {
-//		for (int row = -1; row <= 1; row += 2) {
-//			if (theCell.getRows() + row > -1 && theCell.getRows() + row < numRows) {
-//				theCell.addAdjacency(getCell(theCell.getRows() + row, theCell.getColumns()));
-//			}
-//		}
-//		for (int col = -1; col <= 1; col += 2) {
-//			if (theCell.getColumns() + col > -1 && theCell.getColumns() + col < numColumns) {
-//				theCell.addAdjacency(getCell(theCell.getRows(), theCell.getColumns() + col));
-//			}
-//		}
+	private void setAllAdjacencies() {
+		for (int row = 0; row < numRows; row++) {
+			for (int col = 0; col < numColumns; col++) {
+				setAdjacencyList(grid[row][col]);
+			}
+		}
+	}
+	private void setAdjacencyList(BoardCell theCell) {
+		if (theCell.getInitial() == 'W') {
+			for (int row = -1; row <= 1; row += 2) {
+				if (theCell.getRows() + row > -1 && theCell.getRows() + row < numRows && !grid[theCell.getRows() + row][theCell.getColumns()].getOccupied() && grid[theCell.getRows() + row][theCell.getColumns()].getInitial() == 'W') {
+					theCell.addAdjacency(getCell(theCell.getRows() + row, theCell.getColumns()));
+				}
+			}
+			for (int col = -1; col <= 1; col += 2) {
+				if (theCell.getColumns() + col > -1 && theCell.getColumns() + col < numColumns && !grid[theCell.getRows()][theCell.getColumns() + col].getOccupied() && grid[theCell.getRows()][theCell.getColumns() + col].getInitial() == 'W') {
+					theCell.addAdjacency(getCell(theCell.getRows(), theCell.getColumns() + col));
+				}
+			}
+			if (theCell.getDoorDirection() != DoorDirection.NONE) {
+				char theRoom;
+				switch (theCell.getDoorDirection()) {
+				case UP:
+					theRoom = grid[theCell.getRows() - 1][theCell.getColumns()].getInitial();
+					break;
+				case LEFT:
+					theRoom = grid[theCell.getRows()][theCell.getColumns() - 1].getInitial();
+					break;
+				case RIGHT:
+					theRoom = grid[theCell.getRows()][theCell.getColumns() + 1].getInitial();
+					break;
+				default:
+					theRoom = grid[theCell.getRows() + 1][theCell.getColumns()].getInitial();
+					break;
+				}
+				theCell.addAdjacency(roomMap.get(theRoom).getCenterCell());
+			}
+		}
+		else if (theCell.getInitial() != 'X' && roomMap.get(theCell.getInitial()).getCenterCell().equals(theCell)) {
+			for (BoardCell door : roomMap.get(theCell.getInitial()).getDoors()) {
+				theCell.addAdjacency(door);
+			}
+			if (roomMap.get(theCell.getInitial()).getSecretPassage() != null) {
+				theCell.addAdjacency(roomMap.get(theCell.getInitial()).getSecretPassage().getCenterCell());
+			}
+		}
 	}
 	public Set<BoardCell> getAdjList(int row, int col) {
-//		return grid[row][col].getAdjList();
-		return new HashSet<BoardCell>();
+		return grid[row][col].getAdjList();
 	}
 	public Set<BoardCell> getTargets() {
 //		return targets;

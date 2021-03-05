@@ -26,6 +26,7 @@ public class BoardCell {
 		this.roomLabel = roomLabel;
 		this.roomCenter = roomCenter;
 		this.secretPassage = secretPassage;
+		adjList = new HashSet<BoardCell>();
 	}
 	public void addAdjacency(BoardCell adj) {
 		adjList.add(adj);
