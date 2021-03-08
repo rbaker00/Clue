@@ -199,16 +199,6 @@ public class Board {
 				continue;
 			}
 			visited.add(adjCell);
-//			if(thisCell.isRoomCenter()) {
-//				for(BoardCell door : roomMap.get(thisCell.getInitial()).getDoors()) {
-//					if(!door.getOccupied()) {
-//						targets.add(door);
-//					}
-//				}
-//				if(roomMap.get(thisCell.getInitial()).getSecretPassage()!=null) {
-//					targets.add(roomMap.get(thisCell.getSecretPassage()).getCenterCell());
-//				}
-//			}
 			if(numSteps==1 || (adjCell.getInitial()!='W' && adjCell.getInitial()!='X')) {
 				targets.add(adjCell);
 			} else {
