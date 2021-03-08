@@ -252,7 +252,7 @@ public class BoardAdjTargetTest {
 			targets= board.getTargets();
 			assertEquals(3, targets.size());
 			assertTrue(targets.contains(board.getCell(7, 17)));	
-			assertTrue(targets.contains(board.getCell(8, 18)));	
+			assertTrue(targets.contains(board.getCell(6, 18)));	
 			assertTrue(targets.contains(board.getCell(7, 21)));	
 			
 			// check leaving a room with a blocked doorway
