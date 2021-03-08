@@ -204,6 +204,14 @@ public class Board {
 			} else {
 				findAllTargets(adjCell, numSteps-1);
 			}
+			if(thisCell.isRoomCenter()) {
+				for(BoardCell door : roomMap.get(thisCell.getInitial()).getDoors()) {
+					targets.add(door);
+				}
+				if(Character.isLetter(thisCell.getSecretPassage()) ) {
+					targets.add(roomMap.get(thisCell.getSecretPassage()).getCenterCell());
+				}
+			}
 			visited.remove(adjCell);
 		}
 	}
