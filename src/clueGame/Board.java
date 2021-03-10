@@ -35,12 +35,17 @@ public class Board {
 	}
 	//Calls the methods to set up the board from the two config files
 	public void initialize() {
-		loadSetupConfig();
-		loadLayoutConfig();
-		setAllAdjacencies();
+		try {
+			loadSetupConfig();
+			loadLayoutConfig();
+			setAllAdjacencies();
+		}
+		catch (BadConfigFormatException e) {
+			e.printStackTrace();
+		}
 	}
 	//Loads the file that stores all of the rooms and some information about them
-	public void loadSetupConfig() {
+	public void loadSetupConfig() throws BadConfigFormatException {
 		rooms = new ArrayList<Room>();
 		File setup = new File(setupConfigFile);
 	    Scanner myReader;
@@ -54,7 +59,7 @@ public class Board {
 			return;
 		}
 	}
-	private void setupRoomsAndRoomMap(Scanner myReader) {
+	private void setupRoomsAndRoomMap(Scanner myReader) throws BadConfigFormatException {
 		while (myReader.hasNextLine()) {
 			
 		    String[] data = myReader.nextLine().split(", ");
@@ -73,7 +78,7 @@ public class Board {
 		}
 	}
 	//Loads the file that stores the board
-	public void loadLayoutConfig() {
+	public void loadLayoutConfig() throws BadConfigFormatException {
 		File layout = new File(layoutConfigFile);
 		try {
 			Scanner myReader = new Scanner(layout);
@@ -93,7 +98,7 @@ public class Board {
 		}
 		
 	}
-	private void setupGrid(ArrayList<String> lines, String[] theLine) {
+	private void setupGrid(ArrayList<String> lines, String[] theLine) throws BadConfigFormatException {
 		ArrayList<BoardCell> doors = new ArrayList<BoardCell>();
 		for (int row = 0; row < numRows; row++) {
 			if (theLine == null) {
