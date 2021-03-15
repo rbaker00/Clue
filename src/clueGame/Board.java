@@ -220,7 +220,8 @@ public class Board {
 		}
 	}
 	private void setAdjacencyList(BoardCell theCell) {
-		if (theCell.getInitial() == 'W') {
+		char initial = theCell.getInitial();
+		if (initial == 'W') {
 			for (int row = -1; row <= 1; row += 2) {
 				if (theCell.getRows() + row > -1 && theCell.getRows() + row < numRows && !grid[theCell.getRows() + row][theCell.getColumns()].getOccupied() && grid[theCell.getRows() + row][theCell.getColumns()].getInitial() == 'W') {
 					theCell.addAdjacency(getCell(theCell.getRows() + row, theCell.getColumns()));
@@ -250,12 +251,12 @@ public class Board {
 				theCell.addAdjacency(roomMap.get(theRoom).getCenterCell());
 			}
 		}
-		else if (theCell.getInitial() != 'X' && roomMap.get(theCell.getInitial()).getCenterCell().equals(theCell)) {
-			for (BoardCell door : roomMap.get(theCell.getInitial()).getDoors()) {
+		else if (initial != 'X' && roomMap.get(initial).getCenterCell().equals(theCell)) {
+			for (BoardCell door : roomMap.get(initial).getDoors()) {
 				theCell.addAdjacency(door);
 			}
-			if (roomMap.get(theCell.getInitial()).getSecretPassage() != null) {
-				theCell.addAdjacency(roomMap.get(theCell.getInitial()).getSecretPassage().getCenterCell());
+			if (roomMap.get(initial).getSecretPassage() != null) {
+				theCell.addAdjacency(roomMap.get(initial).getSecretPassage().getCenterCell());
 			}
 		}
 	}
