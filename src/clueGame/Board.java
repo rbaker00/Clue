@@ -99,6 +99,7 @@ public class Board {
 		
 	}
 	private void setupGrid(ArrayList<String> lines, String[] theLine) throws BadConfigFormatException {
+		// iterate through all characters in our array list of lines
 		for (int row = 0; row < numRows; row++) {
 			if (theLine == null) {
 				theLine = lines.get(row).split(",");
@@ -119,7 +120,7 @@ public class Board {
 					if(theLine[col].length() > 2) {
 						throw new BadConfigFormatException("Too many characters in Board Cell from layout file");
 					}
-					switch(theLine[col].charAt(1)) { //handles when a cell has some sort of modifier after the initial
+					switch(theLine[col].charAt(1)) { // handles when a cell has some sort of modifier after the initial
 					case '#':
 						roomLabel = true;
 						break;
@@ -139,22 +140,22 @@ public class Board {
 						doorDirection = DoorDirection.DOWN;
 						break;
 					default:
-						secretPassage = theLine[col].charAt(1);
+						secretPassage = theLine[col].charAt(1); // by default we check for a secret passage
 						roomMap.get(initial).setSecretPassage(roomMap.get(secretPassage));
-						if(!roomMap.containsKey(secretPassage)) {
+						if(!roomMap.containsKey(secretPassage)) { // if no secret passage and initial is greater than one character, throw an error
 							throw new BadConfigFormatException("Board layout refers to room that is not in the setup file.");
 						}
 						break;
 					}
 				}
-				else if(theLine[col].length() != 1) {
+				else if(theLine[col].length() != 1) { // initial is empty, throw an error
 					throw new BadConfigFormatException("Empty cell in layout file.");
 				}
-				grid[row][col] = new BoardCell(row, col, initial, doorDirection, roomLabel, roomCenter, secretPassage);
-				if (roomLabel) {
+				grid[row][col] = new BoardCell(row, col, initial, doorDirection, roomLabel, roomCenter, secretPassage); // create cell and set grid
+				if (roomLabel) { // if we read in '#' we have to update the room label
 					roomMap.get(initial).setLabelCell(grid[row][col]);
 				}
-				else if (roomCenter) {
+				else if (roomCenter) { // if we read in '*' we have to update the room center
 					roomMap.get(initial).setCenterCell(grid[row][col]);
 				}
 			}
@@ -209,7 +210,7 @@ public class Board {
 					theCell.addAdjacency(getCell(theCell.getRows() + row, theCell.getColumns())); // add adjacencies of nearby cells
 				}
 			}
-			for (int col = -1; col <= 1; col += 2) { // loook at cells directly to the right and the left of current
+			for (int col = -1; col <= 1; col += 2) { // look at cells directly to the right and the left of current
 				if (theCell.getColumns() + col > -1 && theCell.getColumns() + col < numColumns && !grid[theCell.getRows()][theCell.getColumns() + col].getOccupied() && grid[theCell.getRows()][theCell.getColumns() + col].getInitial() == 'W') {
 					theCell.addAdjacency(getCell(theCell.getRows(), theCell.getColumns() + col)); // add adjacencies of nearby cells
 				}
