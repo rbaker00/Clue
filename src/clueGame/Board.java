@@ -63,7 +63,7 @@ public class Board {
 		while (myReader.hasNextLine()) {
 			
 		    String[] data = myReader.nextLine().split(", ");
-		    if(data.length > 3 && !data[0].substring(0, 2).equals("//")) { //thrown if line is not a comment and is too long
+		    if(data.length != 3 && !data[0].substring(0, 2).equals("//")) { //thrown if line is not a comment and is too long
 		    	myReader.close();
 		    	throw new BadConfigFormatException();
 		    }
@@ -265,7 +265,6 @@ public class Board {
 	}
 	public Set<BoardCell> getTargets() {
 		return targets;
-//		return new HashSet<BoardCell>();
 	}
 	public BoardCell getCell(int row, int col) {
 		return grid[row][col];
