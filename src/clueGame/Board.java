@@ -180,11 +180,11 @@ public class Board {
 	}
 	private void findAllTargets(BoardCell thisCell, int numSteps) {
 		for(BoardCell adjCell : thisCell.getAdjList()) {
-			if(visited.contains(adjCell) || (adjCell.getOccupied() && !adjCell.isRoomCenter())) {
+			if(visited.contains(adjCell) || (adjCell.getOccupied() && !adjCell.isRoomCenter())) { //continues if cell has been visited or cannot be moved through
 				continue;
 			}
 			visited.add(adjCell);
-			if(numSteps==1 || (adjCell.getInitial()!='W' && adjCell.getInitial()!='X')) {
+			if(numSteps==1 || (adjCell.getInitial()!='W' && adjCell.getInitial()!='X')) { //Stops the movement if the number of steps have run out or if the cell is a room
 				targets.add(adjCell);
 			} else {
 				findAllTargets(adjCell, numSteps-1);
