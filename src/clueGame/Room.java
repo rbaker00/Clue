@@ -8,11 +8,9 @@ public class Room {
 	private BoardCell centerCell;
 	private BoardCell labelCell;
 	private Room secretPassage;
-	private ArrayList<BoardCell> doors;
 	
 	public Room() {
 		super();
-		doors = new ArrayList<BoardCell>();
 	}
 	public Room getSecretPassage() {
 		return secretPassage;
@@ -23,7 +21,6 @@ public class Room {
 	public Room(String name) {
 		super();
 		this.name = name;
-		doors = new ArrayList<BoardCell>();
 	}
 	public String getName() {
 		return name;
@@ -39,11 +36,5 @@ public class Room {
 	}
 	public void setLabelCell(BoardCell labelCell) {
 		this.labelCell = labelCell;
-	}
-	public void addDoor (BoardCell door) {
-		doors.add(door);
-	}
-	public ArrayList<BoardCell> getDoors() {
-		return doors;
 	}
 }

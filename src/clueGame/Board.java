@@ -63,7 +63,7 @@ public class Board {
 		while (myReader.hasNextLine()) {
 			
 		    String[] data = myReader.nextLine().split(", ");
-		    if(data.length != 3 && !data[0].substring(0, 2).equals("//")) { //thrown if line is not a comment and is too long
+		    if(data.length != 3 && !data[0].substring(0, 2).equals("//")) { //thrown if line is not a comment and is not the correct size
 		    	myReader.close();
 		    	throw new BadConfigFormatException();
 		    }
@@ -99,7 +99,6 @@ public class Board {
 		
 	}
 	private void setupGrid(ArrayList<String> lines, String[] theLine) throws BadConfigFormatException {
-		ArrayList<BoardCell> doors = new ArrayList<BoardCell>();
 		for (int row = 0; row < numRows; row++) {
 			if (theLine == null) {
 				theLine = lines.get(row).split(",");
@@ -158,27 +157,8 @@ public class Board {
 				else if (roomCenter) {
 					roomMap.get(initial).setCenterCell(grid[row][col]);
 				}
-				else if (doorDirection != DoorDirection.NONE) {
-					doors.add(grid[row][col]);
-				}
 			}
 			theLine = null;
-		}
-		for (BoardCell theCell : doors) {
-			switch (theCell.getDoorDirection()) {
-			case UP:
-				roomMap.get(grid[theCell.getRows() - 1][theCell.getColumns()].getInitial()).addDoor(theCell);
-				break;
-			case LEFT:
-				roomMap.get(grid[theCell.getRows()][theCell.getColumns() - 1].getInitial()).addDoor(theCell);
-				break;
-			case RIGHT:
-				roomMap.get(grid[theCell.getRows()][theCell.getColumns() + 1].getInitial()).addDoor(theCell);
-				break;
-			default:
-				roomMap.get(grid[theCell.getRows() + 1][theCell.getColumns()].getInitial()).addDoor(theCell);
-				break;
-			}
 		}
 	}
 	public void setConfigFiles(String layoutConfigFile, String setupConfigFile) {
@@ -251,15 +231,11 @@ public class Board {
 					break;
 				}
 				theCell.addAdjacency(roomMap.get(theRoom).getCenterCell()); // add adjacency to the room.
+				roomMap.get(theRoom).getCenterCell().addAdjacency(theCell);
 			}
 		}
-		else if (initial != 'X' && roomMap.get(initial).getCenterCell().equals(theCell)) { // handle case if inside the room
-			for (BoardCell door : roomMap.get(initial).getDoors()) {
-				theCell.addAdjacency(door); // add doors to adj.
-			}
-			if (roomMap.get(initial).getSecretPassage() != null) {
-				theCell.addAdjacency(roomMap.get(initial).getSecretPassage().getCenterCell()); // if secret passage available it should be accessible from room center
-			}
+		else if (initial != 'X' && roomMap.get(initial).getCenterCell().equals(theCell) && roomMap.get(initial).getSecretPassage() != null) { // handle case if inside the room
+			theCell.addAdjacency(roomMap.get(initial).getSecretPassage().getCenterCell()); // if secret passage available it should be accessible from room center
 		}
 	}
 	public Set<BoardCell> getAdjList(int row, int col) {
