@@ -219,22 +219,24 @@ public class Board {
 			}
 		}
 	}
+	// look at nearby available cells and determine how to handle them and when to add them to adjacency lists.
 	private void setAdjacencyList(BoardCell theCell) {
+		// find the type of cell we are on.
 		char initial = theCell.getInitial();
-		if (initial == 'W') {
-			for (int row = -1; row <= 1; row += 2) {
+		if (initial == 'W') { // if we are on a walkway
+			for (int row = -1; row <= 1; row += 2) { // look at cells directly above and below current
 				if (theCell.getRows() + row > -1 && theCell.getRows() + row < numRows && !grid[theCell.getRows() + row][theCell.getColumns()].getOccupied() && grid[theCell.getRows() + row][theCell.getColumns()].getInitial() == 'W') {
-					theCell.addAdjacency(getCell(theCell.getRows() + row, theCell.getColumns()));
+					theCell.addAdjacency(getCell(theCell.getRows() + row, theCell.getColumns())); // add adjacencies of nearby cells
 				}
 			}
-			for (int col = -1; col <= 1; col += 2) {
+			for (int col = -1; col <= 1; col += 2) { // loook at cells directly to the right and the left of current
 				if (theCell.getColumns() + col > -1 && theCell.getColumns() + col < numColumns && !grid[theCell.getRows()][theCell.getColumns() + col].getOccupied() && grid[theCell.getRows()][theCell.getColumns() + col].getInitial() == 'W') {
-					theCell.addAdjacency(getCell(theCell.getRows(), theCell.getColumns() + col));
+					theCell.addAdjacency(getCell(theCell.getRows(), theCell.getColumns() + col)); // add adjacencies of nearby cells
 				}
 			}
-			if (theCell.getDoorDirection() != DoorDirection.NONE) {
+			if (theCell.getDoorDirection() != DoorDirection.NONE) { // handle case that our cell is a doorway
 				char theRoom;
-				switch (theCell.getDoorDirection()) {
+				switch (theCell.getDoorDirection()) { // determine what room the door goes into
 				case UP:
 					theRoom = grid[theCell.getRows() - 1][theCell.getColumns()].getInitial();
 					break;
@@ -248,15 +250,15 @@ public class Board {
 					theRoom = grid[theCell.getRows() + 1][theCell.getColumns()].getInitial();
 					break;
 				}
-				theCell.addAdjacency(roomMap.get(theRoom).getCenterCell());
+				theCell.addAdjacency(roomMap.get(theRoom).getCenterCell()); // add adjacency to the room.
 			}
 		}
-		else if (initial != 'X' && roomMap.get(initial).getCenterCell().equals(theCell)) {
+		else if (initial != 'X' && roomMap.get(initial).getCenterCell().equals(theCell)) { // handle case if inside the room
 			for (BoardCell door : roomMap.get(initial).getDoors()) {
-				theCell.addAdjacency(door);
+				theCell.addAdjacency(door); // add doors to adj.
 			}
 			if (roomMap.get(initial).getSecretPassage() != null) {
-				theCell.addAdjacency(roomMap.get(initial).getSecretPassage().getCenterCell());
+				theCell.addAdjacency(roomMap.get(initial).getSecretPassage().getCenterCell()); // if secret passage available it should be accessible from room center
 			}
 		}
 	}
