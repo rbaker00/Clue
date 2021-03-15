@@ -2,7 +2,6 @@ package clueGame;
 
 import java.util.*;
 
-import experiment.TestBoardCell;
 
 import java.io.File;
 import java.io.FileNotFoundException;
