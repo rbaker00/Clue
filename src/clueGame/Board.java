@@ -41,7 +41,7 @@ public class Board {
 			setAllAdjacencies();
 		}
 		catch (BadConfigFormatException e) {
-			e.printStackTrace();
+			System.out.println(e.getMessage());
 		}
 	}
 	//Loads the file that stores all of the rooms and some information about them
