@@ -238,6 +238,9 @@ public class Board {
 			theCell.addAdjacency(roomMap.get(initial).getSecretPassage().getCenterCell()); // if secret passage available it should be accessible from room center
 		}
 	}
+	public void deal() {
+		return;
+	}
 	public Set<BoardCell> getAdjList(int row, int col) {
 		return grid[row][col].getAdjList();
 	}
