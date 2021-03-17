@@ -62,7 +62,7 @@ public class Board {
 		while (myReader.hasNextLine()) {
 			
 		    String[] data = myReader.nextLine().split(", ");
-		    if(data.length != 3 && !data[0].substring(0, 2).equals("//")) { //thrown if line is not a comment and is not the correct size
+		    if(data.length != 3 && !data[0].substring(0, 2).equals("//") && !data[0].equals("Weapon")) { //thrown if line is not a comment and is not the correct size
 		    	myReader.close();
 		    	throw new BadConfigFormatException();
 		    }
@@ -70,7 +70,7 @@ public class Board {
 		        rooms.add(new Room(data[1]));
 		        roomMap.put(data[2].charAt(0), rooms.get(rooms.size()-1));
 		    }
-		    else if (!data[0].substring(0, 2).equals("//")){ //thrown if a line does not contain Room or Space and is not a comment
+		    else if (!data[0].substring(0, 2).equals("//") && !data[0].equals("Weapon") && !data[0].equals("Player")){ //thrown if a line does not contain Room or Space and is not a comment
 		    	myReader.close();
 		    	throw new BadConfigFormatException();
 		    }

@@ -15,7 +15,7 @@ Space, Walkway, W
 Player, Reed Baker, 102 204 0
 Player, Henry Purdum, 0 76 153
 Player, Stephen Strange, 204 204 0
-Player, Hippocrates, 204 255, 153
+Player, Hippocrates, 204 255 153
 Player, Martha Ballard, 178 102 255
 Player, Mary Seacole, 255 0 0
 // Weapon cards

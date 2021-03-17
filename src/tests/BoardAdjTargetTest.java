@@ -22,7 +22,7 @@ public class BoardAdjTargetTest {
 			// Board is singleton, get the only instance
 			board = Board.getInstance();
 			// set the file names to use my config files
-			board.setConfigFiles("board.csv", "Rooms.txt");		
+			board.setConfigFiles("board.csv", "ClueSetup.txt");		
 			// Initialize will load config files 
 			board.initialize();
 		}
