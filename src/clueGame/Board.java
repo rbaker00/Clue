@@ -18,6 +18,8 @@ public class Board {
 	private ArrayList<Room> rooms;
 	Set<BoardCell> targets;
 	Set<BoardCell> visited = new HashSet<BoardCell>();
+	private Player[] players;
+	
 	
 	private Board() {
 		super();
@@ -34,6 +36,7 @@ public class Board {
 	}
 	//Calls the methods to set up the board from the two config files
 	public void initialize() {
+		players = new Player[6];
 		try {
 			loadSetupConfig();
 			loadLayoutConfig();
@@ -249,5 +252,8 @@ public class Board {
 	}
 	public BoardCell getCell(int row, int col) {
 		return grid[row][col];
+	}
+	public Player[] getPlayers() {
+		return new Player[1];
 	}
 }
