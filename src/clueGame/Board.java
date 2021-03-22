@@ -1,8 +1,7 @@
 package clueGame;
 
 import java.util.*;
-
-
+import java.awt.Color;
 import java.io.File;
 import java.io.FileNotFoundException;
 
@@ -50,28 +49,66 @@ public class Board {
 	public void loadSetupConfig() throws BadConfigFormatException {
 		rooms = new ArrayList<Room>();
 		File setup = new File(setupConfigFile);
+		ArrayList<Card> deck = new ArrayList<Card>();
 	    Scanner myReader;
 		try {
 			myReader = new Scanner(setup);
 			roomMap = new HashMap<Character, Room>();
-			setupRoomsAndRoomMap(myReader);
+			setupCards(myReader, deck);
 		    myReader.close();
 		} catch (FileNotFoundException e) {
 			e.printStackTrace();
 			return;
 		}
 	}
-	private void setupRoomsAndRoomMap(Scanner myReader) throws BadConfigFormatException {
+	private void setupCards(Scanner myReader, ArrayList<Card> deck) throws BadConfigFormatException {
 		while (myReader.hasNextLine()) {
-			
 		    String[] data = myReader.nextLine().split(", ");
-		    if(data.length != 3 && !data[0].substring(0, 2).equals("//") && !data[0].equals("Weapon")) { //thrown if line is not a comment and is not the correct size
+		    if(!(data.length == 2 || data.length == 3 || data.length == 5)  && !data[0].substring(0, 2).equals("//") && !data[0].equals("Weapon")) { //thrown if line is not a comment and is not the correct size
 		    	myReader.close();
 		    	throw new BadConfigFormatException();
 		    }
 		    if (data[0].equals("Room") || data[0].equals("Space")) { //puts the data of the room in the appropriate data structures
-		        rooms.add(new Room(data[1]));
+		        if (data.length != 3) {
+		        	myReader.close();
+			    	throw new BadConfigFormatException();
+		        }
+		    	rooms.add(new Room(data[1]));
 		        roomMap.put(data[2].charAt(0), rooms.get(rooms.size()-1));
+		        if (data[0].equals("Room")) {
+		        	deck.add(new Card(data[1], CardType.ROOM));
+		        }
+		    }
+		    else if (data[0].equals("Player")) {
+		    	if (data.length != 5) {
+		        	myReader.close();
+			    	throw new BadConfigFormatException();
+		        }
+		    	String[] color = data[2].split(" ");
+		    	if (color.length != 3) {
+		        	myReader.close();
+			    	throw new BadConfigFormatException();
+		        }
+		    	Color theColor = new Color(Integer.parseInt(color[0]), Integer.parseInt(color[1]), Integer.parseInt(color[0]));
+		    	String[] location = data[3].split(" ");
+		    	if (location.length != 2) {
+		        	myReader.close();
+			    	throw new BadConfigFormatException();
+		        }
+		    	if (data[4] == "Computer") {
+		    		players.add(new ComputerPlayer(data[1], theColor, Integer.parseInt(location[0]), Integer.parseInt(location[1])));
+		    	}
+		    	else if (data[4] == "Human") {
+		    		players.add(new HumanPlayer(data[1], theColor, Integer.parseInt(location[0]), Integer.parseInt(location[1])));
+		    	}
+		    	else {
+		    		myReader.close();
+			    	throw new BadConfigFormatException();
+		    	}
+		    	deck.add(new Card(data[1], CardType.PERSON));
+		    }
+		    else if (data[0].equals("Weapon")) {
+		    	
 		    }
 		    else if (!data[0].substring(0, 2).equals("//") && !data[0].equals("Weapon") && !data[0].equals("Player")){ //thrown if a line does not contain Room or Space and is not a comment
 		    	myReader.close();
