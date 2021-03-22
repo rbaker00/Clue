@@ -95,4 +95,10 @@ public class GameSetupTests {
 		assertEquals(weapons, NUM_WEAPONS-1);
 	}
 	
+	@Test
+	public void testSolution() {
+		assertFalse(board.getSolution().person == null);
+		assertFalse(board.getSolution().room == null);
+		assertFalse(board.getSolution().weapon == null);
+	}
 }
