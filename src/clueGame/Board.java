@@ -49,19 +49,21 @@ public class Board {
 	public void loadSetupConfig() throws BadConfigFormatException {
 		rooms = new ArrayList<Room>();
 		File setup = new File(setupConfigFile);
+		int weapons = 0;
 		ArrayList<Card> deck = new ArrayList<Card>();
 	    Scanner myReader;
 		try {
 			myReader = new Scanner(setup);
 			roomMap = new HashMap<Character, Room>();
-			setupCards(myReader, deck);
+			setupCards(myReader, deck, rooms, players, weapons);
 		    myReader.close();
+		    dealOutDeck(deck);
 		} catch (FileNotFoundException e) {
 			e.printStackTrace();
 			return;
 		}
 	}
-	private void setupCards(Scanner myReader, ArrayList<Card> deck) throws BadConfigFormatException {
+	private void setupCards(Scanner myReader, ArrayList<Card> deck, int weapons) throws BadConfigFormatException {
 		while (myReader.hasNextLine()) {
 		    String[] data = myReader.nextLine().split(", ");
 		    if(!(data.length == 2 || data.length == 3 || data.length == 5)  && !data[0].substring(0, 2).equals("//") && !data[0].equals("Weapon")) { //thrown if line is not a comment and is not the correct size
@@ -115,6 +117,9 @@ public class Board {
 		    	throw new BadConfigFormatException();
 		    }
 		}
+	}
+	private void dealOutDeck(ArrayList<Card> deck) {
+		
 	}
 	//Loads the file that stores the board
 	public void loadLayoutConfig() throws BadConfigFormatException {
@@ -291,7 +296,7 @@ public class Board {
 		return grid[row][col];
 	}
 	public ArrayList<Player> getPlayers() {
-		return new ArrayList<Player>();
+		return players;
 	}
 	public Solution getSolution() {
 		return solution;
