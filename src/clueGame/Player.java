@@ -19,7 +19,7 @@ public abstract class Player {
 		hand = new ArrayList<Card>();
 	}
 	public void updateHand(Card card) {
-		return;
+		hand.add(card);
 	}
 	public ArrayList<Card> getHand() {
 		return hand;

@@ -75,7 +75,7 @@ public class GameSetupTests {
 		int weapons = 0;
 		for (Player person : board.getPlayers()) {
 			assertFalse(person == null);
-			assertFalse(person.getHand().size() != 0);
+			assertFalse(person.getHand().size() == 0);
 			for (Card card : person.getHand()) {
 				switch (card.getType()) {
 				case ROOM:
@@ -90,14 +90,14 @@ public class GameSetupTests {
 				}
 			}
 		}
-		assertEquals(rooms, NUM_ROOMS-1);
-		assertEquals(players, NUM_PLAYERS-1);
-		assertEquals(weapons, NUM_WEAPONS-1);
+		assertEquals(NUM_ROOMS-1, rooms);
+		assertEquals(NUM_PLAYERS-1, players);
+		assertEquals(NUM_WEAPONS-1, weapons);
 	}
 	
 	@Test
 	public void testSolution() {
-		assertFalse(board.getSolution().person == null);
+		assertFalse(board.getSolution().player == null);
 		assertFalse(board.getSolution().room == null);
 		assertFalse(board.getSolution().weapon == null);
 	}

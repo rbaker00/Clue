@@ -55,9 +55,9 @@ public class Board {
 		try {
 			myReader = new Scanner(setup);
 			roomMap = new HashMap<Character, Room>();
-			setupCards(myReader, deck, rooms, players, weapons);
+			setupCards(myReader, deck, weapons);
 		    myReader.close();
-		    dealOutDeck(deck);
+		    dealOutDeck(deck, weapons);
 		} catch (FileNotFoundException e) {
 			e.printStackTrace();
 			return;
@@ -66,14 +66,10 @@ public class Board {
 	private void setupCards(Scanner myReader, ArrayList<Card> deck, int weapons) throws BadConfigFormatException {
 		while (myReader.hasNextLine()) {
 		    String[] data = myReader.nextLine().split(", ");
-		    if(!(data.length == 2 || data.length == 3 || data.length == 5)  && !data[0].substring(0, 2).equals("//") && !data[0].equals("Weapon")) { //thrown if line is not a comment and is not the correct size
-		    	myReader.close();
-		    	throw new BadConfigFormatException();
-		    }
 		    if (data[0].equals("Room") || data[0].equals("Space")) { //puts the data of the room in the appropriate data structures
 		        if (data.length != 3) {
 		        	myReader.close();
-			    	throw new BadConfigFormatException();
+			    	throw new BadConfigFormatException("Room");
 		        }
 		    	rooms.add(new Room(data[1]));
 		        roomMap.put(data[2].charAt(0), rooms.get(rooms.size()-1));
@@ -84,48 +80,98 @@ public class Board {
 		    else if (data[0].equals("Player")) {
 		    	if (data.length != 5) {
 		        	myReader.close();
-			    	throw new BadConfigFormatException();
+			    	throw new BadConfigFormatException("size");
 		        }
 		    	String[] color = data[2].split(" ");
 		    	if (color.length != 3) {
 		        	myReader.close();
-			    	throw new BadConfigFormatException();
+			    	throw new BadConfigFormatException("color");
 		        }
 		    	Color theColor = new Color(Integer.parseInt(color[0]), Integer.parseInt(color[1]), Integer.parseInt(color[0]));
 		    	String[] location = data[3].split(" ");
 		    	if (location.length != 2) {
 		        	myReader.close();
-			    	throw new BadConfigFormatException();
+			    	throw new BadConfigFormatException("location");
 		        }
-		    	if (data[4] == "Computer") {
+		    	if (data[4].equals("Computer")) {
 		    		players.add(new ComputerPlayer(data[1], theColor, Integer.parseInt(location[0]), Integer.parseInt(location[1])));
 		    	}
-		    	else if (data[4] == "Human") {
+		    	else if (data[4].equals("Human")) {
 		    		players.add(new HumanPlayer(data[1], theColor, Integer.parseInt(location[0]), Integer.parseInt(location[1])));
 		    	}
 		    	else {
 		    		myReader.close();
-			    	throw new BadConfigFormatException();
+		    		System.out.println(data[4]);
+			    	throw new BadConfigFormatException("type");
 		    	}
 		    	deck.add(new Card(data[1], CardType.PERSON));
 		    }
 		    else if (data[0].equals("Weapon")) {
 		    	if(data.length != 2) {
 		    		myReader.close();
-		    		throw new BadConfigFormatException();
+		    		throw new BadConfigFormatException("Weapon");
 		    	}
 		    	else {
 		    		deck.add(new Card(data[1], CardType.WEAPON));
+		    		weapons++;
 		    	}
 		    }
 		    else if (!data[0].substring(0, 2).equals("//")) { //thrown if a line does not contain Room or Space and is not a comment
 		    	myReader.close();
-		    	throw new BadConfigFormatException();
+		    	throw new BadConfigFormatException("Comment");
 		    }
 		}
 	}
-	private void dealOutDeck(ArrayList<Card> deck) {
-		
+	private void dealOutDeck(ArrayList<Card> deck, int weapons) {
+		solution = new Solution();
+		int randWeapon = (int)Math.random()*(weapons);
+		int randPlayer = (int)Math.random()*(players.size()-1);
+		int randRoom = (int)Math.random()*(rooms.size()-1);
+		int currWeapon = 0;
+		int currPlayer = 0;
+		int currRoom = 0;
+		Collections.shuffle(deck);
+		int player = 0;
+		boolean isSolution;
+		for (Card card: deck) {
+			isSolution = false;
+			if (solution.weapon == null || solution.player == null || solution.room == null) {
+				switch (card.getType()) {
+				case WEAPON:
+					if (currWeapon == randWeapon) {
+						solution.weapon = card;
+						isSolution = true;
+					} else {
+						currWeapon++;
+					}
+					break;
+				case PERSON:
+					if (currPlayer == randPlayer) {
+						solution.player = card;
+						isSolution = true;
+					} else {
+						currPlayer++;
+					}
+					break;
+				case ROOM:
+					if (currRoom == randRoom) {
+						solution.room = card;
+						isSolution = true;
+					} else {
+						currRoom++;
+					}
+					break;
+				}
+			}
+			if (!isSolution) {
+				System.out.println("hwfebiu");
+				players.get(player).updateHand(card);
+				player++;
+				if (player == players.size()) {
+					player = 0;
+				}
+			}
+		}
 	}
 	//Loads the file that stores the board
 	public void loadLayoutConfig() throws BadConfigFormatException {
