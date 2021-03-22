@@ -108,9 +108,15 @@ public class Board {
 		    	deck.add(new Card(data[1], CardType.PERSON));
 		    }
 		    else if (data[0].equals("Weapon")) {
-		    	
+		    	if(data.length != 2) {
+		    		myReader.close();
+		    		throw new BadConfigFormatException();
+		    	}
+		    	else {
+		    		deck.add(new Card(data[1], CardType.WEAPON));
+		    	}
 		    }
-		    else if (!data[0].substring(0, 2).equals("//") && !data[0].equals("Weapon") && !data[0].equals("Player")){ //thrown if a line does not contain Room or Space and is not a comment
+		    else if (!data[0].substring(0, 2).equals("//")) { //thrown if a line does not contain Room or Space and is not a comment
 		    	myReader.close();
 		    	throw new BadConfigFormatException();
 		    }
