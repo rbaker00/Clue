@@ -19,7 +19,7 @@ public class Board {
 	Set<BoardCell> targets;
 	Set<BoardCell> visited = new HashSet<BoardCell>();
 	private ArrayList<Player> players;
-	
+	private Solution solution;
 	
 	private Board() {
 		super();
@@ -255,5 +255,8 @@ public class Board {
 	}
 	public ArrayList<Player> getPlayers() {
 		return new ArrayList<Player>();
+	}
+	public Solution getSolution() {
+		return solution;
 	}
 }

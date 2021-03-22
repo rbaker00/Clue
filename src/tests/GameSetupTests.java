@@ -75,11 +75,24 @@ public class GameSetupTests {
 		int weapons = 0;
 		for (Player person : board.getPlayers()) {
 			assertFalse(person == null);
+			assertFalse(person.getHand().size() != 0);
 			for (Card card : person.getHand()) {
-				deck.add(card);
+				switch (card.getType()) {
+				case ROOM:
+					rooms++;
+					break;
+				case PERSON:
+					players++;
+					break;
+				case WEAPON:
+					weapons++;
+					break;
+				}
 			}
 		}
-		assertEquals(NUM_ROOMS + NUM_PLAYERS + NUM_WEAPONS - 3, deck.size());
+		assertEquals(rooms, NUM_ROOMS-1);
+		assertEquals(players, NUM_PLAYERS-1);
+		assertEquals(weapons, NUM_WEAPONS-1);
 		
 	}
 }
