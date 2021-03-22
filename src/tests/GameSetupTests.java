@@ -93,6 +93,6 @@ public class GameSetupTests {
 		assertEquals(rooms, NUM_ROOMS-1);
 		assertEquals(players, NUM_PLAYERS-1);
 		assertEquals(weapons, NUM_WEAPONS-1);
-		
 	}
+	
 }
