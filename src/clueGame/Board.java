@@ -57,7 +57,9 @@ public class Board {
 			roomMap = new HashMap<Character, Room>();
 			setupCards(myReader, deck, weapons);
 		    myReader.close();
-		    dealOutDeck(deck, weapons);
+		    if (players.size() != 0) {
+		    	dealOutDeck(deck, weapons);
+		    }
 		} catch (FileNotFoundException e) {
 			e.printStackTrace();
 			return;
