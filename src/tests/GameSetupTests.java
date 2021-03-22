@@ -40,6 +40,7 @@ public class GameSetupTests {
 		assertTrue("Martha Ballard".equals(people.get(4).getName()));
 		assertTrue("Mary Seacole".equals(people.get(5).getName()));
 		
+		assertEquals(new Color(102, 204, 0), new Color(102, 204, 0));
 		assertEquals(new Color(102, 204, 0), people.get(0).getColor());
 		assertEquals(new Color(0, 76, 153), people.get(1).getColor());
 		assertEquals(new Color(204, 204, 0), people.get(2).getColor());

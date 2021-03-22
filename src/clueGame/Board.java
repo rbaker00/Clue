@@ -87,7 +87,7 @@ public class Board {
 		        	myReader.close();
 			    	throw new BadConfigFormatException("color");
 		        }
-		    	Color theColor = new Color(Integer.parseInt(color[0]), Integer.parseInt(color[1]), Integer.parseInt(color[0]));
+		    	Color theColor = new Color(Integer.parseInt(color[0]), Integer.parseInt(color[1]), Integer.parseInt(color[2]));
 		    	String[] location = data[3].split(" ");
 		    	if (location.length != 2) {
 		        	myReader.close();
@@ -138,7 +138,7 @@ public class Board {
 			if (solution.weapon == null || solution.player == null || solution.room == null) {
 				switch (card.getType()) {
 				case WEAPON:
-					if (currWeapon == randWeapon) {
+					if (currWeapon == randWeapon && solution.weapon == null) {
 						solution.weapon = card;
 						isSolution = true;
 					} else {
@@ -146,7 +146,7 @@ public class Board {
 					}
 					break;
 				case PERSON:
-					if (currPlayer == randPlayer) {
+					if (currPlayer == randPlayer && solution.player == null) {
 						solution.player = card;
 						isSolution = true;
 					} else {
@@ -154,7 +154,7 @@ public class Board {
 					}
 					break;
 				case ROOM:
-					if (currRoom == randRoom) {
+					if (currRoom == randRoom && solution.room == null) {
 						solution.room = card;
 						isSolution = true;
 					} else {
@@ -164,7 +164,6 @@ public class Board {
 				}
 			}
 			if (!isSolution) {
-				System.out.println("hwfebiu");
 				players.get(player).updateHand(card);
 				player++;
 				if (player == players.size()) {
