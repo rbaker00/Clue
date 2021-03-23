@@ -21,6 +21,57 @@ public abstract class Player {
 	public void updateHand(Card card) {
 		hand.add(card);
 	}
+	public Card disproveSuggestion(Solution s) {
+		boolean sp = false;
+		boolean sr = false;
+		boolean sw = false;
+		int maxI = -1;
+		for(Card c : hand) {
+			switch(c.getType()) {
+			case PERSON:
+				if(s.player == c) {
+					sp = true;
+				}
+				break;
+			case ROOM:
+				if(s.room == c) {
+					sr = true;
+				}
+				break;
+			case WEAPON:
+				if(s.weapon == c) {
+					sw = true;
+				}
+				break;
+			}
+		}
+		if(sp) {maxI++;}
+		if(sr) {maxI++;}
+		if(sw) {maxI++;}
+		int index = (int) Math.random() * (maxI-0+1);
+		switch(index) {
+		case 0:
+			for(Card c : hand) {
+				if(c.getType() == CardType.PERSON) {
+					return c;
+				}
+			}
+		case 1:
+			for(Card c : hand) {
+				if(c.getType() == CardType.ROOM) {
+					return c;
+				}
+			}
+		case 2:
+			for(Card c : hand) {
+				if(c.getType() == CardType.WEAPON) {
+					return c;
+				}
+			}
+		}
+		
+		return null;
+	}
 	public ArrayList<Card> getHand() {
 		return hand;
 	}
