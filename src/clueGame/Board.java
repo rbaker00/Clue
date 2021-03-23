@@ -360,4 +360,7 @@ public class Board {
 	public Solution getSolution() {
 		return solution;
 	}
+	public void setSolution(Solution solution) {
+		this.solution = solution;
+	}
 }
