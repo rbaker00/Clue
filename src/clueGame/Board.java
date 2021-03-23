@@ -336,6 +336,12 @@ public class Board {
 			theCell.addAdjacency(roomMap.get(initial).getSecretPassage().getCenterCell()); // if secret passage available it should be accessible from room center
 		}
 	}
+	public boolean checkAccusation(Solution accusation) {
+		return false;
+	}
+	public Card handleSuggestion (Card suggestion) {
+		return null;
+	}
 	public void deal() {
 		return;
 	}
