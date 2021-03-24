@@ -12,12 +12,13 @@ public class BoardCell {
 	private char secretPassage;
 	private Set<BoardCell> adjList;
 	private boolean isOccupied = false;
+	private String roomName;
 	
 	public BoardCell() {
 		super();
 	}
 	
-	public BoardCell(int row, int col, char initial, DoorDirection doorDirection, boolean roomLabel, boolean roomCenter, char secretPassage) {
+	public BoardCell(int row, int col, char initial, DoorDirection doorDirection, boolean roomLabel, boolean roomCenter, char secretPassage, String roomName) {
 		super();
 		this.row = row;
 		this.col = col;
@@ -26,6 +27,7 @@ public class BoardCell {
 		this.roomLabel = roomLabel;
 		this.roomCenter = roomCenter;
 		this.secretPassage = secretPassage;
+		this.roomName = roomName;
 		adjList = new HashSet<BoardCell>();
 	}
 	public void addAdjacency(BoardCell adj) {
@@ -39,6 +41,9 @@ public class BoardCell {
 	}
 	public char getInitial() {
 		return initial;
+	}
+	public String getRoomName() {
+		return roomName;
 	}
 	public DoorDirection getDoorDirection() {
 		return doorDirection;

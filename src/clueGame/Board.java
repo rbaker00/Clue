@@ -19,9 +19,6 @@ public class Board {
 	Set<BoardCell> visited = new HashSet<BoardCell>();
 	private ArrayList<Player> players;
 	private Solution solution;
-	private ArrayList<Card> playerCards = new ArrayList<Card>();
-	private ArrayList<Card> roomCards = new ArrayList<Card>();
-	private ArrayList<Card> weaponCards = new ArrayList<Card>();
 	
 	private Board() {
 		super();
@@ -69,6 +66,9 @@ public class Board {
 		}
 	}
 	private void setupCards(Scanner myReader, ArrayList<Card> deck, int weapons) throws BadConfigFormatException {
+		ArrayList<Card> playerCards = new ArrayList<Card>();
+		ArrayList<Card> roomCards = new ArrayList<Card>();
+		ArrayList<Card> weaponCards = new ArrayList<Card>();
 		while (myReader.hasNextLine()) {
 		    String[] data = myReader.nextLine().split(", ");
 		    if (data[0].equals("Room") || data[0].equals("Space")) { //puts the data of the room in the appropriate data structures
@@ -80,7 +80,6 @@ public class Board {
 		        roomMap.put(data[2].charAt(0), rooms.get(rooms.size()-1));
 		        if (data[0].equals("Room")) {
 		        	Card roomCard = new Card(data[1], CardType.ROOM);
-		        	deck.add(roomCard);
 		        	roomCards.add(roomCard);
 		        }
 		    }
@@ -112,7 +111,6 @@ public class Board {
 			    	throw new BadConfigFormatException("type");
 		    	}
 		    	Card personCard = new Card(data[1], CardType.PERSON);
-		    	deck.add(personCard);
 		    	playerCards.add(personCard);
 		    }
 		    else if (data[0].equals("Weapon")) {
@@ -122,7 +120,6 @@ public class Board {
 		    	}
 		    	else {
 		    		Card weaponCard = new Card(data[1], CardType.WEAPON);
-		    		deck.add(weaponCard);
 		    		weaponCards.add(weaponCard);
 		    		weapons++;
 		    	}
@@ -132,6 +129,12 @@ public class Board {
 		    	throw new BadConfigFormatException("Comment");
 		    }
 		}
+		if (players.size() != 0) {
+			players.get(0).setDeck(playerCards, roomCards, weaponCards);
+		}
+		deck.addAll(playerCards);
+		deck.addAll(roomCards);
+		deck.addAll(weaponCards);
 	}
 	private void dealOutDeck(ArrayList<Card> deck, int weapons) {
 		solution = new Solution();
@@ -257,7 +260,7 @@ public class Board {
 				else if(theLine[col].length() != 1) { // initial is empty, throw an error
 					throw new BadConfigFormatException("Empty cell in layout file.");
 				}
-				grid[row][col] = new BoardCell(row, col, initial, doorDirection, roomLabel, roomCenter, secretPassage); // create cell and set grid
+				grid[row][col] = new BoardCell(row, col, initial, doorDirection, roomLabel, roomCenter, secretPassage, roomMap.get(initial).getName()); // create cell and set grid
 				if (roomLabel) { // if we read in '#' we have to update the room label
 					roomMap.get(initial).setLabelCell(grid[row][col]);
 				}
@@ -344,15 +347,6 @@ public class Board {
 		else if (initial != 'X' && roomMap.get(initial).getCenterCell().equals(theCell) && roomMap.get(initial).getSecretPassage() != null) { // handle case if inside the room
 			theCell.addAdjacency(roomMap.get(initial).getSecretPassage().getCenterCell()); // if secret passage available it should be accessible from room center
 		}
-	}
-	public ArrayList<Card> getPlayerCards() {
-		return playerCards;
-	}
-	public ArrayList<Card> getRoomCards() {
-		return roomCards;
-	}
-	public ArrayList<Card> getWeaponCards() {
-		return weaponCards;
 	}
 	public boolean checkAccusation(Solution accusation) {
 		return solution.equals(accusation);
