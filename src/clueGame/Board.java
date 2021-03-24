@@ -19,6 +19,9 @@ public class Board {
 	Set<BoardCell> visited = new HashSet<BoardCell>();
 	private ArrayList<Player> players;
 	private Solution solution;
+	private ArrayList<Card> playerCards = new ArrayList<Card>();
+	private ArrayList<Card> roomCards = new ArrayList<Card>();
+	private ArrayList<Card> weaponCards = new ArrayList<Card>();
 	
 	private Board() {
 		super();
@@ -76,7 +79,9 @@ public class Board {
 		    	rooms.add(new Room(data[1]));
 		        roomMap.put(data[2].charAt(0), rooms.get(rooms.size()-1));
 		        if (data[0].equals("Room")) {
-		        	deck.add(new Card(data[1], CardType.ROOM));
+		        	Card roomCard = new Card(data[1], CardType.ROOM);
+		        	deck.add(roomCard);
+		        	roomCards.add(roomCard);
 		        }
 		    }
 		    else if (data[0].equals("Player")) {
@@ -106,7 +111,9 @@ public class Board {
 		    		System.out.println(data[4]);
 			    	throw new BadConfigFormatException("type");
 		    	}
-		    	deck.add(new Card(data[1], CardType.PERSON));
+		    	Card personCard = new Card(data[1], CardType.PERSON);
+		    	deck.add(personCard);
+		    	playerCards.add(personCard);
 		    }
 		    else if (data[0].equals("Weapon")) {
 		    	if(data.length != 2) {
@@ -114,7 +121,9 @@ public class Board {
 		    		throw new BadConfigFormatException("Weapon");
 		    	}
 		    	else {
-		    		deck.add(new Card(data[1], CardType.WEAPON));
+		    		Card weaponCard = new Card(data[1], CardType.WEAPON);
+		    		deck.add(weaponCard);
+		    		weaponCards.add(weaponCard);
 		    		weapons++;
 		    	}
 		    }
@@ -335,6 +344,15 @@ public class Board {
 		else if (initial != 'X' && roomMap.get(initial).getCenterCell().equals(theCell) && roomMap.get(initial).getSecretPassage() != null) { // handle case if inside the room
 			theCell.addAdjacency(roomMap.get(initial).getSecretPassage().getCenterCell()); // if secret passage available it should be accessible from room center
 		}
+	}
+	public ArrayList<Card> getPlayerCards() {
+		return playerCards;
+	}
+	public ArrayList<Card> getRoomCards() {
+		return roomCards;
+	}
+	public ArrayList<Card> getWeaponCards() {
+		return weaponCards;
 	}
 	public boolean checkAccusation(Solution accusation) {
 		return false;
