@@ -6,6 +6,8 @@ import org.junit.jupiter.api.BeforeAll;
 import clueGame.Board;
 import clueGame.Card;
 import clueGame.CardType;
+import clueGame.ComputerPlayer;
+import clueGame.Player;
 
 public class ComputerAITest {
 	public static Card reedCard = new Card("Reed", CardType.PERSON);
@@ -42,6 +44,10 @@ public class ComputerAITest {
 	
 	@Test
 	public static void testCreateSuggestion() {
-		
+		for(Player p : board.getPlayers()) {
+			if(p.getClass() == ComputerPlayer.class) {
+				p.createSuggestion();
+			}
+		}
 	}
 }
