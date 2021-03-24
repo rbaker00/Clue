@@ -56,8 +56,6 @@ public class ComputerAITest {
 	
 	@Test
 	public void testSelectTargets() {
-<<<<<<< HEAD
-=======
 		ComputerPlayer player = new ComputerPlayer("Bob", Color.black, 0, 0);
 		Set<BoardCell> targets = new HashSet<BoardCell>();
 		targets.add(new BoardCell(0, 0, 'T', DoorDirection.NONE, false, false, ' ', "Test"));
@@ -74,7 +72,6 @@ public class ComputerAITest {
 		player.updateSeen(new Card("Bedroom", CardType.ROOM));
 		target = player.selectTargets(targets);
 		assertTrue(targets.contains(target));
->>>>>>> 698ed494ff4785776d017e96d9d7db8d2c34e2bc
 		
 		targets.clear();
 		targets.add(new BoardCell(0, 0, 'T', DoorDirection.NONE, false, true, ' ', "Bedroom"));
