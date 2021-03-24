@@ -10,7 +10,6 @@ public class ComputerPlayer extends Player {
 	}
 	public Solution createSuggestion(Room currentRoom) {
 		ArrayList<Card> randomPlayers = new ArrayList<Card>();
-		ArrayList<Card> randomRooms = new ArrayList<Card>();
 		ArrayList<Card> randomWeapons = new ArrayList<Card>();
 		Solution suggestion = new Solution();
 		for (Card c : getPlayerCards()) {
