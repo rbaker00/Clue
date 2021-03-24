@@ -46,7 +46,7 @@ public class ComputerAITest {
 	public static void testCreateSuggestion() {
 		for(Player p : board.getPlayers()) {
 			if(p.getClass() == ComputerPlayer.class) {
-				p.createSuggestion();
+				((ComputerPlayer) p).createSuggestion();
 			}
 		}
 	}

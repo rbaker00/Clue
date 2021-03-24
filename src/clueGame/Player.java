@@ -11,6 +11,7 @@ public abstract class Player {
 	private int column;
 	private ArrayList<Card> hand;
 	private ArrayList<Card> seen;
+	private Solution suggestion;
 	Player(String name, Color color, int row, int col) {
 		super();
 		this.name = name;
