@@ -4,6 +4,7 @@ import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertTrue;
 
 import java.awt.Color;
@@ -75,7 +76,7 @@ public class GameSetupTests {
 		int players = 0;
 		int weapons = 0;
 		for (Player person : board.getPlayers()) {
-			assertFalse(person == null);
+			assertNotNull(person);
 			assertFalse(person.getHand().size() == 0);
 			for (Card card : person.getHand()) {
 				switch (card.getType()) {
@@ -98,8 +99,8 @@ public class GameSetupTests {
 	
 	@Test
 	public void testSolution() {
-		assertFalse(board.getSolution().player == null);
-		assertFalse(board.getSolution().room == null);
-		assertFalse(board.getSolution().weapon == null);
+		assertNotNull(board.getSolution().player);
+		assertNotNull(board.getSolution().room);
+		assertNotNull(board.getSolution().weapon);
 	}
 }

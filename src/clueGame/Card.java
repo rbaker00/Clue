@@ -9,9 +9,15 @@ public class Card {
 		this.type = type;
 	}
 	public boolean equals(Card target) {
-		return cardName == target.cardName && type == target.type;
+		if (target == null) {
+			return false;
+		}
+		return cardName.equals(target.cardName) && type.equals(target.type);
 	}
 	public CardType getType() {
 		return type;
+	}
+	public String getName() {
+		return cardName;
 	}
 }

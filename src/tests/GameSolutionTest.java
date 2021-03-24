@@ -4,6 +4,7 @@ import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertNull;
 import static org.junit.Assert.assertTrue;
 
 import java.awt.Color;
@@ -99,17 +100,17 @@ public class GameSolutionTest {
 		suggestion.weapon = gunCard;
 		assertEquals(reedCard, players.get(0).disproveSuggestion(suggestion));
 		Card dissprove = players.get(2).disproveSuggestion(suggestion);
-		assertTrue(gunCard.equals(dissprove) || bedroomCard.equals(dissprove));
-		assertEquals(null, players.get(3).disproveSuggestion(suggestion));
+		assertTrue(gunCard.equals(dissprove) || livingCard.equals(dissprove));
+		assertNull(players.get(3).disproveSuggestion(suggestion));
 		
 		
 		suggestion.player = steveCard;
 		suggestion.room = bedroomCard;
 		suggestion.weapon = pillowCard;
-		assertEquals(null, board.handleSuggestion(suggestion, players.get(0)));
+		assertNull(board.handleSuggestion(suggestion, players.get(0)));
 		
 		suggestion.player = reedCard;
-		assertEquals(null, board.handleSuggestion(suggestion, players.get(0)));
+		assertNull(board.handleSuggestion(suggestion, players.get(0)));
 		assertEquals(reedCard, board.handleSuggestion(suggestion, players.get(1)));
 		
 		suggestion.room = kitchenCard;

@@ -135,9 +135,9 @@ public class Board {
 	}
 	private void dealOutDeck(ArrayList<Card> deck, int weapons) {
 		solution = new Solution();
-		int randWeapon = (int)Math.random()*(weapons);
-		int randPlayer = (int)Math.random()*(players.size());
-		int randRoom = (int)Math.random()*(rooms.size());
+		int randWeapon = (int)(Math.random()*(weapons));
+		int randPlayer = (int)(Math.random()*(players.size()));
+		int randRoom = (int)(Math.random()*(rooms.size()));
 		int currWeapon = 0;
 		int currPlayer = 0;
 		int currRoom = 0;
@@ -355,9 +355,15 @@ public class Board {
 		return weaponCards;
 	}
 	public boolean checkAccusation(Solution accusation) {
-		return false;
+		return solution.equals(accusation);
 	}
 	public Card handleSuggestion (Solution suggestion, Player accuser) {
+		for (Player player : players) {
+			Card dispute = player.disproveSuggestion(suggestion);
+			if (dispute != null && !player.equals(accuser)) {
+				return dispute;
+			}
+		}
 		return null;
 	}
 	public void deal() {

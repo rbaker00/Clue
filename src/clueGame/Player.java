@@ -27,13 +27,13 @@ public abstract class Player {
 	public Card disproveSuggestion(Solution s) {
 		ArrayList<Card> match = new ArrayList<Card>();
 		for(Card c : hand) {
-			if(c == s.player) {
+			if(c.equals(s.player)) {
 				match.add(c);
 			}
-			if(c == s.room) {
+			if(c.equals(s.room)) {
 				match.add(c);
 			}
-			if(c == s.weapon) {
+			if(c.equals(s.weapon)) {
 				match.add(c);
 			}
 		}
@@ -41,16 +41,12 @@ public abstract class Player {
 			return match.get(0);
 		}
 		else if(match.size() > 1) {
-			int index = (int) Math.random() * (match.size());
-			return match.get(index);
+			return match.get((int)(Math.random() * match.size()));
 		}
 		else {return null;}
 	}
 	public void updateSeen(Card seenCard) {
-		if(seen.contains(seenCard)) {
-			return;
-		}
-		else {
+		if(!seen.contains(seenCard)) {
 			seen.add(seenCard);
 		}
 	}
@@ -68,5 +64,11 @@ public abstract class Player {
 	}
 	public int getCol() {
 		return column;
+	}
+	public boolean equals(Player target) {
+		if (target == null) {
+			return false;
+		}
+		return name.equals(target.name);
 	}
 }
