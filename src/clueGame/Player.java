@@ -24,54 +24,26 @@ public abstract class Player {
 		hand.add(card);
 	}
 	public Card disproveSuggestion(Solution s) {
-		boolean sp = false;
-		boolean sr = false;
-		boolean sw = false;
-		int maxI = -1;
+		ArrayList<Card> match = new ArrayList<Card>();
 		for(Card c : hand) {
-			switch(c.getType()) {
-			case PERSON:
-				if(s.player == c) {
-					sp = true;
-				}
-				break;
-			case ROOM:
-				if(s.room == c) {
-					sr = true;
-				}
-				break;
-			case WEAPON:
-				if(s.weapon == c) {
-					sw = true;
-				}
-				break;
+			if(c == s.player) {
+				match.add(c);
+			}
+			if(c == s.room) {
+				match.add(c);
+			}
+			if(c == s.weapon) {
+				match.add(c);
 			}
 		}
-		if(sp) {maxI++;}
-		if(sr) {maxI++;}
-		if(sw) {maxI++;}
-		int index = (int) Math.random() * (maxI-0+1);
-		switch(index) {
-		case 0:
-			for(Card c : hand) {
-				if(c.getType() == CardType.PERSON) {
-					return c;
-				}
-			}
-		case 1:
-			for(Card c : hand) {
-				if(c.getType() == CardType.ROOM) {
-					return c;
-				}
-			}
-		case 2:
-			for(Card c : hand) {
-				if(c.getType() == CardType.WEAPON) {
-					return c;
-				}
-			}
+		if(match.size() == 1) {
+			return match.get(0);
 		}
-		return null;
+		else if(match.size() > 1) {
+			int index = (int) Math.random() * (match.size());
+			return match.get(index);
+		}
+		else {return null;}
 	}
 	public void updateSeen(Card seenCard) {
 		if(seen.contains(seenCard)) {
