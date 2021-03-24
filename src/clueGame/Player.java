@@ -12,9 +12,9 @@ public abstract class Player {
 	private ArrayList<Card> hand;
 	private ArrayList<Card> seen;
 	private Solution suggestion;
-	private ArrayList<Card> playerCards = new ArrayList<Card>();
-	private ArrayList<Card> roomCards = new ArrayList<Card>();
-	private ArrayList<Card> weaponCards = new ArrayList<Card>();
+	private static ArrayList<Card> playerCards = new ArrayList<Card>();
+	private static ArrayList<Card> roomCards = new ArrayList<Card>();
+	private static ArrayList<Card> weaponCards = new ArrayList<Card>();
 	Player(String name, Color color, int row, int col) {
 		super();
 		this.name = name;
