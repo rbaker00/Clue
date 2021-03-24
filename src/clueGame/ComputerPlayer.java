@@ -36,6 +36,7 @@ public class ComputerPlayer extends Player {
 		int index = 0;
 		int rand = (int)(Math.random()*targets.size());
 		BoardCell randBoardCell = null;
+		ArrayList<BoardCell> rooms = new ArrayList<BoardCell>();
 		for (BoardCell b : targets) {
 			if (b.isRoomCenter()) {
 				boolean seen = false;
@@ -46,13 +47,16 @@ public class ComputerPlayer extends Player {
 					}
 				}
 				if (!seen) {
-					return b;
+					rooms.add(b);
 				}
 			}
 			if (index == rand) {
 				randBoardCell = b;
 			}
 			index++;
+		}
+		if (!rooms.isEmpty()) {
+			randBoardCell = rooms.get((int)(Math.random()*rooms.size()));
 		}
 		return randBoardCell;
 	}
