@@ -10,6 +10,7 @@ public abstract class Player {
 	private int row;
 	private int column;
 	private ArrayList<Card> hand;
+	private ArrayList<Card> seen;
 	Player(String name, Color color, int row, int col) {
 		super();
 		this.name = name;
@@ -17,6 +18,7 @@ public abstract class Player {
 		this.row = row;
 		this.column = col;
 		hand = new ArrayList<Card>();
+		seen = new ArrayList<Card>();
 	}
 	public void updateHand(Card card) {
 		hand.add(card);
@@ -69,8 +71,15 @@ public abstract class Player {
 				}
 			}
 		}
-		
 		return null;
+	}
+	public void updateSeen(Card seenCard) {
+		if(seen.contains(seenCard)) {
+			return;
+		}
+		else {
+			seen.add(seenCard);
+		}
 	}
 	public ArrayList<Card> getHand() {
 		return hand;
