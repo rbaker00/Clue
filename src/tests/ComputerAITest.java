@@ -12,6 +12,8 @@ import clueGame.Card;
 import clueGame.CardType;
 import clueGame.ComputerPlayer;
 import clueGame.Player;
+import clueGame.Room;
+import clueGame.Solution;
 
 public class ComputerAITest {
 	public static Card reedCard = new Card("Reed", CardType.PERSON);
@@ -55,6 +57,9 @@ public class ComputerAITest {
 		players.add(new ComputerPlayer("Steve", Color.black, 0, 0));
 		players.add(new ComputerPlayer("Rob", Color.black, 0, 0));
 		board.setPlayers(players);
-		
+		Room bedroom = new Room("Bedroom");
+		for(Player p : board.getPlayers()) {
+			assertEquals(p.createSuggestion(), new Solution(player, room, weapon));
+		}
 	}
 }
