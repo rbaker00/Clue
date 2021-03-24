@@ -6,6 +6,9 @@ import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
 
+import java.awt.Color;
+import java.util.ArrayList;
+
 import clueGame.Board;
 import clueGame.Card;
 import clueGame.CardType;
@@ -17,7 +20,7 @@ import clueGame.Solution;
 public class GameSolutionTest {
 	public static Card reedCard = new Card("Reed", CardType.PERSON);
 	public static Card henryCard = new Card("Henry", CardType.PERSON);
-	public static Card steveCard = new Card("steve", CardType.PERSON);
+	public static Card steveCard = new Card("Steve", CardType.PERSON);
 	public static Card robCard = new Card("Rob", CardType.PERSON);
 	
 	public static Card bedroomCard = new Card("Bedroom", CardType.ROOM);
@@ -39,7 +42,13 @@ public class GameSolutionTest {
 		// set the file names to use my config files
 		board.setConfigFiles("board.csv", "ClueSetup.txt");		
 		// Initialize will load config files 
-		board.initialize();
+		//board.initialize();
+		ArrayList<Player> players = new ArrayList<Player>();
+		players.add(new ComputerPlayer("Reed", Color.black, 0, 0));
+		players.add(new ComputerPlayer("Henry", Color.black, 0, 0));
+		players.add(new ComputerPlayer("Steve", Color.black, 0, 0));
+		players.add(new ComputerPlayer("Rob", Color.black, 0, 0));
+		board.setPlayers(players);
 	}
 	
 	@Test
@@ -66,5 +75,10 @@ public class GameSolutionTest {
 		theAccusation.room = bedroomCard;
 		theAccusation.weapon = knifeCard;
 		assertFalse(board.checkAccusation(theAccusation));
+	}
+	
+	@Test
+	public void testSuggestion() {
+		
 	}
 }
