@@ -64,15 +64,19 @@ public class GameSolutionTest {
 		theAccusation.weapon = gunCard;
 		board.setSolution(theSolution);
 		
+		//Tests that the accusation is a correct accusation
 		assertTrue(board.checkAccusation(theAccusation));
 		
+		//Tests that the accusation is false when the player card is wrong
 		theAccusation.player = henryCard;
 		assertFalse(board.checkAccusation(theAccusation));
 		
+		//Tests that the accusation is false when the room card is wrong
 		theAccusation.player = reedCard;
 		theAccusation.room = kitchenCard;
 		assertFalse(board.checkAccusation(theAccusation));
 		
+		//Tests that the accusation is false when the weapon card is wrong
 		theAccusation.room = bedroomCard;
 		theAccusation.weapon = knifeCard;
 		assertFalse(board.checkAccusation(theAccusation));
@@ -94,6 +98,7 @@ public class GameSolutionTest {
 		players.get(3).updateHand(carCard);
 //		players.get(3).updateHand(pillowCard);
 		
+		//Tests that a player will disapprove a suggestion if they have a corresponding card
 		Solution suggestion = new Solution();
 		suggestion.player = reedCard;
 		suggestion.room = livingCard;
@@ -103,16 +108,18 @@ public class GameSolutionTest {
 		assertTrue(gunCard.equals(dissprove) || livingCard.equals(dissprove));
 		assertNull(players.get(3).disproveSuggestion(suggestion));
 		
-		
+		//Tests that null is returned when no one has a corresponding card
 		suggestion.player = steveCard;
 		suggestion.room = bedroomCard;
 		suggestion.weapon = pillowCard;
 		assertNull(board.handleSuggestion(suggestion, players.get(0)));
 		
+		//Tests that null is returned when only the accuser has a corresponding card
 		suggestion.player = reedCard;
 		assertNull(board.handleSuggestion(suggestion, players.get(0)));
 		assertEquals(reedCard, board.handleSuggestion(suggestion, players.get(1)));
 		
+		//Tests that the first player's card is the one that is returned
 		suggestion.room = kitchenCard;
 		assertEquals(reedCard, board.handleSuggestion(suggestion, players.get(2)));
 	}

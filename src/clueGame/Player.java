@@ -28,9 +28,10 @@ public abstract class Player {
 		hand.add(card);
 		this.updateSeen(card);
 	}
+	//Returns a card that matches a card in the Solution parameter
 	public Card disproveSuggestion(Solution s) {
 		ArrayList<Card> match = new ArrayList<Card>();
-		for(Card c : hand) {
+		for(Card c : hand) { //searches for matching cards
 			if(c.equals(s.player)) {
 				match.add(c);
 			}
@@ -41,14 +42,15 @@ public abstract class Player {
 				match.add(c);
 			}
 		}
-		if(match.size() == 1) {
+		if(match.size() == 1) { //returns the single match
 			return match.get(0);
 		}
-		else if(match.size() > 1) {
+		else if(match.size() > 1) { //returns a random match
 			return match.get((int)(Math.random() * match.size()));
 		}
 		else {return null;}
 	}
+	//adds a card to the seen list if it doesn't exist there already
 	public void updateSeen(Card seenCard) {
 		if(!seen.contains(seenCard)) {
 			seen.add(seenCard);
@@ -81,10 +83,10 @@ public abstract class Player {
 		}
 		return name.equals(target.name);
 	}
-	public void setDeck(ArrayList<Card> playerCards, ArrayList<Card> roomCards, ArrayList<Card> weaponCards) {
-		this.playerCards = playerCards;
-		this.roomCards = roomCards;
-		this.weaponCards = weaponCards;
+	public static void setDeck(ArrayList<Card> playerCards, ArrayList<Card> roomCards, ArrayList<Card> weaponCards) {
+		Player.playerCards = playerCards;
+		Player.roomCards = roomCards;
+		Player.weaponCards = weaponCards;
 	}
 	public ArrayList<Card> getPlayerCards() {
 		return playerCards;

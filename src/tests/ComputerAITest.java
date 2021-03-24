@@ -47,21 +47,26 @@ public class ComputerAITest {
 	public void testSelectTargets() {
 		ComputerPlayer player = new ComputerPlayer("Bob", Color.black, 0, 0);
 		Set<BoardCell> targets = new HashSet<BoardCell>();
+		
+		//Tests that the player chooses a target
 		targets.add(new BoardCell(0, 0, 'T', DoorDirection.NONE, false, false, ' ', "Test"));
 		targets.add(new BoardCell(0, 0, 'T', DoorDirection.NONE, false, false, ' ', "Test"));
 		targets.add(new BoardCell(0, 0, 'T', DoorDirection.NONE, false, false, ' ', "Test"));
 		BoardCell target = player.selectTargets(targets);
 		assertTrue(targets.contains(target));
 		
+		//Tests that the player chooses an unseen room
 		targets.add(new BoardCell(0, 0, 'T', DoorDirection.NONE, false, true, ' ', "Bedroom"));
 		target = player.selectTargets(targets);
 		assertTrue(targets.contains(target));
 		assertEquals("Bedroom", target.getRoomName());
 		
+		//Tests that the player chooses a random location when a room has been seen
 		player.updateSeen(new Card("Bedroom", CardType.ROOM));
 		target = player.selectTargets(targets);
 		assertTrue(targets.contains(target));
 		
+		//Tests that the player still chooses a room if it has been seen
 		targets.clear();
 		targets.add(new BoardCell(0, 0, 'T', DoorDirection.NONE, false, true, ' ', "Bedroom"));
 		target = player.selectTargets(targets);
@@ -112,6 +117,7 @@ public class ComputerAITest {
 		cp4.updateHand(pillowCard);
 		cp4.setDeck(players, rooms, weapons);
 		
+<<<<<<< HEAD
 		cp1.createSuggestion(bathroom);
 		cp2.createSuggestion(bedroom);
 		cp3.createSuggestion(kitchen);
@@ -121,5 +127,11 @@ public class ComputerAITest {
 		assertEquals(cp3.getSuggestion().room, kitchenCard);
 		assertEquals(cp4.getSuggestion().room, livingCard);
 		
+=======
+		assertEquals(cp1.createSuggestion(bathroom).room, bathroomCard);
+		assertEquals(cp2.createSuggestion(bedroom).room, bedroomCard);
+		assertEquals(cp3.createSuggestion(kitchen).room, kitchenCard);
+		assertEquals(cp4.createSuggestion(living).room, livingCard);
+>>>>>>> b72689b7f1654c0333db406a5e5a69fc6142a773
 	}
 }

@@ -129,60 +129,30 @@ public class Board {
 		    	throw new BadConfigFormatException("Comment");
 		    }
 		}
-		if (players.size() != 0) {
-			players.get(0).setDeck(playerCards, roomCards, weaponCards);
-		}
+		Player.setDeck(playerCards, roomCards, weaponCards);
+		solution = new Solution();
+		int rand = (int)(Math.random()*(playerCards.size()));
+		solution.player = playerCards.get(rand);
+		playerCards.remove(rand);
+		rand = (int)(Math.random()*(roomCards.size()));
+		solution.room = roomCards.get(rand);
+		roomCards.remove(rand);
+		rand = (int)(Math.random()*(weaponCards.size()));
+		solution.room = weaponCards.get(rand);
+		weaponCards.remove(rand);
 		deck.addAll(playerCards);
 		deck.addAll(roomCards);
 		deck.addAll(weaponCards);
 	}
+	//Deals out all the deck withhout the solution to 
 	private void dealOutDeck(ArrayList<Card> deck, int weapons) {
-		solution = new Solution();
-		int randWeapon = (int)(Math.random()*(weapons));
-		int randPlayer = (int)(Math.random()*(players.size()));
-		int randRoom = (int)(Math.random()*(rooms.size()));
-		int currWeapon = 0;
-		int currPlayer = 0;
-		int currRoom = 0;
 		Collections.shuffle(deck);
 		int player = 0;
-		boolean isSolution;
 		for (Card card: deck) {
-			isSolution = false;
-			if (solution.weapon == null || solution.player == null || solution.room == null) {
-				switch (card.getType()) {
-				case WEAPON:
-					if (currWeapon == randWeapon && solution.weapon == null) {
-						solution.weapon = card;
-						isSolution = true;
-					} else {
-						currWeapon++;
-					}
-					break;
-				case PERSON:
-					if (currPlayer == randPlayer && solution.player == null) {
-						solution.player = card;
-						isSolution = true;
-					} else {
-						currPlayer++;
-					}
-					break;
-				case ROOM:
-					if (currRoom == randRoom && solution.room == null) {
-						solution.room = card;
-						isSolution = true;
-					} else {
-						currRoom++;
-					}
-					break;
-				}
-			}
-			if (!isSolution) {
-				players.get(player).updateHand(card);
-				player++;
-				if (player == players.size()) {
-					player = 0;
-				}
+			players.get(player).updateHand(card);
+			player++;
+			if (player == players.size()) {
+				player = 0;
 			}
 		}
 	}

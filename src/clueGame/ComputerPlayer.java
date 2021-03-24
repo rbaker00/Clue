@@ -8,6 +8,7 @@ public class ComputerPlayer extends Player {
 	public ComputerPlayer(String name, Color color, int row, int col) {
 		super(name, color, row, col);
 	}
+	//Generates a somewhat random suggestion, where the room is passed through as a parameter
 	public Solution createSuggestion(Room currentRoom) {
 		ArrayList<String> players = new ArrayList<String>();
 		for(Card c : getPlayerCards()) {
@@ -21,7 +22,7 @@ public class ComputerPlayer extends Player {
 				players.remove(c);
 			}
 		}
-		for (Card c : rooms) {
+		for (Card c : rooms) { //sets the room card
 			if (c.getName().equals(currentRoom.getName())) {
 				suggestion.room = c;
 			}
@@ -35,6 +36,7 @@ public class ComputerPlayer extends Player {
 		suggestion.weapon = getWeaponCards().get((int)(Math.random()*weapons.size()));
 		return suggestion;
 	}
+	//Selects a somewhat random target, but will always go to a room that it hasn't seen
 	public BoardCell selectTargets(Set<BoardCell> targets) {
 		int index = 0;
 		int rand = (int)(Math.random()*targets.size());
@@ -49,16 +51,16 @@ public class ComputerPlayer extends Player {
 						break;
 					}
 				}
-				if (!seen) {
+				if (!seen) { //if a room hasn't been seen, adds it to a list
 					rooms.add(b);
 				}
 			}
-			if (index == rand) {
+			if (index == rand) { //gets a random target
 				randBoardCell = b;
 			}
 			index++;
 		}
-		if (!rooms.isEmpty()) {
+		if (!rooms.isEmpty()) { //chooses a random unseen room, if one exists
 			randBoardCell = rooms.get((int)(Math.random()*rooms.size()));
 		}
 		return randBoardCell;

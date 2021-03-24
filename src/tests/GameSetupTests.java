@@ -33,6 +33,7 @@ public class GameSetupTests {
 	}
 	@Test
 	public void testPeople() {
+		//Tests that people's names are correct
 		ArrayList<Player> people = board.getPlayers();
 		assertEquals(NUM_PLAYERS, people.size());
 		assertTrue("Reed Baker".equals(people.get(0).getName()));
@@ -42,6 +43,7 @@ public class GameSetupTests {
 		assertTrue("Martha Ballard".equals(people.get(4).getName()));
 		assertTrue("Mary Seacole".equals(people.get(5).getName()));
 		
+		//Tests that people's colors are correct
 		assertEquals(new Color(102, 204, 0), new Color(102, 204, 0));
 		assertEquals(new Color(102, 204, 0), people.get(0).getColor());
 		assertEquals(new Color(0, 76, 153), people.get(1).getColor());
@@ -50,6 +52,7 @@ public class GameSetupTests {
 		assertEquals(new Color(178, 102, 255), people.get(4).getColor());
 		assertEquals(new Color(255, 0, 0), people.get(5).getColor());
 		
+		//Tests that people's locations are correct
 		assertEquals(13, people.get(0).getRow());
 		assertEquals(2, people.get(0).getCol());
 		assertEquals(6, people.get(1).getRow());
@@ -63,6 +66,7 @@ public class GameSetupTests {
 		assertEquals(10, people.get(5).getRow());
 		assertEquals(23, people.get(5).getCol());
 		
+		//Tests that people are the correct classes
 		assertEquals(people.get(2).getClass(), HumanPlayer.class);
 		assertEquals(people.get(0).getClass(), ComputerPlayer.class);
 		assertEquals(people.get(1).getClass(), ComputerPlayer.class);
@@ -73,6 +77,7 @@ public class GameSetupTests {
 	
 	@Test
 	public void testCards() {
+		//Tests that there are the correct number of cards
 		int rooms = 0;
 		int players = 0;
 		int weapons = 0;
@@ -100,6 +105,7 @@ public class GameSetupTests {
 	
 	@Test
 	public void testSolution() {
+		//Tests that a solution has been made
 		assertNotNull(board.getSolution().player);
 		assertNotNull(board.getSolution().room);
 		assertNotNull(board.getSolution().weapon);
