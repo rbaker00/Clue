@@ -1,21 +1,16 @@
 package tests;
 
 
-import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
-import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertTrue;
-import static org.junit.Assert.fail;
-import static org.junit.Assert.assertEquals;
 
 import java.awt.Color;
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.Set;
 
-import clueGame.Board;
 import clueGame.BoardCell;
 import clueGame.Card;
 import clueGame.CardType;
@@ -23,7 +18,6 @@ import clueGame.ComputerPlayer;
 import clueGame.DoorDirection;
 import clueGame.Player;
 import clueGame.Room;
-import clueGame.Solution;
 
 public class ComputerAITest {
 	public static Card reedCard = new Card("Reed", CardType.PERSON);
@@ -40,9 +34,7 @@ public class ComputerAITest {
 	public static Card knifeCard = new Card("Knife", CardType.WEAPON);
 	public static Card carCard = new Card("Car", CardType.WEAPON);
 	public static Card pillowCard = new Card("Pillow", CardType.WEAPON);
-	
-	private static Board board;
-	
+		
 	@Test
 	public void testSelectTargets() {
 		ComputerPlayer player = new ComputerPlayer("Bob", Color.black, 0, 0);
