@@ -19,9 +19,9 @@ public class Board {
 	Set<BoardCell> visited = new HashSet<BoardCell>();
 	private ArrayList<Player> players;
 	private Solution solution;
-	private ArrayList<Card> playerCards;
-	private ArrayList<Card> roomCards;
-	private ArrayList<Card> weaponCards;
+	private ArrayList<Card> playerCards = new ArrayList<Card>();
+	private ArrayList<Card> roomCards = new ArrayList<Card>();
+	private ArrayList<Card> weaponCards = new ArrayList<Card>();
 	
 	private Board() {
 		super();
@@ -121,7 +121,7 @@ public class Board {
 		    		throw new BadConfigFormatException("Weapon");
 		    	}
 		    	else {
-		    		Card weaponCard = new Card(data[1], CardType.WEAPON)
+		    		Card weaponCard = new Card(data[1], CardType.WEAPON);
 		    		deck.add(weaponCard);
 		    		weaponCards.add(weaponCard);
 		    		weapons++;
@@ -344,6 +344,15 @@ public class Board {
 		else if (initial != 'X' && roomMap.get(initial).getCenterCell().equals(theCell) && roomMap.get(initial).getSecretPassage() != null) { // handle case if inside the room
 			theCell.addAdjacency(roomMap.get(initial).getSecretPassage().getCenterCell()); // if secret passage available it should be accessible from room center
 		}
+	}
+	public ArrayList<Card> getPlayerCards() {
+		return playerCards;
+	}
+	public ArrayList<Card> getRoomCards() {
+		return roomCards;
+	}
+	public ArrayList<Card> getWeaponCards() {
+		return weaponCards;
 	}
 	public boolean checkAccusation(Solution accusation) {
 		return false;
