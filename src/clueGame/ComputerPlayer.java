@@ -9,12 +9,15 @@ public class ComputerPlayer extends Player {
 		super(name, color, row, col);
 	}
 	public Solution createSuggestion(Room currentRoom) {
-		ArrayList<Card> players = this.getPlayerCards();
-		ArrayList<Card> rooms = this.getRoomCards();
-		ArrayList<Card> weapons = this.getWeaponCards();
+		ArrayList<String> players = new ArrayList<String>();
+		for(Card c : getPlayerCards()) {
+			players.add(c.getName());
+		}
+		ArrayList<Card> rooms = getRoomCards();
+		ArrayList<String> weapons = new ArrayList<String>();
 		Solution suggestion = new Solution();
-		for (Card c : players) {
-			if (this.getSeen().contains(c)) {
+		for (String c : players) {
+			if (getSeen().contains(new Card(c, CardType.PERSON))) {
 				players.remove(c);
 			}
 		}
@@ -23,13 +26,13 @@ public class ComputerPlayer extends Player {
 				suggestion.room = c;
 			}
 		}
-		for (Card c : weapons) {
-			if (this.getSeen().contains(c)) {
+		for (String c : weapons) {
+			if (getSeen().contains(new Card(c, CardType.WEAPON))) {
 				weapons.remove(c);
 			}
 		}
-		suggestion.player = players.get((int)(Math.random()*players.size()));
-		suggestion.weapon = weapons.get((int)(Math.random()*weapons.size()));
+		suggestion.player = getPlayerCards().get((int)(Math.random()*players.size()));
+		suggestion.weapon = getWeaponCards().get((int)(Math.random()*weapons.size()));
 		return suggestion;
 	}
 	public BoardCell selectTargets(Set<BoardCell> targets) {

@@ -54,6 +54,9 @@ public abstract class Player {
 			seen.add(seenCard);
 		}
 	}
+	public Solution getSuggestion() {
+		return suggestion;
+	}
 	public ArrayList<Card> getHand() {
 		return hand;
 	}
