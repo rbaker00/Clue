@@ -14,9 +14,9 @@ public class ComputerPlayer extends Player {
 		ArrayList<Card> rooms = this.getRoomCards();
 		ArrayList<Card> weapons = this.getWeaponCards();
 		Solution suggestion = new Solution();
-		for (Card c : players) { //removes seen players
-			if (this.getHand().contains(c)) {
-				players.remove(players.indexOf(c));
+		for (Card c : players) {
+			if (this.getSeen().contains(c)) {
+				players.remove(c);
 			}
 		}
 		for (Card c : rooms) { //sets the room card
@@ -24,9 +24,9 @@ public class ComputerPlayer extends Player {
 				suggestion.room = c;
 			}
 		}
-		for (Card c : weapons) { //removes seen weapons
-			if (this.getHand().contains(c)) {
-				players.remove(c);
+		for (Card c : weapons) {
+			if (this.getSeen().contains(c)) {
+				weapons.remove(c);
 			}
 		}
 		suggestion.player = players.get((int)(Math.random()*players.size()));

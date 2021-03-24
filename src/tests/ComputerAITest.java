@@ -8,6 +8,8 @@ import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertTrue;
 
+import static org.junit.Assert.assertEquals;
+
 import java.awt.Color;
 import java.util.ArrayList;
 import java.util.HashSet;
@@ -42,7 +44,7 @@ public class ComputerAITest {
 	private static Board board;
 		
 	@BeforeAll
-	public static void setUp() {
+	public void setUp() {
 		// Board is singleton, get the only instance
 		board = Board.getInstance();
 		// set the file names to use my config files
@@ -84,16 +86,31 @@ public class ComputerAITest {
 	}
 	
 	@Test
-	public static void testCreateSuggestion() {
-		ArrayList<Player> players = new ArrayList<Player>();
-		players.add(new ComputerPlayer("Reed", Color.black, 0, 0));
-		players.add(new ComputerPlayer("Henry", Color.black, 0, 0));
-		players.add(new ComputerPlayer("Steve", Color.black, 0, 0));
-		players.add(new ComputerPlayer("Rob", Color.black, 0, 0));
-		board.setPlayers(players);
+	public void testCreateSuggestion() {
 		Room bedroom = new Room("Bedroom");
-		for(Player p : board.getPlayers()) {
-//			assertEquals(p.createSuggestion(), new Solution(player, room, weapon));
-		}
+		Room kitchen = new Room("Kitchen");
+		Room living = new Room("Living Room");
+		Room bathroom = new Room("Bathroom");
+		ComputerPlayer cp1 = new ComputerPlayer("Reed", Color.black, 0, 0);
+		cp1.updateHand(reedCard);
+		cp1.updateHand(bathroomCard);
+		cp1.updateHand(gunCard);
+		ComputerPlayer cp2 = new ComputerPlayer("Henry", Color.black, 0, 0);
+		cp2.updateHand(henryCard);
+		cp2.updateHand(bedroomCard);
+		cp2.updateHand(knifeCard);
+		ComputerPlayer cp3 = new ComputerPlayer("Steve", Color.black, 0, 0);
+		cp3.updateHand(steveCard);
+		cp3.updateHand(kitchenCard);
+		cp3.updateHand(carCard);
+		ComputerPlayer cp4 = new ComputerPlayer("Rob", Color.black, 0, 0);
+		cp4.updateHand(robCard);
+		cp4.updateHand(livingCard);
+		cp4.updateHand(pillowCard);
+		
+		assertEquals(cp1.createSuggestion(bathroom).room, bathroomCard);
+		assertEquals(cp2.createSuggestion(bedroom).room, bedroomCard);
+		assertEquals(cp3.createSuggestion(kitchen).room, kitchenCard);
+		assertEquals(cp4.createSuggestion(living).room, livingCard);
 	}
 }

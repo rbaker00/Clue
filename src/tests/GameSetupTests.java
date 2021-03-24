@@ -21,6 +21,7 @@ public class GameSetupTests {
 	private static final int NUM_ROOMS = 9;
 	private static final int NUM_PLAYERS = 6;
 	private static final int NUM_WEAPONS = 6;
+	
 	@BeforeAll
 	public static void setUp() {
 		// Board is singleton, get the only instance
