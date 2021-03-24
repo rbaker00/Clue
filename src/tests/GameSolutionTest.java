@@ -44,7 +44,7 @@ public class GameSolutionTest {
 		// Initialize will load config files 
 		//board.initialize();
 		ArrayList<Player> players = new ArrayList<Player>();
-		players.add(new ComputerPlayer("Reed", Color.black, 0, 0));
+		players.add(new HumanPlayer("Reed", Color.black, 0, 0));
 		players.add(new ComputerPlayer("Henry", Color.black, 0, 0));
 		players.add(new ComputerPlayer("Steve", Color.black, 0, 0));
 		players.add(new ComputerPlayer("Rob", Color.black, 0, 0));
@@ -79,6 +79,40 @@ public class GameSolutionTest {
 	
 	@Test
 	public void testSuggestion() {
+		ArrayList<Player> players = board.getPlayers();
+		players.get(0).updateHand(reedCard);
+		players.get(0).updateHand(henryCard);
+//		players.get(0).updateHand(steveCard);
+		players.get(1).updateHand(robCard);
+//		players.get(1).updateHand(bedroomCard);
+		players.get(1).updateHand(kitchenCard);
+		players.get(2).updateHand(livingCard);
+		players.get(2).updateHand(bathroomCard);
+		players.get(2).updateHand(gunCard);
+		players.get(3).updateHand(knifeCard);
+		players.get(3).updateHand(carCard);
+//		players.get(3).updateHand(pillowCard);
 		
+		Solution suggestion = new Solution();
+		suggestion.player = reedCard;
+		suggestion.room = livingCard;
+		suggestion.weapon = gunCard;
+		assertEquals(reedCard, players.get(0).disproveSuggestion(suggestion));
+		Card dissprove = players.get(2).disproveSuggestion(suggestion);
+		assertTrue(gunCard.equals(dissprove) || bedroomCard.equals(dissprove));
+		assertEquals(null, players.get(3).disproveSuggestion(suggestion));
+		
+		
+		suggestion.player = steveCard;
+		suggestion.room = bedroomCard;
+		suggestion.weapon = pillowCard;
+		assertEquals(null, board.handleSuggestion(suggestion, players.get(0)));
+		
+		suggestion.player = reedCard;
+		assertEquals(null, board.handleSuggestion(suggestion, players.get(0)));
+		assertEquals(reedCard, board.handleSuggestion(suggestion, players.get(1)));
+		
+		suggestion.room = kitchenCard;
+		assertEquals(reedCard, board.handleSuggestion(suggestion, players.get(2)));
 	}
 }

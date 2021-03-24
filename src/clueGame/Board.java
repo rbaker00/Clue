@@ -339,7 +339,7 @@ public class Board {
 	public boolean checkAccusation(Solution accusation) {
 		return false;
 	}
-	public Card handleSuggestion (Card suggestion) {
+	public Card handleSuggestion (Solution suggestion, Player accuser) {
 		return null;
 	}
 	public void deal() {
