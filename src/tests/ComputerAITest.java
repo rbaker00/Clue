@@ -1,6 +1,10 @@
 package tests;
 
 import org.junit.jupiter.api.Test;
+
+import java.awt.Color;
+import java.util.ArrayList;
+
 import org.junit.jupiter.api.BeforeAll;
 
 import clueGame.Board;
@@ -26,7 +30,7 @@ public class ComputerAITest {
 	public static Card pillowCard = new Card("Pillow", CardType.WEAPON);
 	
 	private static Board board;
-	
+		
 	@BeforeAll
 	public static void setUp() {
 		// Board is singleton, get the only instance
@@ -35,6 +39,7 @@ public class ComputerAITest {
 		board.setConfigFiles("board.csv", "ClueSetup.txt");		
 		// Initialize will load config files 
 		board.initialize();
+		
 	}
 	
 	@Test
@@ -44,10 +49,12 @@ public class ComputerAITest {
 	
 	@Test
 	public static void testCreateSuggestion() {
-		for(Player p : board.getPlayers()) {
-			if(p.getClass() == ComputerPlayer.class) {
-				((ComputerPlayer) p).createSuggestion();
-			}
-		}
+		ArrayList<Player> players = new ArrayList<Player>();
+		players.add(new ComputerPlayer("Reed", Color.black, 0, 0));
+		players.add(new ComputerPlayer("Henry", Color.black, 0, 0));
+		players.add(new ComputerPlayer("Steve", Color.black, 0, 0));
+		players.add(new ComputerPlayer("Rob", Color.black, 0, 0));
+		board.setPlayers(players);
+		
 	}
 }
