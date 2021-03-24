@@ -26,6 +26,7 @@ public abstract class Player {
 	}
 	public void updateHand(Card card) {
 		hand.add(card);
+		this.updateSeen(card);
 	}
 	public Card disproveSuggestion(Solution s) {
 		ArrayList<Card> match = new ArrayList<Card>();
