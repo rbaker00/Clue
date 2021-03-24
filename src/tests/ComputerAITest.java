@@ -117,21 +117,9 @@ public class ComputerAITest {
 		cp4.updateHand(pillowCard);
 		cp4.setDeck(players, rooms, weapons);
 		
-<<<<<<< HEAD
-		cp1.createSuggestion(bathroom);
-		cp2.createSuggestion(bedroom);
-		cp3.createSuggestion(kitchen);
-		cp4.createSuggestion(living);
-		assertEquals(cp1.getSuggestion().room, bathroomCard);
-		assertEquals(cp2.getSuggestion().room, bedroomCard);
-		assertEquals(cp3.getSuggestion().room, kitchenCard);
-		assertEquals(cp4.getSuggestion().room, livingCard);
-		
-=======
 		assertEquals(cp1.createSuggestion(bathroom).room, bathroomCard);
 		assertEquals(cp2.createSuggestion(bedroom).room, bedroomCard);
 		assertEquals(cp3.createSuggestion(kitchen).room, kitchenCard);
 		assertEquals(cp4.createSuggestion(living).room, livingCard);
->>>>>>> b72689b7f1654c0333db406a5e5a69fc6142a773
 	}
 }
