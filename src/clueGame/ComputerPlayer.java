@@ -14,7 +14,7 @@ public class ComputerPlayer extends Player {
 		ArrayList<Card> weapons = this.getWeaponCards();
 		Solution suggestion = new Solution();
 		for (Card c : players) {
-			if (this.getHand().contains(c)) {
+			if (this.getSeen().contains(c)) {
 				players.remove(c);
 			}
 		}
@@ -24,8 +24,8 @@ public class ComputerPlayer extends Player {
 			}
 		}
 		for (Card c : weapons) {
-			if (this.getHand().contains(c)) {
-				players.remove(c);
+			if (this.getSeen().contains(c)) {
+				weapons.remove(c);
 			}
 		}
 		suggestion.player = players.get((int)(Math.random()*players.size()));
