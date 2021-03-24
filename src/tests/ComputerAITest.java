@@ -1,18 +1,26 @@
 package tests;
 
+
+import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertNotNull;
+import static org.junit.Assert.assertTrue;
 
 import static org.junit.Assert.assertEquals;
 
 import java.awt.Color;
 import java.util.ArrayList;
-
-import org.junit.jupiter.api.BeforeAll;
+import java.util.HashSet;
+import java.util.Set;
 
 import clueGame.Board;
+import clueGame.BoardCell;
 import clueGame.Card;
 import clueGame.CardType;
 import clueGame.ComputerPlayer;
+import clueGame.DoorDirection;
 import clueGame.Player;
 import clueGame.Room;
 import clueGame.Solution;
@@ -48,7 +56,31 @@ public class ComputerAITest {
 	
 	@Test
 	public void testSelectTargets() {
+<<<<<<< HEAD
+=======
+		ComputerPlayer player = new ComputerPlayer("Bob", Color.black, 0, 0);
+		Set<BoardCell> targets = new HashSet<BoardCell>();
+		targets.add(new BoardCell(0, 0, 'T', DoorDirection.NONE, false, false, ' ', "Test"));
+		targets.add(new BoardCell(0, 0, 'T', DoorDirection.NONE, false, false, ' ', "Test"));
+		targets.add(new BoardCell(0, 0, 'T', DoorDirection.NONE, false, false, ' ', "Test"));
+		BoardCell target = player.selectTargets(targets);
+		assertTrue(targets.contains(target));
 		
+		targets.add(new BoardCell(0, 0, 'T', DoorDirection.NONE, false, true, ' ', "Bedroom"));
+		target = player.selectTargets(targets);
+		assertTrue(targets.contains(target));
+		assertEquals("Bedroom", target.getRoomName());
+		
+		player.updateSeen(new Card("Bedroom", CardType.ROOM));
+		target = player.selectTargets(targets);
+		assertTrue(targets.contains(target));
+>>>>>>> 698ed494ff4785776d017e96d9d7db8d2c34e2bc
+		
+		targets.clear();
+		targets.add(new BoardCell(0, 0, 'T', DoorDirection.NONE, false, true, ' ', "Bedroom"));
+		target = player.selectTargets(targets);
+		assertTrue(targets.contains(target));
+		assertEquals("Bedroom", target.getRoomName());
 	}
 	
 	@Test
