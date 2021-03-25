@@ -6,7 +6,6 @@ import java.util.ArrayList;
 public abstract class Player {
 	private String name;
 	private Color color;
-	private char playerType;
 	private int row;
 	private int column;
 	private ArrayList<Card> hand;

@@ -1,7 +1,5 @@
 package clueGame;
 
-import java.util.ArrayList;
-
 //Class used to contain a room for a clue game
 public class Room {
 	private String name;
