@@ -16,8 +16,14 @@ public class GameControlPanel extends JPanel {
 	/**
 	 * Constructor for the panel, it does 90% of the work
 	 */
+	JTextField whoseTurnTextField;
+	JTextField rollTextField;
 	public GameControlPanel()  {
 		super();
+		whoseTurnTextField = new JTextField(15);
+		whoseTurnTextField.setEditable(false);
+		rollTextField = new JTextField(5);
+		rollTextField.setEditable(false);
 	}
 	
 	private void setGuessResult(String string) {
@@ -28,8 +34,9 @@ public class GameControlPanel extends JPanel {
 		return;
 	}
 
-	private void setTurn(ComputerPlayer computerPlayer, int i) {
-		return;
+	private void setTurn(ComputerPlayer computerPlayer, int roll) {
+		whoseTurnTextField.setText(computerPlayer.getName());
+		rollTextField.setText(String.valueOf(roll));
 	}
 	
 	private void createUI() {
@@ -38,14 +45,10 @@ public class GameControlPanel extends JPanel {
 		JPanel top_rightPanel = new JPanel();
 		topPanel.add(top_leftPanel, BorderLayout.WEST);
 		JLabel whoseTurnLabel = new JLabel("Whose turn?");
-		JTextField whoseTurnTextField = new JTextField(15);
-		whoseTurnTextField.setEditable(false);
 		top_leftPanel.add(whoseTurnLabel, BorderLayout.NORTH);
 		top_leftPanel.add(whoseTurnTextField, BorderLayout.SOUTH);
 		topPanel.add(top_rightPanel, BorderLayout.CENTER);
 		JLabel rollLabel = new JLabel("Roll:");
-		JTextField rollTextField = new JTextField(5);
-		rollTextField.setEditable(false);
 		top_rightPanel.add(rollLabel);
 		top_rightPanel.add(rollTextField);
 		JButton makeAccusationButton = new JButton("Make Accusation");
