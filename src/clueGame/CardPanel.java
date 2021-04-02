@@ -20,7 +20,8 @@ public class CardPanel extends JPanel {
 	JPanel weaponHand;
 	JPanel weaponSeen;
 	public CardPanel() {
-		super(new BorderLayout());
+		super();
+		setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
 		peopleHand = new JPanel();
 		peopleHand.setLayout(new BoxLayout(peopleHand, BoxLayout.Y_AXIS));
 		peopleHand.add(new JLabel("In Hand:"));
@@ -41,17 +42,14 @@ public class CardPanel extends JPanel {
 		weaponSeen.add(new JLabel("Seen:"));
 	}
 	private void createUI() {
-		JPanel all = new JPanel();
-		all.setLayout(new BoxLayout(all, BoxLayout.Y_AXIS));
-		all.setBorder(BorderFactory.createTitledBorder(BorderFactory.createLineBorder(Color.black), "Known Cards"));
+		setBorder(BorderFactory.createTitledBorder(BorderFactory.createLineBorder(Color.black), "Known Cards"));
 		
 		JPanel people = new JPanel();
 		people.setLayout(new BoxLayout(people, BoxLayout.Y_AXIS));
 		people.setBorder(BorderFactory.createTitledBorder(BorderFactory.createLineBorder(Color.black), "People"));
 		people.add(peopleHand);
 		people.add(peopleSeen);
-		all.add(people);
-		add(all, BorderLayout.CENTER);
+		add(people);
 	}
 	public static void main(String[] args) {
 		CardPanel panel = new CardPanel();  // create the panel
