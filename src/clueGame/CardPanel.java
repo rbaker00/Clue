@@ -53,6 +53,14 @@ public class CardPanel extends JPanel {
 		people.setMaximumSize(new Dimension(Integer.MAX_VALUE, Integer.MAX_VALUE));
 		add(people);
 		
+		JPanel rooms = new JPanel();
+		rooms.setLayout(new BoxLayout(rooms, BoxLayout.Y_AXIS));
+		rooms.setBorder(BorderFactory.createTitledBorder(BorderFactory.createLineBorder(Color.black), "Rooms"));
+		rooms.add(roomHand);
+		rooms.add(roomSeen);
+		rooms.setMaximumSize(new Dimension(Integer.MAX_VALUE, Integer.MAX_VALUE));
+		add(rooms);
+		
 		JPanel weapons = new JPanel();
 		weapons.setLayout(new BoxLayout(weapons, BoxLayout.Y_AXIS));
 		weapons.setBorder(BorderFactory.createTitledBorder(BorderFactory.createLineBorder(Color.black), "Weapons"));
@@ -61,6 +69,7 @@ public class CardPanel extends JPanel {
 		weapons.setMaximumSize(new Dimension(Integer.MAX_VALUE, Integer.MAX_VALUE));
 		add(weapons);
 	}
+	
 	public static void main(String[] args) {
 		CardPanel panel = new CardPanel();  // create the panel
 		JFrame frame = new JFrame("Clue Game");  // create the frame 
