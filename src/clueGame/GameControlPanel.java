@@ -32,8 +32,8 @@ public class GameControlPanel extends JPanel {
 		guessResultTextField.setEditable(false);
 	}
 	
-	private void setGuessResult(String string) {
-		return;
+	private void setGuessResult(String guessResult) {
+		guessResultTextField.setText(guessResult);
 	}
 	
 	private void setGuess(String string) {
