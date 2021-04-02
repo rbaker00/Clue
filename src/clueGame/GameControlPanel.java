@@ -3,7 +3,6 @@ package clueGame;
 
 import java.awt.BorderLayout;
 import java.awt.Color;
-import java.awt.FlowLayout;
 
 import javax.swing.BorderFactory;
 import javax.swing.JButton;
@@ -46,9 +45,9 @@ public class GameControlPanel extends JPanel {
 	}
 	
 	private void createUI() {
-		JPanel topPanel = new JPanel();
-		JPanel top_leftPanel = new JPanel();
-		JPanel top_rightPanel = new JPanel();
+		JPanel topPanel = new JPanel(new BorderLayout());
+		JPanel top_leftPanel = new JPanel(new BorderLayout());
+		JPanel top_rightPanel = new JPanel(new BorderLayout());
 		topPanel.add(top_leftPanel, BorderLayout.WEST);
 		JLabel whoseTurnLabel = new JLabel("Whose turn?");
 		top_leftPanel.add(whoseTurnLabel, BorderLayout.NORTH);
@@ -58,15 +57,15 @@ public class GameControlPanel extends JPanel {
 		top_rightPanel.add(rollLabel);
 		top_rightPanel.add(rollTextField);
 		JButton makeAccusationButton = new JButton("Make Accusation");
-		topPanel.add(makeAccusationButton, BorderLayout.EAST);
+		topPanel.add(makeAccusationButton, BorderLayout.CENTER);
 		JButton nextButton = new JButton("NEXT!");
 		topPanel.add(nextButton, BorderLayout.EAST);
-		JPanel bottomPanel = new JPanel();
-		JPanel bottom_leftPanel = new JPanel();
+		JPanel bottomPanel = new JPanel(new BorderLayout());
+		JPanel bottom_leftPanel = new JPanel(new BorderLayout());
 		bottom_leftPanel.setBorder(BorderFactory.createTitledBorder(BorderFactory.createLineBorder(Color.black), "Guess"));
 		
 		bottom_leftPanel.add(guessTextField);
-		JPanel bottom_rightPanel = new JPanel();
+		JPanel bottom_rightPanel = new JPanel(new BorderLayout());
 		bottom_rightPanel.setBorder(BorderFactory.createTitledBorder(BorderFactory.createLineBorder(Color.black), "Guess Result"));
 		
 		bottom_rightPanel.add(guessResultTextField);
