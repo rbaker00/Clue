@@ -12,15 +12,45 @@ import javax.swing.JPanel;
 import javax.swing.JTextField;
 
 public class GameControlPanel extends JPanel {
+	// JPanels
+	JPanel topPanel;
+	JPanel top_leftPanel;
+	JPanel top_rightPanel;
+	JPanel bottomPanel;
+	JPanel bottom_leftPanel;
+	JPanel bottom_rightPanel;
+	
+	// JLabels
+	JLabel whoseTurnLabel;
+	JLabel rollLabel;
+	
+	// JTextFields
 	JTextField guessTextField;
 	JTextField guessResultTextField;
 	JTextField whoseTurnTextField;
 	JTextField rollTextField;
+	
+	//JButtons
+	JButton makeAccusationButton;
+	JButton nextButton;
 	/**
 	 * Constructor for the panel, it does 90% of the work
 	 */
 	public GameControlPanel()  {
 		super();
+		// JPanels
+		topPanel = new JPanel(new BorderLayout());
+		top_leftPanel = new JPanel(new BorderLayout());
+		top_rightPanel = new JPanel(new BorderLayout());
+		bottomPanel = new JPanel(new BorderLayout());
+		bottom_leftPanel = new JPanel(new BorderLayout());
+		bottom_rightPanel = new JPanel(new BorderLayout());
+		
+		//JLabels
+		whoseTurnLabel = new JLabel("Whose turn?");
+		rollLabel = new JLabel("Roll:");
+		
+		// JTextFields
 		whoseTurnTextField = new JTextField(15);
 		whoseTurnTextField.setEditable(false);
 		rollTextField = new JTextField(5);
@@ -29,6 +59,10 @@ public class GameControlPanel extends JPanel {
 		guessTextField.setEditable(false);
 		guessResultTextField = new JTextField(20);
 		guessResultTextField.setEditable(false);
+		
+		// JButtons
+		makeAccusationButton = new JButton("Make Accusation");
+		nextButton = new JButton("NEXT!");
 	}
 	
 	private void setGuessResult(String guessResult) {
@@ -45,32 +79,26 @@ public class GameControlPanel extends JPanel {
 	}
 	
 	private void createUI() {
-		JPanel topPanel = new JPanel(new BorderLayout());
-		JPanel top_leftPanel = new JPanel(new BorderLayout());
-		JPanel top_rightPanel = new JPanel(new BorderLayout());
+		
+		// top panel adds and layout management
 		topPanel.add(top_leftPanel, BorderLayout.WEST);
-		JLabel whoseTurnLabel = new JLabel("Whose turn?");
 		top_leftPanel.add(whoseTurnLabel, BorderLayout.NORTH);
 		top_leftPanel.add(whoseTurnTextField, BorderLayout.SOUTH);
 		topPanel.add(top_rightPanel, BorderLayout.CENTER);
-		JLabel rollLabel = new JLabel("Roll:");
 		top_rightPanel.add(rollLabel);
 		top_rightPanel.add(rollTextField);
-		JButton makeAccusationButton = new JButton("Make Accusation");
 		topPanel.add(makeAccusationButton, BorderLayout.CENTER);
-		JButton nextButton = new JButton("NEXT!");
 		topPanel.add(nextButton, BorderLayout.EAST);
-		JPanel bottomPanel = new JPanel(new BorderLayout());
-		JPanel bottom_leftPanel = new JPanel(new BorderLayout());
+		
+		// bottom panel adds and layout management
 		bottom_leftPanel.setBorder(BorderFactory.createTitledBorder(BorderFactory.createLineBorder(Color.black), "Guess"));
-		
 		bottom_leftPanel.add(guessTextField);
-		JPanel bottom_rightPanel = new JPanel(new BorderLayout());
 		bottom_rightPanel.setBorder(BorderFactory.createTitledBorder(BorderFactory.createLineBorder(Color.black), "Guess Result"));
-		
 		bottom_rightPanel.add(guessResultTextField);
 		bottomPanel.add(bottom_leftPanel, BorderLayout.WEST);
 		bottomPanel.add(bottom_rightPanel, BorderLayout.EAST);
+		
+		// game control panel adds and layout management
 		add(topPanel, BorderLayout.NORTH);
 		add(bottomPanel, BorderLayout.SOUTH);
 	}
