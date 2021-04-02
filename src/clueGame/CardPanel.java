@@ -18,14 +18,25 @@ public class CardPanel extends JPanel {
 	JPanel roomSeen;
 	JPanel weaponHand;
 	JPanel weaponSeen;
+	public CardPanel() {
+		super(new BorderLayout());
+		peopleHand = new JPanel(new BorderLayout());
+		peopleSeen = new JPanel(new BorderLayout());
+		roomHand = new JPanel(new BorderLayout());
+		roomSeen = new JPanel(new BorderLayout());
+		weaponHand = new JPanel(new BorderLayout());
+		weaponSeen = new JPanel(new BorderLayout());
+	}
 	private void createUI() {
-		
+		JPanel all = new JPanel(new BorderLayout());
+		all.setBorder(BorderFactory.createTitledBorder(BorderFactory.createLineBorder(Color.black), "Known Cards"));
+		add(all, BorderLayout.CENTER);
 	}
 	public static void main(String[] args) {
 		CardPanel panel = new CardPanel();  // create the panel
 		JFrame frame = new JFrame("Clue Game");  // create the frame 
 		frame.setContentPane(panel); // put the panel in the frame
-		frame.setSize(750, 180);  // size the frame
+		frame.setSize(150, 800);  // size the frame
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE); // allow it to close
 		panel.createUI();
 		frame.setVisible(true); // make it visible
