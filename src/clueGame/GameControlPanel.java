@@ -29,7 +29,7 @@ public class GameControlPanel extends JPanel {
 		return;
 	}
 	
-	private void createLayout() {
+	private void createUI() {
 		JPanel topPanel = new JPanel();
 		JPanel top_leftPanel = new JPanel();
 		JPanel top_rightPanel = new JPanel();
@@ -49,7 +49,11 @@ public class GameControlPanel extends JPanel {
 		topPanel.add(nextButton, BorderLayout.EAST);
 		JPanel bottomPanel = new JPanel();
 		JPanel bottom_leftPanel = new JPanel();
+		JTextField guessTextField = new JTextField(20);
+		bottom_leftPanel.add(guessTextField);
 		JPanel bottom_rightPanel = new JPanel();
+		JTextField guessResultTextField = new JTextField(20);
+		bottom_rightPanel.add(guessResultTextField);
 		bottomPanel.add(bottom_leftPanel, BorderLayout.WEST);
 		bottomPanel.add(bottom_rightPanel, BorderLayout.EAST);
 		add(topPanel, BorderLayout.NORTH);
@@ -67,7 +71,7 @@ public class GameControlPanel extends JPanel {
 		frame.setContentPane(panel); // put the panel in the frame
 		frame.setSize(750, 180);  // size the frame
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE); // allow it to close
-		panel.createLayout();
+		panel.createUI();
 		frame.setVisible(true); // make it visible
 		
 		
