@@ -2,6 +2,7 @@ package clueGame;
 
 import java.awt.BorderLayout;
 import java.awt.Color;
+import java.awt.Dimension;
 import java.awt.FlowLayout;
 
 import javax.swing.BorderFactory;
@@ -49,7 +50,16 @@ public class CardPanel extends JPanel {
 		people.setBorder(BorderFactory.createTitledBorder(BorderFactory.createLineBorder(Color.black), "People"));
 		people.add(peopleHand);
 		people.add(peopleSeen);
+		people.setMaximumSize(new Dimension(Integer.MAX_VALUE, Integer.MAX_VALUE));
 		add(people);
+		
+		JPanel weapons = new JPanel();
+		weapons.setLayout(new BoxLayout(weapons, BoxLayout.Y_AXIS));
+		weapons.setBorder(BorderFactory.createTitledBorder(BorderFactory.createLineBorder(Color.black), "Weapons"));
+		weapons.add(weaponHand);
+		weapons.add(weaponSeen);
+		weapons.setMaximumSize(new Dimension(Integer.MAX_VALUE, Integer.MAX_VALUE));
+		add(weapons);
 	}
 	public static void main(String[] args) {
 		CardPanel panel = new CardPanel();  // create the panel
