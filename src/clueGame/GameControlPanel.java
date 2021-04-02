@@ -2,7 +2,10 @@ package clueGame;
 
 
 import java.awt.BorderLayout;
+import java.awt.Color;
 import java.awt.FlowLayout;
+
+import javax.swing.BorderFactory;
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
@@ -49,9 +52,11 @@ public class GameControlPanel extends JPanel {
 		topPanel.add(nextButton, BorderLayout.EAST);
 		JPanel bottomPanel = new JPanel();
 		JPanel bottom_leftPanel = new JPanel();
+		bottom_leftPanel.setBorder(BorderFactory.createTitledBorder(BorderFactory.createLineBorder(Color.black), "Guess"));
 		JTextField guessTextField = new JTextField(20);
 		bottom_leftPanel.add(guessTextField);
 		JPanel bottom_rightPanel = new JPanel();
+		bottom_rightPanel.setBorder(BorderFactory.createTitledBorder(BorderFactory.createLineBorder(Color.black), "Guess Result"));
 		JTextField guessResultTextField = new JTextField(20);
 		bottom_rightPanel.add(guessResultTextField);
 		bottomPanel.add(bottom_leftPanel, BorderLayout.WEST);
