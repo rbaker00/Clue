@@ -36,8 +36,8 @@ public class GameControlPanel extends JPanel {
 		return;
 	}
 	
-	private void setGuess(String string) {
-		return;
+	private void setGuess(String guess) {
+		guessTextField.setText(guess);
 	}
 
 	private void setTurn(ComputerPlayer computerPlayer, int roll) {
