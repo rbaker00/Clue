@@ -13,11 +13,17 @@ import javax.swing.JPanel;
 import javax.swing.JTextField;
 
 public class GameControlPanel extends JPanel {
+	JTextField guessTextField;
+	JTextField guessResultTextField;
 	/**
 	 * Constructor for the panel, it does 90% of the work
 	 */
 	public GameControlPanel()  {
 		super();
+		guessTextField = new JTextField(20);
+		guessTextField.setEditable(false);
+		guessResultTextField = new JTextField(20);
+		guessResultTextField.setEditable(false);
 	}
 	
 	private void setGuessResult(String string) {
@@ -55,13 +61,11 @@ public class GameControlPanel extends JPanel {
 		JPanel bottomPanel = new JPanel();
 		JPanel bottom_leftPanel = new JPanel();
 		bottom_leftPanel.setBorder(BorderFactory.createTitledBorder(BorderFactory.createLineBorder(Color.black), "Guess"));
-		JTextField guessTextField = new JTextField(20);
-		guessTextField.setEditable(false);
+		
 		bottom_leftPanel.add(guessTextField);
 		JPanel bottom_rightPanel = new JPanel();
 		bottom_rightPanel.setBorder(BorderFactory.createTitledBorder(BorderFactory.createLineBorder(Color.black), "Guess Result"));
-		JTextField guessResultTextField = new JTextField(20);
-		guessResultTextField.setEditable(false);
+		
 		bottom_rightPanel.add(guessResultTextField);
 		bottomPanel.add(bottom_leftPanel, BorderLayout.WEST);
 		bottomPanel.add(bottom_rightPanel, BorderLayout.EAST);
