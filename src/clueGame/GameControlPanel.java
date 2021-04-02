@@ -36,11 +36,13 @@ public class GameControlPanel extends JPanel {
 		topPanel.add(top_leftPanel, BorderLayout.WEST);
 		JLabel whoseTurnLabel = new JLabel("Whose turn?");
 		JTextField whoseTurnTextField = new JTextField(15);
+		whoseTurnTextField.setEditable(false);
 		top_leftPanel.add(whoseTurnLabel, BorderLayout.NORTH);
 		top_leftPanel.add(whoseTurnTextField, BorderLayout.SOUTH);
 		topPanel.add(top_rightPanel, BorderLayout.CENTER);
 		JLabel rollLabel = new JLabel("Roll:");
 		JTextField rollTextField = new JTextField(5);
+		rollTextField.setEditable(false);
 		top_rightPanel.add(rollLabel);
 		top_rightPanel.add(rollTextField);
 		JButton makeAccusationButton = new JButton("Make Accusation");
@@ -50,9 +52,11 @@ public class GameControlPanel extends JPanel {
 		JPanel bottomPanel = new JPanel();
 		JPanel bottom_leftPanel = new JPanel();
 		JTextField guessTextField = new JTextField(20);
+		guessTextField.setEditable(false);
 		bottom_leftPanel.add(guessTextField);
 		JPanel bottom_rightPanel = new JPanel();
 		JTextField guessResultTextField = new JTextField(20);
+		guessResultTextField.setEditable(false);
 		bottom_rightPanel.add(guessResultTextField);
 		bottomPanel.add(bottom_leftPanel, BorderLayout.WEST);
 		bottomPanel.add(bottom_rightPanel, BorderLayout.EAST);
