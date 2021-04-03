@@ -25,7 +25,6 @@ public abstract class Player {
 	}
 	public void updateHand(Card card) {
 		hand.add(card);
-		this.updateSeen(card);
 	}
 	//Returns a card that matches a card in the Solution parameter
 	public Card disproveSuggestion(Solution s) {
