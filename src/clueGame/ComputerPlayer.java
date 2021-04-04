@@ -13,7 +13,7 @@ public class ComputerPlayer extends Player {
 		ArrayList<Card> randomWeapons = new ArrayList<Card>();
 		Solution suggestion = new Solution();
 		for (Card c : getPlayerCards()) {
-			if (!getSeen().contains(c)) {
+			if (!getSeen().contains(c) && !getHand().contains(c)) {
 				randomPlayers.add(c);
 			}
 		}
@@ -23,7 +23,7 @@ public class ComputerPlayer extends Player {
 			}
 		}
 		for (Card c : getWeaponCards()) {
-			if (!getSeen().contains(c)) {
+			if (!getSeen().contains(c) && !getHand().contains(c)) {
 				randomWeapons.add(c);
 			}
 		}
