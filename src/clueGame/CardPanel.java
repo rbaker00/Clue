@@ -44,6 +44,7 @@ public class CardPanel extends JPanel {
 		weaponSeen.add(new JLabel("Seen:"));
 	}
 	private void createUI() {
+		// puts the finished Panels together
 		setBorder(BorderFactory.createTitledBorder(BorderFactory.createLineBorder(Color.black), "Known Cards"));
 		
 		JPanel people = new JPanel();
@@ -71,6 +72,7 @@ public class CardPanel extends JPanel {
 		add(weapons);
 	}
 	private void setHuman (Player player) {
+		// add TextFields for each Card in Hand
 		for (Card card : player.getHand()) {
 			JTextField text = new JTextField();
 			text.setEditable(false);
@@ -87,6 +89,8 @@ public class CardPanel extends JPanel {
 				break;
 			}
 		}
+		
+		// add TextFields for each Card in Seen
 		for (Card card : player.getSeen()) {
 			JTextField text = new JTextField();
 			text.setEditable(false);
@@ -102,6 +106,46 @@ public class CardPanel extends JPanel {
 				weaponSeen.add(text);
 				break;
 			}
+		}
+		
+		// check if any Hands are empty and if so add a None TextField
+		if(peopleHand.getComponentCount()==1) {
+			JTextField text = new JTextField();
+			text.setEditable(false);
+			text.setText("None");
+			peopleHand.add(text);
+		}
+		if(roomHand.getComponentCount()==1) {
+			JTextField text = new JTextField();
+			text.setEditable(false);
+			text.setText("None");
+			roomHand.add(text);
+		}
+		if(weaponHand.getComponentCount()==1) {
+			JTextField text = new JTextField();
+			text.setEditable(false);
+			text.setText("None");
+			weaponHand.add(text);
+		}
+		
+		// check if any of the Seens are empty and if so add a None TextField
+		if(peopleSeen.getComponentCount()==1) {
+			JTextField text = new JTextField();
+			text.setEditable(false);
+			text.setText("None");
+			peopleSeen.add(text);
+		}
+		if(roomSeen.getComponentCount()==1) {
+			JTextField text = new JTextField();
+			text.setEditable(false);
+			text.setText("None");
+			roomSeen.add(text);
+		}
+		if(weaponSeen.getComponentCount()==1) {
+			JTextField text = new JTextField();
+			text.setEditable(false);
+			text.setText("None");
+			weaponSeen.add(text);
 		}
 	}
 	public static void main(String[] args) {
