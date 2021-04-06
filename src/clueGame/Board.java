@@ -1,12 +1,17 @@
 package clueGame;
 
 import java.util.*;
+
+import javax.swing.JFrame;
+import javax.swing.JPanel;
+
 import java.awt.Color;
+import java.awt.Graphics;
 import java.io.File;
 import java.io.FileNotFoundException;
 
 //Class to contain a clue board
-public class Board {
+public class Board extends JPanel{
 	private BoardCell[][] grid;
 	private int numRows = 0;
 	private int numColumns = 0;
@@ -330,8 +335,20 @@ public class Board {
 		}
 		return null;
 	}
-	public void deal() {
-		return;
+	public void paintComponent(Graphics g) {
+		super.paintComponent(g);
+		int rectSize;
+		if (getWidth() / numColumns < getHeight() / numRows) {
+			rectSize = getWidth() / numColumns;
+		}
+		else {
+			rectSize = getHeight() / numRows;
+		}
+		for (int row = 0; row < numRows; row++) {
+			for (int col = 0; col < numColumns; col++) {
+				grid[row][col].draw(rectSize, g);
+			}
+		}
 	}
 	public Set<BoardCell> getAdjList(int row, int col) {
 		return grid[row][col].getAdjList();
@@ -353,5 +370,15 @@ public class Board {
 	}
 	public void setPlayers(ArrayList<Player> players) {
 		this.players = players;
+	}
+	public static void main(String[] args) {
+		Board theBoard = Board.getInstance();
+		theBoard.setConfigFiles("board.csv", "ClueSetup.txt");	
+		theBoard.initialize();
+		JFrame frame = new JFrame("Clue Game");  // create the frame 
+		frame.setContentPane(theBoard); // put the panel in the frame
+		frame.setSize(750, 750);  // size the frame
+		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE); // allow it to close
+		frame.setVisible(true); // make it visible
 	}
 }

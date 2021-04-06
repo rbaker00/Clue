@@ -1,5 +1,7 @@
 package clueGame;
 
+import java.awt.Color;
+import java.awt.Graphics;
 import java.util.HashSet;
 import java.util.Set;
 
@@ -29,6 +31,40 @@ public class BoardCell {
 		this.secretPassage = secretPassage;
 		this.roomName = roomName;
 		adjList = new HashSet<BoardCell>();
+	}
+	public void draw(int rectSize, Graphics g) {
+		if (initial == 'W') {
+			g.setColor(Color.black);
+			g.fillRect(col*rectSize, row*rectSize, rectSize, rectSize);
+			g.setColor(Color.yellow);
+			g.fillRect(col*rectSize+rectSize/10, row*rectSize+rectSize/10, rectSize*4/5, rectSize*4/5);
+			if (doorDirection != DoorDirection.NONE) {
+				g.setColor(Color.blue);
+				switch (doorDirection) {
+				case UP:
+					g.fillRect(col*rectSize+rectSize/10, row*rectSize, rectSize*4/5, rectSize*2/10);
+					break;
+				case DOWN:
+					g.fillRect(col*rectSize+rectSize/10, row*rectSize+rectSize*4/5, rectSize*4/5, rectSize*2/10);
+					break;
+				case LEFT:
+					g.fillRect(col*rectSize, row*rectSize+rectSize/10, rectSize*2/10, rectSize*4/5);
+					break;
+				case RIGHT:
+					g.fillRect(col*rectSize+rectSize*4/5, row*rectSize+rectSize/10, rectSize*2/10, rectSize*4/5);
+					break;
+				}
+			}
+		}
+		else {
+			if (initial == 'X') {
+				g.setColor(Color.black);
+			}
+			else {
+				g.setColor(Color.gray);
+			}
+			g.fillRect(col*rectSize, row*rectSize, rectSize, rectSize);
+		}
 	}
 	public void addAdjacency(BoardCell adj) {
 		adjList.add(adj);
