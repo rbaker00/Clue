@@ -1,6 +1,7 @@
 package clueGame;
 
 import java.awt.Color;
+import java.awt.Graphics;
 import java.util.ArrayList;
 
 public abstract class Player {
@@ -85,6 +86,10 @@ public abstract class Player {
 		Player.playerCards = playerCards;
 		Player.roomCards = roomCards;
 		Player.weaponCards = weaponCards;
+	}
+	public void draw(int rectSize, Graphics g, int offset) {
+		g.setColor(color);
+		g.fillOval(column*rectSize+rectSize/10 + offset, row*rectSize+rectSize/10, rectSize*4/5, rectSize*4/5);
 	}
 	public ArrayList<Card> getPlayerCards() {
 		return playerCards;

@@ -354,6 +354,16 @@ public class Board extends JPanel{
 				room.draw(rectSize, g);
 			}
 		}
+		Map<BoardCell, Integer> offsetMap = new HashMap<BoardCell, Integer>();
+		for (Player player : players) {
+			if (!offsetMap.containsKey(grid[player.getRow()][player.getCol()])) {
+				offsetMap.put(grid[player.getRow()][player.getCol()], 0);
+			}
+			else {
+				offsetMap.put(grid[player.getRow()][player.getCol()], offsetMap.get(grid[player.getRow()][player.getCol()]) + rectSize/2);
+			}
+			player.draw(rectSize, g, offsetMap.get(grid[player.getRow()][player.getCol()]));
+		}
 	}
 	public Set<BoardCell> getAdjList(int row, int col) {
 		return grid[row][col].getAdjList();

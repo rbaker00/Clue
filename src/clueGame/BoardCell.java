@@ -36,7 +36,7 @@ public class BoardCell {
 		if (initial == 'W') {
 			g.setColor(Color.black);
 			g.fillRect(col*rectSize, row*rectSize, rectSize, rectSize);
-			g.setColor(Color.yellow);
+			g.setColor(Color.red);
 			g.fillRect(col*rectSize+rectSize/10, row*rectSize+rectSize/10, rectSize*4/5, rectSize*4/5);
 			if (doorDirection != DoorDirection.NONE) {
 				g.setColor(Color.blue);
