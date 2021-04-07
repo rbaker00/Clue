@@ -349,6 +349,11 @@ public class Board extends JPanel{
 				grid[row][col].draw(rectSize, g);
 			}
 		}
+		for (Room room : rooms) {
+			if (room.getLabelCell() != null) {
+				room.draw(rectSize, g);
+			}
+		}
 	}
 	public Set<BoardCell> getAdjList(int row, int col) {
 		return grid[row][col].getAdjList();

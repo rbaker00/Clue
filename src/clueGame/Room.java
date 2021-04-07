@@ -1,5 +1,9 @@
 package clueGame;
 
+import java.awt.Color;
+import java.awt.Font;
+import java.awt.Graphics;
+
 //Class used to contain a room for a clue game
 public class Room {
 	private String name;
@@ -34,5 +38,10 @@ public class Room {
 	}
 	public void setLabelCell(BoardCell labelCell) {
 		this.labelCell = labelCell;
+	}
+	public void draw(int rectSize, Graphics g) {
+		g.setColor(Color.orange);
+		g.setFont(new Font("TimesRoman", Font.PLAIN, rectSize*9/20)); 
+		g.drawString(name, labelCell.getColumns()*rectSize, labelCell.getRows()*rectSize + rectSize/2);
 	}
 }
