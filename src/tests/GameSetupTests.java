@@ -50,7 +50,7 @@ public class GameSetupTests {
 		assertEquals(new Color(204, 204, 0), people.get(2).getColor());
 		assertEquals(new Color(204, 255, 153), people.get(3).getColor());
 		assertEquals(new Color(178, 102, 255), people.get(4).getColor());
-		assertEquals(new Color(255, 0, 0), people.get(5).getColor());
+		assertEquals(new Color(255, 255, 0), people.get(5).getColor());
 		
 		//Tests that people's locations are correct
 		assertEquals(13, people.get(0).getRow());

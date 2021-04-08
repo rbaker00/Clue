@@ -63,6 +63,7 @@ public class Board extends JPanel{
 			setupCards(myReader, deck, weapons);
 		    myReader.close();
 		    if (players.size() != 0) {
+		    	System.out.println(players.size());
 		    	dealOutDeck(deck, weapons);
 		    }
 		} catch (FileNotFoundException e) {
@@ -134,20 +135,22 @@ public class Board extends JPanel{
 		    	throw new BadConfigFormatException("Comment");
 		    }
 		}
-		Player.setDeck(playerCards, roomCards, weaponCards);
-		solution = new Solution();
-		int rand = (int)(Math.random()*(playerCards.size()));
-		solution.player = playerCards.get(rand);
-		playerCards.remove(rand);
-		rand = (int)(Math.random()*(roomCards.size()));
-		solution.room = roomCards.get(rand);
-		roomCards.remove(rand);
-		rand = (int)(Math.random()*(weaponCards.size()));
-		solution.room = weaponCards.get(rand);
-		weaponCards.remove(rand);
-		deck.addAll(playerCards);
-		deck.addAll(roomCards);
-		deck.addAll(weaponCards);
+		if (playerCards.size() != 0) {
+			Player.setDeck(playerCards, roomCards, weaponCards);
+			solution = new Solution();
+			int rand = (int)(Math.random()*(playerCards.size()));
+			solution.player = playerCards.get(rand);
+			playerCards.remove(rand);
+			rand = (int)(Math.random()*(roomCards.size()));
+			solution.room = roomCards.get(rand);
+			roomCards.remove(rand);
+			rand = (int)(Math.random()*(weaponCards.size()));
+			solution.weapon = weaponCards.get(rand);
+			weaponCards.remove(rand);
+			deck.addAll(playerCards);
+			deck.addAll(roomCards);
+			deck.addAll(weaponCards);
+		}
 	}
 	//Deals out all the deck withhout the solution to 
 	private void dealOutDeck(ArrayList<Card> deck, int weapons) {
@@ -386,14 +389,14 @@ public class Board extends JPanel{
 	public void setPlayers(ArrayList<Player> players) {
 		this.players = players;
 	}
-	public static void main(String[] args) {
-		Board theBoard = Board.getInstance();
-		theBoard.setConfigFiles("board.csv", "ClueSetup.txt");	
-		theBoard.initialize();
-		JFrame frame = new JFrame("Clue Game");  // create the frame 
-		frame.setContentPane(theBoard); // put the panel in the frame
-		frame.setSize(750, 750);  // size the frame
-		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE); // allow it to close
-		frame.setVisible(true); // make it visible
-	}
+//	public static void main(String[] args) {
+//		Board theBoard = Board.getInstance();
+//		theBoard.setConfigFiles("board.csv", "ClueSetup.txt");	
+//		theBoard.initialize();
+//		JFrame frame = new JFrame("Clue Game");  // create the frame 
+//		frame.setContentPane(theBoard); // put the panel in the frame
+//		frame.setSize(750, 750);  // size the frame
+//		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE); // allow it to close
+//		frame.setVisible(true); // make it visible
+//	}
 }
