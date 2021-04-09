@@ -25,7 +25,7 @@ public class Board extends JPanel{
 	private ArrayList<Player> players;
 	private Solution solution;
 	
-	private Board() {
+	public Board() {
 		super();
 	}
 	//Returns the instance of the board (because only 1 board can be created)
