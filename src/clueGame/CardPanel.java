@@ -43,7 +43,7 @@ public class CardPanel extends JPanel {
 		weaponSeen.setLayout(new BoxLayout(weaponSeen, BoxLayout.Y_AXIS));
 		weaponSeen.add(new JLabel("Seen:"));
 	}
-	private void createUI() {
+	public void createUI() {
 		// puts the finished Panels together
 		setBorder(BorderFactory.createTitledBorder(BorderFactory.createLineBorder(Color.black), "Known Cards"));
 		

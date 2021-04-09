@@ -78,7 +78,7 @@ public class GameControlPanel extends JPanel {
 		rollTextField.setText(String.valueOf(roll));
 	}
 	
-	private void createUI() {
+	public void createUI() {
 		
 		// top panel adds and layout management
 		topPanel.add(top_leftPanel, BorderLayout.WEST);
