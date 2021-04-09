@@ -39,6 +39,7 @@ public class Room {
 	public void setLabelCell(BoardCell labelCell) {
 		this.labelCell = labelCell;
 	}
+	//draws the room name on the label cell
 	public void draw(int rectSize, Graphics g) {
 		g.setColor(Color.orange);
 		g.setFont(new Font("TimesRoman", Font.PLAIN, rectSize*9/20)); 

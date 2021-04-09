@@ -87,6 +87,7 @@ public abstract class Player {
 		Player.roomCards = roomCards;
 		Player.weaponCards = weaponCards;
 	}
+	//Draws a circle to represent the player
 	public void draw(int rectSize, Graphics g, int offset) {
 		g.setColor(color);
 		g.fillOval(column*rectSize+rectSize/10 + offset, row*rectSize+rectSize/10, rectSize*4/5, rectSize*4/5);

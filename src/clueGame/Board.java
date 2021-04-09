@@ -338,27 +338,29 @@ public class Board extends JPanel{
 		}
 		return null;
 	}
+	
+	//Deals with painting the board, with the cells, players, and rooms
 	public void paintComponent(Graphics g) {
 		super.paintComponent(g);
 		int rectSize;
-		if (getWidth() / numColumns < getHeight() / numRows) {
+		if (getWidth() / numColumns < getHeight() / numRows) { //calculates the proper board cell size
 			rectSize = getWidth() / numColumns;
 		}
 		else {
 			rectSize = getHeight() / numRows;
 		}
-		for (int row = 0; row < numRows; row++) {
+		for (int row = 0; row < numRows; row++) { //draws the cells
 			for (int col = 0; col < numColumns; col++) {
 				grid[row][col].draw(rectSize, g);
 			}
 		}
-		for (Room room : rooms) {
+		for (Room room : rooms) { //draws the room names
 			if (room.getLabelCell() != null) {
 				room.draw(rectSize, g);
 			}
 		}
-		Map<BoardCell, Integer> offsetMap = new HashMap<BoardCell, Integer>();
-		for (Player player : players) {
+		Map<BoardCell, Integer> offsetMap = new HashMap<BoardCell, Integer>(); //keeps track of where players are in order to offset players on the same space
+		for (Player player : players) { //draws the players
 			if (!offsetMap.containsKey(grid[player.getRow()][player.getCol()])) {
 				offsetMap.put(grid[player.getRow()][player.getCol()], 0);
 			}
@@ -389,14 +391,4 @@ public class Board extends JPanel{
 	public void setPlayers(ArrayList<Player> players) {
 		this.players = players;
 	}
-//	public static void main(String[] args) {
-//		Board theBoard = Board.getInstance();
-//		theBoard.setConfigFiles("board.csv", "ClueSetup.txt");	
-//		theBoard.initialize();
-//		JFrame frame = new JFrame("Clue Game");  // create the frame 
-//		frame.setContentPane(theBoard); // put the panel in the frame
-//		frame.setSize(750, 750);  // size the frame
-//		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE); // allow it to close
-//		frame.setVisible(true); // make it visible
-//	}
 }
