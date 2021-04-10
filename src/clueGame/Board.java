@@ -3,10 +3,13 @@ package clueGame;
 import java.util.*;
 
 import javax.swing.JFrame;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 
 import java.awt.Color;
 import java.awt.Graphics;
+import java.awt.event.MouseEvent;
+import java.awt.event.MouseListener;
 import java.io.File;
 import java.io.FileNotFoundException;
 
@@ -15,6 +18,7 @@ public class Board extends JPanel{
 	private BoardCell[][] grid;
 	private int numRows = 0;
 	private int numColumns = 0;
+	private int rectSize;
 	private String layoutConfigFile;
 	private String setupConfigFile;
 	private Map<Character, Room> roomMap;
@@ -23,6 +27,7 @@ public class Board extends JPanel{
 	Set<BoardCell> targets;
 	Set<BoardCell> visited = new HashSet<BoardCell>();
 	private ArrayList<Player> players;
+	private int currentPlayer;
 	private Solution solution;
 	
 	public Board() {
@@ -40,11 +45,17 @@ public class Board extends JPanel{
 	}
 	//Calls the methods to set up the board from the two config files
 	public void initialize() {
+		currentPlayer = -1;
+		addMouseListener(new ClickListener());
+		targets = new HashSet<BoardCell>();
 		players = new ArrayList<Player>();
 		try {
 			loadSetupConfig();
 			loadLayoutConfig();
 			setAllAdjacencies();
+			if (players.size() != 0) {
+				nextPlayer();
+			}
 		}
 		catch (BadConfigFormatException e) {
 			System.out.println(e.getMessage());
@@ -63,7 +74,6 @@ public class Board extends JPanel{
 			setupCards(myReader, deck, weapons);
 		    myReader.close();
 		    if (players.size() != 0) {
-		    	System.out.println(players.size());
 		    	dealOutDeck(deck, weapons);
 		    }
 		} catch (FileNotFoundException e) {
@@ -113,7 +123,6 @@ public class Board extends JPanel{
 		    	}
 		    	else {
 		    		myReader.close();
-		    		System.out.println(data[4]);
 			    	throw new BadConfigFormatException("type");
 		    	}
 		    	Card personCard = new Card(data[1], CardType.PERSON);
@@ -260,7 +269,7 @@ public class Board extends JPanel{
 		return roomMap.get(cell.getInitial());
 	}
 	public void calcTargets(BoardCell start, int pathlength) {
-		targets = new HashSet<BoardCell>();
+		targets.clear();
 		visited.add(start);
 		findAllTargets(start, pathlength);
 		visited.remove(start);
@@ -341,8 +350,13 @@ public class Board extends JPanel{
 	
 	//Deals with painting the board, with the cells, players, and rooms
 	public void paintComponent(Graphics g) {
+		Set<Character> roomChars = new HashSet<Character>();
+		if (players.get(currentPlayer) instanceof HumanPlayer) {
+			for (BoardCell cell : targets) {
+				roomChars.add(cell.getInitial());
+			}
+		}
 		super.paintComponent(g);
-		int rectSize;
 		if (getWidth() / numColumns < getHeight() / numRows) { //calculates the proper board cell size
 			rectSize = getWidth() / numColumns;
 		}
@@ -351,7 +365,17 @@ public class Board extends JPanel{
 		}
 		for (int row = 0; row < numRows; row++) { //draws the cells
 			for (int col = 0; col < numColumns; col++) {
-				grid[row][col].draw(rectSize, g);
+				if (grid[row][col].getInitial() != 'W') {
+					if (roomChars.contains(grid[row][col].getInitial())) {
+						grid[row][col].draw(rectSize, g, Color.yellow);
+					}
+					else {
+						grid[row][col].draw(rectSize, g, Color.gray);
+					}
+				}
+				else {
+					grid[row][col].draw(rectSize, g, Color.red);
+				}
 			}
 		}
 		for (Room room : rooms) { //draws the room names
@@ -368,6 +392,33 @@ public class Board extends JPanel{
 				offsetMap.put(grid[player.getRow()][player.getCol()], offsetMap.get(grid[player.getRow()][player.getCol()]) + rectSize/2);
 			}
 			player.draw(rectSize, g, offsetMap.get(grid[player.getRow()][player.getCol()]));
+		}
+		if (players.get(currentPlayer) instanceof HumanPlayer) {
+			for (BoardCell cell : targets) {
+				cell.draw(rectSize, g, Color.yellow);
+			}
+		}
+	}
+	
+	public void nextPlayer () {
+		if (targets.isEmpty()) {
+			currentPlayer = (currentPlayer + 1)%players.size();
+			int roll = (int)(Math.random() * 6) + 1;
+			calcTargets(grid[players.get(currentPlayer).getRow()][players.get(currentPlayer).getCol()], roll);
+			repaint();
+			if (players.get(currentPlayer) instanceof ComputerPlayer) {
+				BoardCell target = ((ComputerPlayer)players.get(currentPlayer)).selectTargets(targets);
+				grid[players.get(currentPlayer).getRow()][players.get(currentPlayer).getCol()].setOccupied(false);
+				target.setOccupied(true);
+				players.get(currentPlayer).move(target.getRows(), target.getColumns());
+				targets.clear();
+//				if (target.getInitial() != 'W') {
+//					((ComputerPlayer)players.get(currentPlayer)).createSuggestion(roomMap.get(target.getInitial()));
+//				}
+			}
+		}
+		else {
+			
 		}
 	}
 	public Set<BoardCell> getAdjList(int row, int col) {
@@ -391,4 +442,52 @@ public class Board extends JPanel{
 	public void setPlayers(ArrayList<Player> players) {
 		this.players = players;
 	}
+	
+	private class ClickListener implements MouseListener {
+		@Override
+		public void mouseClicked(MouseEvent e) {
+			if (players.get(currentPlayer) instanceof HumanPlayer) {
+				int x = e.getPoint().x;
+				int y = e.getPoint().y;
+				int col = x/rectSize;
+				int row = y/rectSize;
+				if (col < numColumns && row < numRows) {
+					if (grid[row][col].getInitial() != 'W') {
+						if (targets.contains(roomMap.get(grid[row][col].getInitial()).getCenterCell())) {
+							row = roomMap.get(grid[row][col].getInitial()).getCenterCell().getRows();
+							col = roomMap.get(grid[row][col].getInitial()).getCenterCell().getColumns();
+							targets.clear();
+							grid[players.get(currentPlayer).getRow()][players.get(currentPlayer).getCol()].setOccupied(false);
+							grid[row][col].setOccupied(true);
+							players.get(currentPlayer).move(row, col);
+							repaint();
+						}
+					}
+					else if (x > col*rectSize + rectSize/10 && x < col*rectSize + 9*rectSize/10) { //checks if not in one of the left or right borders
+						if (y > row*rectSize + rectSize/10 && y < row*rectSize + 9*rectSize/10) { //checks if not in one of the top or down borders
+							if (targets.contains(grid[row][col])) {
+								targets.clear();
+								grid[players.get(currentPlayer).getRow()][players.get(currentPlayer).getCol()].setOccupied(false);
+								grid[row][col].setOccupied(true);
+								players.get(currentPlayer).move(row, col);
+								repaint();
+							}
+							else {
+								
+							}
+						}
+					}
+				}
+			}
+		}
+
+		@Override
+		public void mousePressed(MouseEvent e) {}
+		@Override
+		public void mouseReleased(MouseEvent e) {}
+		@Override
+		public void mouseEntered(MouseEvent e) {}
+		@Override
+		public void mouseExited(MouseEvent e) {}
+	};
 }

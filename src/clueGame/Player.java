@@ -101,4 +101,8 @@ public abstract class Player {
 	public ArrayList<Card> getWeaponCards() {
 		return weaponCards;
 	}
+	public void move (int row, int column) {
+		this.row = row;
+		this.column = column;
+	}
 }

@@ -32,11 +32,11 @@ public class BoardCell {
 		this.roomName = roomName;
 		adjList = new HashSet<BoardCell>();
 	}
-	public void draw(int rectSize, Graphics g) {
+	public void draw(int rectSize, Graphics g, Color theColor) {
 		if (initial == 'W') {
 			g.setColor(Color.black);
 			g.fillRect(col*rectSize, row*rectSize, rectSize, rectSize); //draws a black border
-			g.setColor(Color.red);
+			g.setColor(theColor);
 			g.fillRect(col*rectSize+rectSize/10, row*rectSize+rectSize/10, rectSize*4/5, rectSize*4/5); //draws the actual cell
 			if (doorDirection != DoorDirection.NONE) { //draws an indicator for the door direction
 				g.setColor(Color.blue);
@@ -61,7 +61,7 @@ public class BoardCell {
 				g.setColor(Color.black);
 			}
 			else {
-				g.setColor(Color.gray);
+				g.setColor(theColor);
 			}
 			g.fillRect(col*rectSize, row*rectSize, rectSize, rectSize);
 		}
