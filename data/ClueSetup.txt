@@ -17,7 +17,7 @@ Player, Reed Baker, 102 204 0, 13 2, Computer
 Player, Henry Purdum, 0 76 153, 6 1, Computer
 Player, Hippocrates, 204 255 153, 0 15, Computer
 Player, Martha Ballard, 178 102 255, 5 24, Computer
-Player, Mary Seacole, 255 255 0, 10 23, Computer
+Player, Mary Seacole, 0 255 255, 10 23, Computer
 // Weapon cards
 Weapon, Gun
 Weapon, Knife
