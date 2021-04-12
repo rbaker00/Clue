@@ -47,9 +47,6 @@ public class ClueGame extends JFrame {
 		mainPanel.add(bottom, BorderLayout.SOUTH);
 		mainPanel.add(right, BorderLayout.EAST);
 	}
-	private void updateUI(String guessResult, String guess, Player p, int roll) {
-		bottom.updateFields(guessResult, guess, p, roll);
-	}
 	
 	public static void main(String[] args) {
 		// create and draw the entire gui
