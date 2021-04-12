@@ -67,9 +67,9 @@ public class ClueGame extends JFrame {
 		String dialog = "You are " + currPlayerName + ". Can you find the solution before the Computer players?";
 		
 		// show dialog to tell player who they are and start game
-		JOptionPane.showMessageDialog(gui, dialog);
-		bottom.updateFields(guessResult, guess, center.getCurrentPlayer(),roll);
+		bottom.updateFields(guessResult, guess, center.getCurrentPlayer(), roll);
 		gui.setVisible(true); // make it visible
+		JOptionPane.showMessageDialog(gui, dialog);
 		
 		// handle what happens when next button is clicked 
 		bottom.getNextButton().addMouseListener(new MouseAdapter() {
