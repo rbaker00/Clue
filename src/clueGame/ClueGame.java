@@ -2,8 +2,12 @@ package clueGame;
 
 import java.awt.BorderLayout;
 import java.awt.Dimension;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
+import java.awt.event.MouseListener;
 
 import javax.swing.JFrame;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 
 public class ClueGame extends JFrame {
@@ -22,10 +26,13 @@ public class ClueGame extends JFrame {
 		
 		// init other two panels
 		bottom = new GameControlPanel();
+		
 		right = new CardPanel();
 		
 		// draw other two panels
 		bottom.createUI();
+		// test filling in the data
+		bottom.initFields();
 		right.createUI();
 		
 		// set prefered size of side panels
@@ -41,6 +48,10 @@ public class ClueGame extends JFrame {
 		mainPanel.add(bottom, BorderLayout.SOUTH);
 		mainPanel.add(right, BorderLayout.EAST);
 	}
+	private void updateUI(String guessResult, String guess, ComputerPlayer cp, int roll) {
+		bottom.updateFields(guessResult, guess, cp, roll);
+	}
+	
 	public static void main(String[] args) {
 		// create and draw the entire gui
 		ClueGame gui = new ClueGame("Clue Game");
@@ -49,6 +60,15 @@ public class ClueGame extends JFrame {
 		gui.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE); // allow it to close
 		gui.createUI();
 		gui.setVisible(true); // make it visible
+		
+		JOptionPane.showMessageDialog(gui, "You are [Miss Scarlet]. Can you find the solution before the Computer players?");
+		
+		bottom.getNextButton().addMouseListener(new MouseAdapter() {
+			public void mouseClicked(MouseEvent e) {
+				updateUI();
+			}
+		}
+		);
 	}
 }
 

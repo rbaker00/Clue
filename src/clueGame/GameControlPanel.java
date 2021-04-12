@@ -65,6 +65,10 @@ public class GameControlPanel extends JPanel {
 		nextButton = new JButton("NEXT!");
 	}
 	
+	public JButton getNextButton() {
+		return nextButton;
+	}
+	
 	private void setGuessResult(String guessResult) {
 		guessResultTextField.setText(guessResult);
 	}
@@ -76,6 +80,19 @@ public class GameControlPanel extends JPanel {
 	private void setTurn(ComputerPlayer computerPlayer, int roll) {
 		whoseTurnTextField.setText(computerPlayer.getName());
 		rollTextField.setText(String.valueOf(roll));
+	}
+	
+	public void initFields() {
+		// test filling in the data
+		setTurn(new ComputerPlayer( "Col. Mustard", java.awt.Color.getColor("orange"), 0, 0), 5);
+		setGuess( "I have no guess!");
+		setGuessResult( "So you have nothing?");
+	}
+	
+	public void updateFields(String guessResult, String guess, ComputerPlayer cp, int roll) {
+		setTurn(cp, roll);
+		setGuess(guess);
+		setGuessResult(guessResult);
 	}
 	
 	public void createUI() {
