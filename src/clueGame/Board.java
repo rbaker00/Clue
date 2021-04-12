@@ -53,9 +53,6 @@ public class Board extends JPanel{
 			loadSetupConfig();
 			loadLayoutConfig();
 			setAllAdjacencies();
-			if (players.size() != 0) {
-				nextPlayer();
-			}
 		}
 		catch (BadConfigFormatException e) {
 			System.out.println(e.getMessage());
@@ -400,10 +397,9 @@ public class Board extends JPanel{
 		}
 	}
 	
-	public void nextPlayer () {
+	public void nextPlayer (int roll) {
 		if (targets.isEmpty()) {
 			currentPlayer = (currentPlayer + 1)%players.size();
-			int roll = (int)(Math.random() * 6) + 1;
 			calcTargets(grid[players.get(currentPlayer).getRow()][players.get(currentPlayer).getCol()], roll);
 			repaint();
 			if (players.get(currentPlayer) instanceof ComputerPlayer) {
@@ -442,7 +438,9 @@ public class Board extends JPanel{
 	public void setPlayers(ArrayList<Player> players) {
 		this.players = players;
 	}
-	
+	public Player getCurrentPlayer() {
+		return players.get(currentPlayer);
+	}
 	private class ClickListener implements MouseListener {
 		@Override
 		public void mouseClicked(MouseEvent e) {
