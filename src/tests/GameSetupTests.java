@@ -36,29 +36,29 @@ public class GameSetupTests {
 		//Tests that people's names are correct
 		ArrayList<Player> people = board.getPlayers();
 		assertEquals(NUM_PLAYERS, people.size());
-		assertTrue("Reed Baker".equals(people.get(0).getName()));
-		assertTrue("Henry Purdum".equals(people.get(1).getName()));
-		assertTrue("Stephen Strange".equals(people.get(2).getName()));
+		assertTrue("Stephen Strange".equals(people.get(0).getName()));
+		assertTrue("Reed Baker".equals(people.get(1).getName()));
+		assertTrue("Henry Purdum".equals(people.get(2).getName()));
 		assertTrue("Hippocrates".equals(people.get(3).getName()));
 		assertTrue("Martha Ballard".equals(people.get(4).getName()));
 		assertTrue("Mary Seacole".equals(people.get(5).getName()));
 		
 		//Tests that people's colors are correct
 		assertEquals(new Color(102, 204, 0), new Color(102, 204, 0));
-		assertEquals(new Color(102, 204, 0), people.get(0).getColor());
-		assertEquals(new Color(0, 76, 153), people.get(1).getColor());
-		assertEquals(new Color(204, 204, 0), people.get(2).getColor());
+		assertEquals(new Color(204, 204, 0), people.get(0).getColor());
+		assertEquals(new Color(102, 204, 0), people.get(1).getColor());
+		assertEquals(new Color(0, 76, 153), people.get(2).getColor());
 		assertEquals(new Color(204, 255, 153), people.get(3).getColor());
 		assertEquals(new Color(178, 102, 255), people.get(4).getColor());
-		assertEquals(new Color(255, 255, 0), people.get(5).getColor());
+		assertEquals(new Color(0, 255, 255), people.get(5).getColor());
 		
 		//Tests that people's locations are correct
-		assertEquals(13, people.get(0).getRow());
-		assertEquals(2, people.get(0).getCol());
-		assertEquals(6, people.get(1).getRow());
-		assertEquals(1, people.get(1).getCol());
-		assertEquals(2, people.get(2).getRow());
-		assertEquals(9, people.get(2).getCol());
+		assertEquals(2, people.get(0).getRow());
+		assertEquals(9, people.get(0).getCol());
+		assertEquals(13, people.get(1).getRow());
+		assertEquals(2, people.get(1).getCol());
+		assertEquals(6, people.get(2).getRow());
+		assertEquals(1, people.get(2).getCol());
 		assertEquals(0, people.get(3).getRow());
 		assertEquals(15, people.get(3).getCol());
 		assertEquals(5, people.get(4).getRow());
@@ -67,9 +67,9 @@ public class GameSetupTests {
 		assertEquals(23, people.get(5).getCol());
 		
 		//Tests that people are the correct classes
-		assertEquals(people.get(2).getClass(), HumanPlayer.class);
-		assertEquals(people.get(0).getClass(), ComputerPlayer.class);
+		assertEquals(people.get(0).getClass(), HumanPlayer.class);
 		assertEquals(people.get(1).getClass(), ComputerPlayer.class);
+		assertEquals(people.get(2).getClass(), ComputerPlayer.class);
 		assertEquals(people.get(3).getClass(), ComputerPlayer.class);
 		assertEquals(people.get(4).getClass(), ComputerPlayer.class);
 		assertEquals(people.get(5).getClass(), ComputerPlayer.class);
