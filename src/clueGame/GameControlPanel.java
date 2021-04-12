@@ -79,8 +79,8 @@ public class GameControlPanel extends JPanel {
 		guessTextField.setText(guess);
 	}
 
-	private void setTurn(ComputerPlayer computerPlayer, int roll) {
-		whoseTurnTextField.setText(computerPlayer.getName());
+	private void setTurn(Player player, int roll) {
+		whoseTurnTextField.setText(player.getName());
 		rollTextField.setText(String.valueOf(roll));
 	}
 	
@@ -91,8 +91,8 @@ public class GameControlPanel extends JPanel {
 		setGuessResult( "So you have nothing?");
 	}
 	
-	public void updateFields(String guessResult, String guess, ComputerPlayer cp, int roll) {
-		setTurn(cp, roll);
+	public void updateFields(String guessResult, String guess, Player p, int roll) {
+		setTurn(p, roll);
 		setGuess(guess);
 		setGuessResult(guessResult);
 	}
