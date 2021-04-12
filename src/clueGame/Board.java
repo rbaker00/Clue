@@ -398,11 +398,11 @@ public class Board extends JPanel{
 	}
 	
 	public void nextPlayer (int roll) {
-		if (targets.isEmpty()) {
+		if (targets.isEmpty()) { //If targets isn't empty, the player hasn't moved
 			currentPlayer = (currentPlayer + 1)%players.size();
 			calcTargets(grid[players.get(currentPlayer).getRow()][players.get(currentPlayer).getCol()], roll);
 			repaint();
-			if (players.get(currentPlayer) instanceof ComputerPlayer) {
+			if (players.get(currentPlayer) instanceof ComputerPlayer) { //does the necessary function calls to move the computer player
 				BoardCell target = ((ComputerPlayer)players.get(currentPlayer)).selectTargets(targets);
 				grid[players.get(currentPlayer).getRow()][players.get(currentPlayer).getCol()].setOccupied(false);
 				target.setOccupied(true);
@@ -415,7 +415,7 @@ public class Board extends JPanel{
 			}
 		}
 		else {
-			JOptionPane.showMessageDialog(this, "Error player hasn't moved.");
+			JOptionPane.showMessageDialog(this, "Error: player hasn't moved.");
 		}
 	}
 	public Set<BoardCell> getAdjList(int row, int col) {
@@ -442,17 +442,20 @@ public class Board extends JPanel{
 	public Player getCurrentPlayer() {
 		return players.get(currentPlayer);
 	}
+	public void notATarget() {
+		JOptionPane.showMessageDialog(this, "Error: Not a target.");
+	}
 	private class ClickListener implements MouseListener {
 		@Override
 		public void mouseClicked(MouseEvent e) {
 			if (players.get(currentPlayer) instanceof HumanPlayer) {
 				int x = e.getPoint().x;
 				int y = e.getPoint().y;
-				int col = x/rectSize;
-				int row = y/rectSize;
-				if (col < numColumns && row < numRows) {
-					if (grid[row][col].getInitial() != 'W') {
-						if (targets.contains(roomMap.get(grid[row][col].getInitial()).getCenterCell())) {
+				int col = x/rectSize; //calculates the column that the player clicked on
+				int row = y/rectSize; //calculates the row that the player clicked on
+				if (col < numColumns && row < numRows) { //checks that the player clicked within the board
+					if (grid[row][col].getInitial() != 'W') { //checks if they clicked on a walkway or a room
+						if (targets.contains(roomMap.get(grid[row][col].getInitial()).getCenterCell())) { //checks if the clicked room is a target
 							row = roomMap.get(grid[row][col].getInitial()).getCenterCell().getRows();
 							col = roomMap.get(grid[row][col].getInitial()).getCenterCell().getColumns();
 							targets.clear();
@@ -461,10 +464,13 @@ public class Board extends JPanel{
 							players.get(currentPlayer).move(row, col);
 							repaint();
 						}
+						else {
+							notATarget();
+						}
 					}
 					else if (x > col*rectSize + rectSize/10 && x < col*rectSize + 9*rectSize/10) { //checks if not in one of the left or right borders
 						if (y > row*rectSize + rectSize/10 && y < row*rectSize + 9*rectSize/10) { //checks if not in one of the top or down borders
-							if (targets.contains(grid[row][col])) {
+							if (targets.contains(grid[row][col])) { //checks if the cell is a target
 								targets.clear();
 								grid[players.get(currentPlayer).getRow()][players.get(currentPlayer).getCol()].setOccupied(false);
 								grid[row][col].setOccupied(true);
@@ -472,14 +478,13 @@ public class Board extends JPanel{
 								repaint();
 							}
 							else {
-								
+								notATarget();
 							}
 						}
 					}
 				}
 			}
 		}
-
 		@Override
 		public void mousePressed(MouseEvent e) {}
 		@Override
