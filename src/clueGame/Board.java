@@ -408,13 +408,14 @@ public class Board extends JPanel{
 				target.setOccupied(true);
 				players.get(currentPlayer).move(target.getRows(), target.getColumns());
 				targets.clear();
+				repaint();
 //				if (target.getInitial() != 'W') {
 //					((ComputerPlayer)players.get(currentPlayer)).createSuggestion(roomMap.get(target.getInitial()));
 //				}
 			}
 		}
 		else {
-			
+			JOptionPane.showMessageDialog(this, "Error player hasn't moved.");
 		}
 	}
 	public Set<BoardCell> getAdjList(int row, int col) {

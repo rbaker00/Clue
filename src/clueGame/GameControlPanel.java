@@ -84,13 +84,6 @@ public class GameControlPanel extends JPanel {
 		rollTextField.setText(String.valueOf(roll));
 	}
 	
-	public void initFields() {
-		// test filling in the data
-		setTurn(new ComputerPlayer( "Col. Mustard", java.awt.Color.getColor("orange"), 0, 0), 5);
-		setGuess( "I have no guess!");
-		setGuessResult( "So you have nothing?");
-	}
-	
 	public void updateFields(String guessResult, String guess, Player p, int roll) {
 		setTurn(p, roll);
 		setGuess(guess);
