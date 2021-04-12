@@ -15,6 +15,7 @@ public class GameControlPanel extends JPanel {
 	// JPanels
 	JPanel topPanel;
 	JPanel top_leftPanel;
+	JPanel top_middlePanel;
 	JPanel top_rightPanel;
 	JPanel bottomPanel;
 	JPanel bottom_leftPanel;
@@ -41,6 +42,7 @@ public class GameControlPanel extends JPanel {
 		// JPanels
 		topPanel = new JPanel(new BorderLayout());
 		top_leftPanel = new JPanel(new BorderLayout());
+		top_middlePanel = new JPanel(new BorderLayout());
 		top_rightPanel = new JPanel(new BorderLayout());
 		bottomPanel = new JPanel(new BorderLayout());
 		bottom_leftPanel = new JPanel(new BorderLayout());
@@ -101,11 +103,12 @@ public class GameControlPanel extends JPanel {
 		topPanel.add(top_leftPanel, BorderLayout.WEST);
 		top_leftPanel.add(whoseTurnLabel, BorderLayout.NORTH);
 		top_leftPanel.add(whoseTurnTextField, BorderLayout.SOUTH);
-		topPanel.add(top_rightPanel, BorderLayout.CENTER);
-		top_rightPanel.add(rollLabel);
-		top_rightPanel.add(rollTextField);
-		topPanel.add(makeAccusationButton, BorderLayout.CENTER);
-		topPanel.add(nextButton, BorderLayout.EAST);
+		topPanel.add(top_middlePanel, BorderLayout.CENTER);
+		top_middlePanel.add(rollLabel, BorderLayout.WEST);
+		top_middlePanel.add(rollTextField, BorderLayout.EAST);
+		top_rightPanel.add(makeAccusationButton, BorderLayout.WEST);
+		top_rightPanel.add(nextButton, BorderLayout.EAST);
+		topPanel.add(top_rightPanel, BorderLayout.EAST);
 		
 		// bottom panel adds and layout management
 		bottom_leftPanel.setBorder(BorderFactory.createTitledBorder(BorderFactory.createLineBorder(Color.black), "Guess"));
