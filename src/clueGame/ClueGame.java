@@ -36,7 +36,7 @@ public class ClueGame extends JFrame {
 		right.createUI();
 		
 		// set prefered size of side panels
-		bottom.setPreferredSize(new Dimension(750, 90));
+		bottom.setPreferredSize(new Dimension(750, 120));
 		right.setPreferredSize(new Dimension(100, 800));
 		
 		// create/init a JPanel to hold these three guis
