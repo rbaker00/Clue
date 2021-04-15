@@ -15,6 +15,9 @@ public class ClueGame extends JFrame {
 	private static GameControlPanel bottom;
 	private static CardPanel right;
 	private static JPanel mainPanel;
+	private String guess;
+	private String guessResult;
+	private int roll;
 	public ClueGame(String title) {
 		// send title to JFrame constructor
 		super(title);
@@ -23,6 +26,7 @@ public class ClueGame extends JFrame {
 		center = Board.getInstance();
 		center.setConfigFiles("board.csv", "ClueSetup.txt");	
 		center.initialize();
+		center.setFrame(this);
 		
 		// init other two panels
 		bottom = new GameControlPanel();
@@ -40,6 +44,32 @@ public class ClueGame extends JFrame {
 		
 		// create/init a JPanel to hold these three guis
 		mainPanel = new JPanel(new BorderLayout());
+		
+		// init fields in gui
+		roll = (int)(Math.random() * 6) + 1;
+		center.nextPlayer(roll);
+		String currPlayerName = center.getCurrentPlayer().getName();
+		right.setHuman(center.getCurrentPlayer());
+		
+		// init player dialog
+		String dialog = "You are " + currPlayerName + ". Can you find the solution before the Computer players?";
+		
+		// show dialog to tell player who they are and start game
+		guess = "No guess";
+		guessResult = "N/A";
+		updateControl();
+		JOptionPane.showMessageDialog(this, dialog);
+		
+		// handle what happens when next button is clicked 
+		bottom.getNextButton().addMouseListener(new MouseAdapter() {
+			public void mouseClicked(MouseEvent e) {
+				roll = (int)(Math.random() * 6) + 1;
+				guess = "No guess";
+				guessResult = "N/A";
+				center.nextPlayer(roll);
+				updateControl();
+			}
+		});
 	}
 	private void createUI() {
 		// add each component to it's respective part of the mainPanel
@@ -47,39 +77,27 @@ public class ClueGame extends JFrame {
 		mainPanel.add(bottom, BorderLayout.SOUTH);
 		mainPanel.add(right, BorderLayout.EAST);
 	}
-	
+	public void setGuess(Solution suggestion) {
+		guess = "Player: " + suggestion.player.getName() + "; Room: " + suggestion.room.getName() + "; Weapon: " + suggestion.weapon.getName();
+	}
+	public void setGuessResult(String guessResult) {
+		this.guessResult = guessResult;
+	}
+	public void updateControl() {
+		bottom.updateFields(guessResult, guess, center.getCurrentPlayer(), roll);
+	}
+	public void updateSeen(Player human) {
+		right.updateSeen(human);
+		revalidate();
+	}
 	public static void main(String[] args) {
 		// create and draw the entire gui
-		String guess = "I have no guess";
-		String guessResult = "So you have nothing?";
 		ClueGame gui = new ClueGame("Clue Game");
 		gui.setContentPane(mainPanel); // put the panel in the frame
 		gui.setSize(750, 750);  // size the frame
 		gui.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE); // allow it to close
 		gui.createUI();
-		
-		// init fields in gui
-		int roll = (int)(Math.random() * 6) + 1;
-		center.nextPlayer(roll);
-		String currPlayerName = center.getCurrentPlayer().getName();
-		
-		// init player dialog
-		String dialog = "You are " + currPlayerName + ". Can you find the solution before the Computer players?";
-		
-		// show dialog to tell player who they are and start game
-		bottom.updateFields(guessResult, guess, center.getCurrentPlayer(), roll);
 		gui.setVisible(true); // make it visible
-		JOptionPane.showMessageDialog(gui, dialog);
-		
-		// handle what happens when next button is clicked 
-		bottom.getNextButton().addMouseListener(new MouseAdapter() {
-			public void mouseClicked(MouseEvent e) {
-				int roll = (int)(Math.random() * 6) + 1;
-				center.nextPlayer(roll);
-				bottom.updateFields(guessResult, guess, center.getCurrentPlayer(),roll);
-			}
-		}
-		);
 	}
 }
 

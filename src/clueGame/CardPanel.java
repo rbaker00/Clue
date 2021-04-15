@@ -15,12 +15,12 @@ import javax.swing.JPanel;
 import javax.swing.JTextField;
 
 public class CardPanel extends JPanel {
-	JPanel peopleHand;
-	JPanel peopleSeen;
-	JPanel roomHand;
-	JPanel roomSeen;
-	JPanel weaponHand;
-	JPanel weaponSeen;
+	private JPanel peopleHand;
+	private JPanel peopleSeen;
+	private JPanel roomHand;
+	private JPanel roomSeen;
+	private JPanel weaponHand;
+	private JPanel weaponSeen;
 	public CardPanel() {
 		super();
 		setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
@@ -29,19 +29,16 @@ public class CardPanel extends JPanel {
 		peopleHand.add(new JLabel("In Hand:"));
 		peopleSeen = new JPanel();
 		peopleSeen.setLayout(new BoxLayout(peopleSeen, BoxLayout.Y_AXIS));
-		peopleSeen.add(new JLabel("Seen:"));
 		roomHand = new JPanel();
 		roomHand.setLayout(new BoxLayout(roomHand, BoxLayout.Y_AXIS));
 		roomHand.add(new JLabel("In Hand:"));
 		roomSeen = new JPanel();
 		roomSeen.setLayout(new BoxLayout(roomSeen, BoxLayout.Y_AXIS));
-		roomSeen.add(new JLabel("Seen:"));
 		weaponHand = new JPanel();
 		weaponHand.setLayout(new BoxLayout(weaponHand, BoxLayout.Y_AXIS));
 		weaponHand.add(new JLabel("In Hand:"));
 		weaponSeen = new JPanel();
 		weaponSeen.setLayout(new BoxLayout(weaponSeen, BoxLayout.Y_AXIS));
-		weaponSeen.add(new JLabel("Seen:"));
 	}
 	public void createUI() {
 		// puts the finished Panels together
@@ -71,7 +68,7 @@ public class CardPanel extends JPanel {
 		weapons.setMaximumSize(new Dimension(Integer.MAX_VALUE, Integer.MAX_VALUE));
 		add(weapons);
 	}
-	private void setHuman (Player player) {
+	public void setHuman (Player player) {
 		// add TextFields for each Card in Hand
 		for (Card card : player.getHand()) {
 			JTextField text = new JTextField();
@@ -90,23 +87,7 @@ public class CardPanel extends JPanel {
 			}
 		}
 		
-		// add TextFields for each Card in Seen
-		for (Card card : player.getSeen()) {
-			JTextField text = new JTextField();
-			text.setEditable(false);
-			text.setText(card.getName());
-			switch (card.getType()) {
-			case PERSON:
-				peopleSeen.add(text);
-				break;
-			case ROOM:
-				roomSeen.add(text);
-				break;
-			case WEAPON:
-				weaponSeen.add(text);
-				break;
-			}
-		}
+		updateSeen(player);
 		
 		// check if any Hands are empty and if so add a None TextField
 		if(peopleHand.getComponentCount()==1) {
@@ -128,6 +109,32 @@ public class CardPanel extends JPanel {
 			weaponHand.add(text);
 		}
 		
+		
+	}
+	public void updateSeen(Player human) {
+		peopleSeen.removeAll();
+		peopleSeen.add(new JLabel("Seen:"));
+		weaponSeen.removeAll();
+		weaponSeen.add(new JLabel("Seen:"));
+		roomSeen.removeAll();
+		roomSeen.add(new JLabel("Seen:"));
+		// add TextFields for each Card in Seen
+		for (Card card : human.getSeen()) {
+			JTextField text = new JTextField();
+			text.setEditable(false);
+			text.setText(card.getName());
+			switch (card.getType()) {
+			case PERSON:
+				peopleSeen.add(text);
+				break;
+			case ROOM:
+				roomSeen.add(text);
+				break;
+			case WEAPON:
+				weaponSeen.add(text);
+				break;
+			}
+		}
 		// check if any of the Seens are empty and if so add a None TextField
 		if(peopleSeen.getComponentCount()==1) {
 			JTextField text = new JTextField();
@@ -147,7 +154,7 @@ public class CardPanel extends JPanel {
 			text.setText("None");
 			weaponSeen.add(text);
 		}
-	}
+		}
 	public static void main(String[] args) {
 		CardPanel panel = new CardPanel();  // create the panel
 		JFrame frame = new JFrame("Clue Game");  // create the frame 

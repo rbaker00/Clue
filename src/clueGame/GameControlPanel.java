@@ -112,8 +112,8 @@ public class GameControlPanel extends JPanel {
 		bottomPanel.add(bottom_rightPanel, BorderLayout.EAST);
 		
 		// game control panel adds and layout management
-		add(topPanel, BorderLayout.NORTH);
-		add(bottomPanel, BorderLayout.SOUTH);
+		add(topPanel);
+		add(bottomPanel);
 	}
 	
 	/**

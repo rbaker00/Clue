@@ -92,13 +92,13 @@ public abstract class Player {
 		g.setColor(color);
 		g.fillOval(column*rectSize+rectSize/10 + offset, row*rectSize+rectSize/10, rectSize*4/5, rectSize*4/5);
 	}
-	public ArrayList<Card> getPlayerCards() {
+	public static ArrayList<Card> getPlayerCards() {
 		return playerCards;
 	}
-	public ArrayList<Card> getRoomCards() {
+	public static ArrayList<Card> getRoomCards() {
 		return roomCards;
 	}
-	public ArrayList<Card> getWeaponCards() {
+	public static ArrayList<Card> getWeaponCards() {
 		return weaponCards;
 	}
 	public void move (int row, int column) {

@@ -2,12 +2,21 @@ package clueGame;
 
 import java.util.*;
 
+import javax.swing.BoxLayout;
+import javax.swing.JButton;
+import javax.swing.JComboBox;
+import javax.swing.JDialog;
 import javax.swing.JFrame;
+import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
+import javax.swing.JTextField;
 
+import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Graphics;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.io.File;
@@ -24,11 +33,12 @@ public class Board extends JPanel{
 	private Map<Character, Room> roomMap;
 	private static Board theInstance = new Board();
 	private ArrayList<Room> rooms;
-	Set<BoardCell> targets;
-	Set<BoardCell> visited = new HashSet<BoardCell>();
+	private Set<BoardCell> targets;
+	private Set<BoardCell> visited = new HashSet<BoardCell>();
 	private ArrayList<Player> players;
 	private int currentPlayer;
 	private Solution solution;
+	ClueGame frame;
 	
 	public Board() {
 		super();
@@ -142,7 +152,7 @@ public class Board extends JPanel{
 		    }
 		}
 		if (playerCards.size() != 0) {
-			Player.setDeck(playerCards, roomCards, weaponCards);
+			Player.setDeck((ArrayList<Card>) playerCards.clone(), (ArrayList<Card>) roomCards.clone(), (ArrayList<Card>) weaponCards.clone());
 			solution = new Solution();
 			int rand = (int)(Math.random()*(playerCards.size()));
 			solution.player = playerCards.get(rand);
@@ -335,14 +345,35 @@ public class Board extends JPanel{
 	public boolean checkAccusation(Solution accusation) {
 		return solution.equals(accusation);
 	}
-	public Card handleSuggestion (Solution suggestion, Player accuser) {
-		for (Player player : players) {
-			Card dispute = player.disproveSuggestion(suggestion);
-			if (dispute != null && !player.equals(accuser)) {
-				return dispute;
+	public Object[] handleSuggestion (Solution suggestion, Player accuser) {
+		BoardCell room = null;
+		for (Room aRoom : rooms) {
+			if (aRoom.getName() == suggestion.room.getName()) {
+				room = aRoom.getCenterCell();
 			}
 		}
-		return null;
+		Card disputeCard = null;
+		Player disputePlayer = null;
+		for (Player player : players) {
+			if (player.getName() == suggestion.player.getName()) {
+				grid[player.getRow()][player.getCol()].setOccupied(false);
+				grid[room.getRows()][room.getColumns()].setOccupied(true);
+				player.move(room.getRows(), room.getColumns());
+				repaint();
+			}
+			if (disputeCard == null) {
+				disputeCard = player.disproveSuggestion(suggestion);
+				disputePlayer = player;
+				if (player.equals(accuser)) {
+					disputeCard = null;
+					disputePlayer = null;
+				}
+			}
+		}
+		Object[] dispute = new Object[2];
+		dispute[0] = disputeCard;
+		dispute[1] = disputePlayer;
+		return dispute;
 	}
 	
 	//Deals with painting the board, with the cells, players, and rooms
@@ -398,6 +429,7 @@ public class Board extends JPanel{
 	}
 	
 	public void nextPlayer (int roll) {
+		roll=6;
 		if (targets.isEmpty()) { //If targets isn't empty, the player hasn't moved
 			currentPlayer = (currentPlayer + 1)%players.size();
 			calcTargets(grid[players.get(currentPlayer).getRow()][players.get(currentPlayer).getCol()], roll);
@@ -409,14 +441,53 @@ public class Board extends JPanel{
 				players.get(currentPlayer).move(target.getRows(), target.getColumns());
 				targets.clear();
 				repaint();
-//				if (target.getInitial() != 'W') {
-//					((ComputerPlayer)players.get(currentPlayer)).createSuggestion(roomMap.get(target.getInitial()));
-//				}
+				if (target.getInitial() != 'W') {
+					computerSuggestion();
+				}
 			}
 		}
 		else {
 			JOptionPane.showMessageDialog(this, "Error: player hasn't moved.");
 		}
+	}
+	private void computerSuggestion() {
+		BoardCell loc = grid[getCurrentPlayer().getRow()][getCurrentPlayer().getCol()];
+		Room theRoom = roomMap.get(loc.getInitial());
+		Solution suggestion = ((ComputerPlayer)getCurrentPlayer()).createSuggestion(theRoom);
+		frame.setGuess(suggestion);
+		Card dispute = (Card)handleSuggestion(suggestion, getCurrentPlayer())[0];
+		if (dispute == null) {
+			frame.setGuessResult("No one else can disprove");
+		}
+		else {
+			getCurrentPlayer().updateSeen(dispute);
+			frame.setGuessResult("Someone else can disprove");
+		}
+		frame.updateControl();
+	}
+	private void humanSuggestion(Card player, Card weapon) {
+		Solution suggestion = new Solution();
+		suggestion.player = player;
+		suggestion.weapon = weapon;
+		BoardCell roomCell = grid[getCurrentPlayer().getRow()][getCurrentPlayer().getCol()];
+		Room currRoom = roomMap.get(roomCell.getInitial());
+		for (Card room : Player.getRoomCards()) {
+			if(room.getName().equals(currRoom.getName())) {
+				suggestion.room = room;
+				break;
+			}
+		}
+		frame.setGuess(suggestion);
+		Object[] dispute = handleSuggestion(suggestion, getCurrentPlayer());
+		if (dispute[0] == null) {
+			frame.setGuessResult("No one else can disprove");
+		}
+		else {
+			getCurrentPlayer().updateSeen((Card)dispute[0]);
+			frame.updateSeen(getCurrentPlayer());
+			frame.setGuessResult(((Player)dispute[1]).getName() + " disputed with " + ((Card)dispute[0]).getName());
+		}
+		frame.updateControl();
 	}
 	public Set<BoardCell> getAdjList(int row, int col) {
 		return grid[row][col].getAdjList();
@@ -442,8 +513,78 @@ public class Board extends JPanel{
 	public Player getCurrentPlayer() {
 		return players.get(currentPlayer);
 	}
+	public Room getPlayerRoom(Player player) {
+		BoardCell loc = grid[player.getRow()][player.getCol()];
+		return roomMap.get(loc.getInitial());
+	}
 	public void notATarget() {
 		JOptionPane.showMessageDialog(this, "Error: Not a target.");
+	}
+	public void setFrame(ClueGame frame) {
+		this.frame = frame;
+	}
+	private class SuggestionDialog extends JDialog {
+		private JComboBox<String> personSelect;
+		private JComboBox<String> weaponSelect;
+		private JButton submit;
+		private JButton cancel;
+		SuggestionDialog() {
+			
+			//setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
+			JPanel dialog = new JPanel();
+			setSize(200, 300);
+			JPanel room = new JPanel(new BorderLayout());
+			JPanel person = new JPanel(new BorderLayout());
+			JPanel weapon = new JPanel(new BorderLayout());
+			JPanel bottom = new JPanel(new BorderLayout());
+			
+			room.add(new JLabel("Current room"), BorderLayout.WEST);
+			JTextField currRoom = new JTextField(getPlayerRoom(getCurrentPlayer()).getName());
+			currRoom.setEditable(false);
+			room.add(currRoom, BorderLayout.EAST);
+			dialog.add(room);
+			
+			person.add(new JLabel("Person"), BorderLayout.WEST);
+			String[] personNames = new String[Player.getPlayerCards().size()];
+			for (int i = 0; i < Player.getPlayerCards().size(); i++) {
+				personNames[i] = Player.getPlayerCards().get(i).getName();
+			}
+			personSelect = new JComboBox<String>(personNames);
+			person.add(personSelect, BorderLayout.EAST);
+			dialog.add(person);
+			
+			
+			weapon.add(new JLabel("Weapon"), BorderLayout.WEST);
+			String[] weaponNames = new String[Player.getWeaponCards().size()];
+			for (int i = 0; i < Player.getWeaponCards().size(); i++) {
+				weaponNames[i] = Player.getWeaponCards().get(i).getName();
+			}
+			weaponSelect = new JComboBox<String>(weaponNames);
+			weaponSelect.setAlignmentX(RIGHT_ALIGNMENT);
+			weapon.add(weaponSelect, BorderLayout.EAST);
+			dialog.add(weapon);
+			
+			submit = new JButton("Submit");
+			submit.addActionListener(new ActionListener() {
+				@Override
+				public void actionPerformed(ActionEvent e) {
+					setVisible(false);
+					humanSuggestion(Player.getPlayerCards().get(personSelect.getSelectedIndex()), Player.getWeaponCards().get(weaponSelect.getSelectedIndex()));
+				}
+			});
+			cancel = new JButton("Cancel");
+			cancel.addActionListener(new ActionListener() {
+				@Override
+				public void actionPerformed(ActionEvent e) {
+					setVisible(false);
+				}
+			});
+			bottom.add(submit, BorderLayout.WEST);
+			bottom.add(cancel, BorderLayout.EAST);
+			dialog.add(bottom);
+			add(dialog);
+		}
+		
 	}
 	private class ClickListener implements MouseListener {
 		@Override
@@ -463,6 +604,8 @@ public class Board extends JPanel{
 							grid[row][col].setOccupied(true);
 							players.get(currentPlayer).move(row, col);
 							repaint();
+							SuggestionDialog dialog = new SuggestionDialog();
+							dialog.setVisible(true);
 						}
 						else {
 							notATarget();
