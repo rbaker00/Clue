@@ -74,7 +74,9 @@ public class ClueGame extends JFrame {
 		// handle what happens when make accusation button is clicked 
 		bottom.getAccusationButton().addMouseListener(new MouseAdapter() {
 			public void mouseClicked(MouseEvent e) {
-				
+				if(center.getCurrentPlayer() instanceof HumanPlayer) {
+					System.out.println("test");
+				}
 			}
 		});
 	}
