@@ -90,6 +90,9 @@ public class ClueGame extends JFrame {
 		right.updateSeen(human);
 		revalidate();
 	}
+	public void end() {
+		System.exit(0);
+	}
 	public static void main(String[] args) {
 		// create and draw the entire gui
 		ClueGame gui = new ClueGame("Clue Game");

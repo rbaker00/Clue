@@ -15,6 +15,7 @@ public abstract class Player {
 	private static ArrayList<Card> playerCards = new ArrayList<Card>();
 	private static ArrayList<Card> roomCards = new ArrayList<Card>();
 	private static ArrayList<Card> weaponCards = new ArrayList<Card>();
+	private boolean movedSuggestion;
 	Player(String name, Color color, int row, int col) {
 		super();
 		this.name = name;
@@ -23,6 +24,7 @@ public abstract class Player {
 		this.column = col;
 		hand = new ArrayList<Card>();
 		seen = new ArrayList<Card>();
+		movedSuggestion = false;
 	}
 	public void updateHand(Card card) {
 		hand.add(card);
@@ -104,5 +106,11 @@ public abstract class Player {
 	public void move (int row, int column) {
 		this.row = row;
 		this.column = column;
+	}
+	public boolean isMovedSuggestion() {
+		return movedSuggestion;
+	}
+	public void setMovedSuggestion(boolean movedSuggestion) {
+		this.movedSuggestion = movedSuggestion;
 	}
 }

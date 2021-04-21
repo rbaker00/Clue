@@ -34,10 +34,11 @@ public class Board extends JPanel{
 	private static Board theInstance = new Board();
 	private ArrayList<Room> rooms;
 	private Set<BoardCell> targets;
-	private Set<BoardCell> visited = new HashSet<BoardCell>();
+	private Set<BoardCell> visited;
 	private ArrayList<Player> players;
 	private int currentPlayer;
 	private Solution solution;
+	private boolean accusation;
 	ClueGame frame;
 	
 	public Board() {
@@ -58,7 +59,9 @@ public class Board extends JPanel{
 		currentPlayer = -1;
 		addMouseListener(new ClickListener());
 		targets = new HashSet<BoardCell>();
+		visited = new HashSet<BoardCell>();
 		players = new ArrayList<Player>();
+		accusation = false;
 		try {
 			loadSetupConfig();
 			loadLayoutConfig();
@@ -279,6 +282,10 @@ public class Board extends JPanel{
 		targets.clear();
 		visited.add(start);
 		findAllTargets(start, pathlength);
+		if (getCurrentPlayer().isMovedSuggestion()) {
+			targets.add(start);
+			getCurrentPlayer().setMovedSuggestion(false);
+		}
 		visited.remove(start);
 		return;
 	}
@@ -359,6 +366,7 @@ public class Board extends JPanel{
 				grid[player.getRow()][player.getCol()].setOccupied(false);
 				grid[room.getRows()][room.getColumns()].setOccupied(true);
 				player.move(room.getRows(), room.getColumns());
+				player.setMovedSuggestion(true);
 				repaint();
 			}
 			if (disputeCard == null) {
@@ -489,6 +497,25 @@ public class Board extends JPanel{
 		}
 		frame.updateControl();
 	}
+	public void accusationButton() {
+		accusation = true;
+		SuggestionDialog dialog = new SuggestionDialog();
+		dialog.setVisible(true);
+	}
+	private void humanAccusation(Card player, Card weapon, Card room) {
+		Solution accusation = new Solution();
+		accusation.player = player;
+		accusation.weapon = weapon;
+		accusation.room = room;
+		if (checkAccusation(accusation)) {
+			JOptionPane.showMessageDialog(this, "Congrats, you won!");
+		}
+		else {
+			JOptionPane.showMessageDialog(this, "Unfortunately you lost :(");
+			frame.end();
+		}
+		
+	}
 	public Set<BoardCell> getAdjList(int row, int col) {
 		return grid[row][col].getAdjList();
 	}
@@ -526,6 +553,7 @@ public class Board extends JPanel{
 	private class SuggestionDialog extends JDialog {
 		private JComboBox<String> personSelect;
 		private JComboBox<String> weaponSelect;
+		private JComboBox<String> roomSelect;
 		private JButton submit;
 		private JButton cancel;
 		SuggestionDialog() {
@@ -539,9 +567,19 @@ public class Board extends JPanel{
 			JPanel bottom = new JPanel(new BorderLayout());
 			
 			room.add(new JLabel("Current room"), BorderLayout.WEST);
-			JTextField currRoom = new JTextField(getPlayerRoom(getCurrentPlayer()).getName());
-			currRoom.setEditable(false);
-			room.add(currRoom, BorderLayout.EAST);
+			if (!accusation) {
+				JTextField currRoom = new JTextField(getPlayerRoom(getCurrentPlayer()).getName());
+				currRoom.setEditable(false);
+				room.add(currRoom, BorderLayout.EAST);
+			}
+			else {
+				String[] roomNames = new String[Player.getRoomCards().size()];
+				for (int i = 0; i < Player.getRoomCards().size(); i++) {
+					roomNames[i] = Player.getRoomCards().get(i).getName();
+				}
+				roomSelect = new JComboBox<String>(roomNames);
+				room.add(roomSelect, BorderLayout.EAST);
+			}
 			dialog.add(room);
 			
 			person.add(new JLabel("Person"), BorderLayout.WEST);
@@ -569,7 +607,12 @@ public class Board extends JPanel{
 				@Override
 				public void actionPerformed(ActionEvent e) {
 					setVisible(false);
-					humanSuggestion(Player.getPlayerCards().get(personSelect.getSelectedIndex()), Player.getWeaponCards().get(weaponSelect.getSelectedIndex()));
+					if (!accusation) {
+						humanSuggestion(Player.getPlayerCards().get(personSelect.getSelectedIndex()), Player.getWeaponCards().get(weaponSelect.getSelectedIndex()));
+					}
+					else {
+						humanAccusation(Player.getPlayerCards().get(personSelect.getSelectedIndex()), Player.getWeaponCards().get(weaponSelect.getSelectedIndex()), Player.getRoomCards().get(roomSelect.getSelectedIndex()));
+					}
 				}
 			});
 			cancel = new JButton("Cancel");
