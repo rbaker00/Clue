@@ -71,6 +71,10 @@ public class GameControlPanel extends JPanel {
 		return nextButton;
 	}
 	
+	public JButton getAccusationButton() {
+		return makeAccusationButton;
+	}
+	
 	private void setGuessResult(String guessResult) {
 		guessResultTextField.setText(guessResult);
 	}

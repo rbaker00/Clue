@@ -70,6 +70,13 @@ public class ClueGame extends JFrame {
 				updateControl();
 			}
 		});
+		
+		// handle what happens when make accusation button is clicked 
+		bottom.getAccusationButton().addMouseListener(new MouseAdapter() {
+			public void mouseClicked(MouseEvent e) {
+				
+			}
+		});
 	}
 	private void createUI() {
 		// add each component to it's respective part of the mainPanel
