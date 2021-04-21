@@ -523,6 +523,7 @@ public class Board extends JPanel{
 		accusation.room = room;
 		if (checkAccusation(accusation)) {
 			JOptionPane.showMessageDialog(this, "Congrats, you won!");
+			frame.end();
 		}
 		else {
 			JOptionPane.showMessageDialog(this, "Unfortunately you lost :(");
@@ -580,13 +581,14 @@ public class Board extends JPanel{
 			JPanel weapon = new JPanel(new BorderLayout());
 			JPanel bottom = new JPanel(new BorderLayout());
 			
-			room.add(new JLabel("Current room"), BorderLayout.WEST);
 			if (!accusation) {
+				room.add(new JLabel("Current room"), BorderLayout.WEST);
 				JTextField currRoom = new JTextField(getPlayerRoom(getCurrentPlayer()).getName());
 				currRoom.setEditable(false);
 				room.add(currRoom, BorderLayout.EAST);
 			}
 			else {
+				room.add(new JLabel("Room"), BorderLayout.WEST);
 				String[] roomNames = new String[Player.getRoomCards().size()];
 				for (int i = 0; i < Player.getRoomCards().size(); i++) {
 					roomNames[i] = Player.getRoomCards().get(i).getName();
