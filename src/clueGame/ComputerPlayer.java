@@ -5,6 +5,15 @@ import java.util.ArrayList;
 import java.util.Set;
 
 public class ComputerPlayer extends Player {
+	private Solution accusation;
+	public Solution getAccusation() {
+		return accusation;
+	}
+	public void setAccusation(Solution accusation) {
+		if (!getHand().contains(accusation.player) && !getHand().contains(accusation.room) && !getHand().contains(accusation.weapon)) {
+			this.accusation = accusation;
+		}
+	}
 	public ComputerPlayer(String name, Color color, int row, int col) {
 		super(name, color, row, col);
 	}

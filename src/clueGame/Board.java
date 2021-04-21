@@ -437,7 +437,6 @@ public class Board extends JPanel{
 	}
 	
 	public void nextPlayer (int roll) {
-		roll=6;
 		if (targets.isEmpty()) { //If targets isn't empty, the player hasn't moved
 			currentPlayer = (currentPlayer + 1)%players.size();
 			calcTargets(grid[players.get(currentPlayer).getRow()][players.get(currentPlayer).getCol()], roll);
@@ -446,6 +445,20 @@ public class Board extends JPanel{
 				BoardCell target = ((ComputerPlayer)players.get(currentPlayer)).selectTargets(targets);
 				grid[players.get(currentPlayer).getRow()][players.get(currentPlayer).getCol()].setOccupied(false);
 				target.setOccupied(true);
+				if (((ComputerPlayer)getCurrentPlayer()).getAccusation() != null) {
+					if (checkAccusation(((ComputerPlayer)getCurrentPlayer()).getAccusation())) {
+						JOptionPane.showMessageDialog(this, getCurrentPlayer().getName() + " has won. The solution was: " + ((ComputerPlayer)getCurrentPlayer()).getAccusation().player.getName() + " " + ((ComputerPlayer)getCurrentPlayer()).getAccusation().room.getName() + " " + ((ComputerPlayer)getCurrentPlayer()).getAccusation().weapon.getName());
+						frame.end();
+					}
+					else {
+						JOptionPane.showMessageDialog(this, getCurrentPlayer().getName() + " has lost");
+						players.remove(currentPlayer);
+						currentPlayer--;
+						targets.clear();
+						repaint();
+						return;
+					}
+				}
 				players.get(currentPlayer).move(target.getRows(), target.getColumns());
 				targets.clear();
 				repaint();
@@ -469,6 +482,7 @@ public class Board extends JPanel{
 		}
 		else {
 			getCurrentPlayer().updateSeen(dispute);
+			((ComputerPlayer)getCurrentPlayer()).setAccusation(suggestion);
 			frame.setGuessResult("Someone else can disprove");
 		}
 		frame.updateControl();
