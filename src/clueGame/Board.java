@@ -479,10 +479,10 @@ public class Board extends JPanel{
 		Card dispute = (Card)handleSuggestion(suggestion, getCurrentPlayer())[0];
 		if (dispute == null) {
 			frame.setGuessResult("No one else can disprove");
+			((ComputerPlayer)getCurrentPlayer()).setAccusation(suggestion);
 		}
 		else {
 			getCurrentPlayer().updateSeen(dispute);
-			((ComputerPlayer)getCurrentPlayer()).setAccusation(suggestion);
 			frame.setGuessResult("Someone else can disprove");
 		}
 		frame.updateControl();
