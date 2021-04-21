@@ -560,7 +560,7 @@ public class Board extends JPanel{
 			
 			//setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
 			JPanel dialog = new JPanel();
-			setSize(200, 300);
+			setSize(300, 200);
 			JPanel room = new JPanel(new BorderLayout());
 			JPanel person = new JPanel(new BorderLayout());
 			JPanel weapon = new JPanel(new BorderLayout());
