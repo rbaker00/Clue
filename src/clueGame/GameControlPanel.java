@@ -57,9 +57,9 @@ public class GameControlPanel extends JPanel {
 		whoseTurnTextField.setEditable(false);
 		rollTextField = new JTextField(5);
 		rollTextField.setEditable(false);
-		guessTextField = new JTextField(20);
+		guessTextField = new JTextField(30);
 		guessTextField.setEditable(false);
-		guessResultTextField = new JTextField(20);
+		guessResultTextField = new JTextField(30);
 		guessResultTextField.setEditable(false);
 		
 		// JButtons
@@ -69,6 +69,10 @@ public class GameControlPanel extends JPanel {
 	
 	public JButton getNextButton() {
 		return nextButton;
+	}
+	
+	public JButton getAccusationButton() {
+		return makeAccusationButton;
 	}
 	
 	private void setGuessResult(String guessResult) {

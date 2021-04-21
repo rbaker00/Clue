@@ -27,7 +27,7 @@ public class ComputerPlayer extends Player {
 				randomWeapons.add(c);
 			}
 		}
-		suggestion.player = randomWeapons.get((int)(Math.random()*randomPlayers.size()));
+		suggestion.player = randomPlayers.get((int)(Math.random()*randomPlayers.size()));
 		suggestion.weapon = randomWeapons.get((int)(Math.random()*randomWeapons.size()));
 		return suggestion;
 	}
