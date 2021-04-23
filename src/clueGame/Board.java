@@ -282,7 +282,7 @@ public class Board extends JPanel{
 		targets.clear();
 		visited.add(start);
 		findAllTargets(start, pathlength);
-		if (getCurrentPlayer().isMovedSuggestion()) {
+		if (currentPlayer != -1 && getCurrentPlayer().isMovedSuggestion()) {
 			targets.add(start);
 			getCurrentPlayer().setMovedSuggestion(false);
 		}
@@ -354,15 +354,17 @@ public class Board extends JPanel{
 	}
 	public Object[] handleSuggestion (Solution suggestion, Player accuser) {
 		BoardCell room = null;
-		for (Room aRoom : rooms) {
-			if (aRoom.getName() == suggestion.room.getName()) {
-				room = aRoom.getCenterCell();
+		if (rooms != null) {
+			for (Room aRoom : rooms) {
+				if (aRoom.getName() == suggestion.room.getName()) {
+					room = aRoom.getCenterCell();
+				}
 			}
 		}
 		Card disputeCard = null;
 		Player disputePlayer = null;
 		for (Player player : players) {
-			if (player.getName() == suggestion.player.getName()) {
+			if (rooms != null && player.getName() == suggestion.player.getName()) {
 				grid[player.getRow()][player.getCol()].setOccupied(false);
 				grid[room.getRows()][room.getColumns()].setOccupied(true);
 				player.move(room.getRows(), room.getColumns());

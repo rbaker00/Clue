@@ -112,15 +112,15 @@ public class GameSolutionTest {
 		suggestion.player = steveCard;
 		suggestion.room = bedroomCard;
 		suggestion.weapon = pillowCard;
-		assertNull(board.handleSuggestion(suggestion, players.get(0)));
+		assertNull(board.handleSuggestion(suggestion, players.get(0))[0]);
 		
 		//Tests that null is returned when only the accuser has a corresponding card
 		suggestion.player = reedCard;
-		assertNull(board.handleSuggestion(suggestion, players.get(0)));
-		assertEquals(reedCard, board.handleSuggestion(suggestion, players.get(1)));
+		assertNull(board.handleSuggestion(suggestion, players.get(0))[0]);
+		assertEquals(reedCard, (Card)board.handleSuggestion(suggestion, players.get(1))[0]);
 		
 		//Tests that the first player's card is the one that is returned
 		suggestion.room = kitchenCard;
-		assertEquals(reedCard, board.handleSuggestion(suggestion, players.get(2)));
+		assertEquals(reedCard, (Card)board.handleSuggestion(suggestion, players.get(2))[0]);
 	}
 }
